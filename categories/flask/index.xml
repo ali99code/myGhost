@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Flask on ALIBABA WIKI - 菩薩球球</title>
+    <link>http://myghost.aligogo.pw/categories/flask/index.xml</link>
+    <description>Recent content in Flask on ALIBABA WIKI - 菩薩球球</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <atom:link href="http://myghost.aligogo.pw/categories/flask/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Nginx &#43; uwsgi &#43; Flask</title>
+      <link>http://myghost.aligogo.pw/post/nginx-uwsgi-flask/</link>
+      <pubDate>Sun, 22 Jan 2017 18:04:18 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/nginx-uwsgi-flask/</guid>
+      <description>
+
+&lt;h2 id=&#34;目標&#34;&gt;目標&lt;/h2&gt;
+
+&lt;p&gt;本範例主要演示利用Python 撰寫一個取得目前自己的IP及此IP是屬於哪個國家。類似這樣一個網站&lt;a href=&#34;https://ifconfig.co/&amp;quot;target=&amp;quot;_blank&#34;&gt;What is my IP address&lt;/a&gt;,另外要使用Python 做一個動態網頁可以使用支援Python 的框架(FrameWork),如 &lt;a href=&#34;http://docs.jinkan.org/docs/flask/&amp;quot;target=&amp;quot;_blank&#34;&gt;&lt;strong&gt;Flask&lt;/strong&gt;&lt;/a&gt; &lt;a href=&#34;http://bottlepy.org/docs/dev/&amp;quot;target=&amp;quot;_blank&#34;&gt;&lt;strong&gt;Bottle&lt;/strong&gt;&lt;/a&gt; &lt;a href=&#34;https://www.djangoproject.com/&#34;&gt;&lt;strong&gt;Django&lt;/strong&gt;&lt;/a&gt;等。本範例是使用&lt;a href=&#34;https://zh.wikipedia.org/wiki/Flask&amp;quot;target=&amp;quot;_blank&#34;&gt;Flask&lt;/a&gt;這個微框架,並搭配&lt;strong&gt;Nginx&lt;/strong&gt; (Web Server) 及 透過&lt;strong&gt;uWSGI&lt;/strong&gt; (server ,或是一種可與支援的程式溝通的協議)與 Python 溝通。&lt;/p&gt;
+
+&lt;h2 id=&#34;架構說明&#34;&gt;架構說明&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;程式目錄內容
+&lt;code&gt;
+/var/www/html/WebPython/
+├── getip.py
+└── uwsgi2.ini
+&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;圖示說明
+&lt;img src=&#34;http://myghost.aligogo.pw/content/images/2017/01/nginx_uWSGI_Python.png&#34; alt=&#34;nginx_uWSGi_Python&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;install-nginx&#34;&gt;install  nginx&lt;/h2&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;um install nginx&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;install-flask-uwsgi&#34;&gt;install  Flask  ,uwsgi&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;pip install flask&lt;/li&gt;
+&lt;li&gt;pip install uwsgi&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;編輯-python-程式&#34;&gt;編輯 Python 程式&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;from flask import Flask , request , jsonify
+from geoip import open_database
+
+GeoipDataBase=&amp;quot;/usr/local/share/GeoIP/GeoLite2-Country.mmdb&amp;quot;
+dbip=open_database(GeoipDataBase)
+
+def getcountry(ip):
+    ipstr=str(dbip.lookup(ip).country)
+    return ipstr
+    dbip.close()
+
+
+app = Flask(__name__)
+
+#@app.route(&#39;/&#39;)
+#def index():
+#    return &amp;quot;&amp;lt;h1&amp;gt;Hello Andy&amp;lt;/h1&amp;gt;&amp;quot;
+
+@app.route(&amp;quot;/&amp;quot;,methods=[&amp;quot;GET&amp;quot;])
+def getip():
+    ip=request.remote_addr
+    ip_country=&amp;quot;&amp;lt;h1&amp;gt;&amp;quot;  + getcountry(ip) + &amp;quot;\t&amp;quot; + ip + &amp;quot;&amp;lt;/h1&amp;gt;&amp;quot;
+    return ip_country  , 200
+
+
+
+if __name__ == &amp;quot;__main__&amp;quot;:
+    app.run(host=&#39;188.166.241.76&#39;,port=80, debug=True)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;uwsgi&#34;&gt;uWSGi&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;edit uWSGi Config  (uwsgi2.ini)
+&lt;code&gt;
+[uwsgi]
+socket = 127.0.0.1:9091
+uid = 997
+chdir = /var/www/html/WebPython/
+module = getip
+callable = app
+master = true
+workers = 3
+reload-mercy = 10   
+max-requests = 100
+pidfile = /var/run/uwsgi9090.pid
+daemonize = /var/log/uwsgi9090.log
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;開啟uWSGi服務
+&lt;code&gt;
+uwsgi --ini  uwsgi2.ini
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;觀察是否有uWSgi程序或是開啟 9091阜口&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;ps aux|grep uwsgi
+nginx    15803  0.0  3.5 235132 17592 ?        S    10:51   0:01 uwsgi --ini uwsgi2.ini
+nginx    15808  0.0  2.8 235264 14196 ?        S    10:51   0:00 uwsgi --ini uwsgi2.ini
+nginx    15809  0.0  2.9 235696 14776 ?        S    10:51   0:00 uwsgi --ini uwsgi2.ini
+nginx    15810  0.0  2.9 235728 14812 ?        S    10:51   0:00 uwsgi --ini uwsgi2.ini
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;netstat  -tlnp
+
+tcp        0      0 127.0.0.1:9091          0.0.0.0:*               LISTEN      15803/uwsgi
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;stop-or-reload-uwsgi&#34;&gt;stop or reload uwsgi&lt;/h2&gt;
+
+&lt;p&gt;在修改python 程序後,並不會立即生效,需要reload uwsgi&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;stop uwsgi
+&lt;code&gt;
+uwsgi  --stop /var/run/uwsgi9090.pid
+rm -rf /var/run/uwsgi9090.pid
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;reload uwsgi
+&lt;code&gt;
+uwsgi --reload /var/run/uwsgi9090.pid
+&lt;/code&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;edit-nginx-config-and-start-nginx&#34;&gt;edit Nginx Config and  Start Nginx&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;/etc/nginx/conf.d/uwsgi.conf&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;     server {
+        listen       80; 
+        server_name 192.168.200.1 ip.aligogo.pw;
+        location / { 
+          include  uwsgi_params;
+          uwsgi_pass  127.0.0.1:9091;
+          #uwsgi_pass  unix:/var/www/html/uwsgi.sock;                                                                                 
+          #uwsgi_param UWSGI_SCRIPT hello.py;
+          #uwsgi_param UWSGI_CHDIR /root/Python/introducing-python/myTest;
+          #index  index.html index.htm;
+    
+        } 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;nginx -t  &amp;amp;&amp;amp; systemctl start  nginx&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;測試&#34;&gt;測試&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;curl http://ip.aligogo.pw
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;參考資料&#34;&gt;參考資料:&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://coder.tw/?p=6375&amp;quot;target=&amp;quot;_blank&#34;&gt;uWSGI – 碼人日誌&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.victorgau.com/?p=4140&amp;quot;target=&amp;quot;_blank&#34;&gt;[Flask] 怎麼取得使用者的 IP 位址?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Nginx &#43; uwsgi &#43; Flask</title>
+      <link>http://myghost.aligogo.pw/post/old/nginx-uwsgi-flask/</link>
+      <pubDate>Sun, 22 Jan 2017 18:04:18 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/old/nginx-uwsgi-flask/</guid>
+      <description>
+
+&lt;h2 id=&#34;目標&#34;&gt;目標&lt;/h2&gt;
+
+&lt;p&gt;本範例主要演示利用Python 撰寫一個取得目前自己的IP及此IP是屬於哪個國家。類似這樣一個網站&lt;a href=&#34;https://ifconfig.co/&amp;quot;target=&amp;quot;_blank&#34;&gt;What is my IP address&lt;/a&gt;,另外要使用Python 做一個動態網頁可以使用支援Python 的框架(FrameWork),如 &lt;a href=&#34;http://docs.jinkan.org/docs/flask/&amp;quot;target=&amp;quot;_blank&#34;&gt;&lt;strong&gt;Flask&lt;/strong&gt;&lt;/a&gt; &lt;a href=&#34;http://bottlepy.org/docs/dev/&amp;quot;target=&amp;quot;_blank&#34;&gt;&lt;strong&gt;Bottle&lt;/strong&gt;&lt;/a&gt; &lt;a href=&#34;https://www.djangoproject.com/&#34;&gt;&lt;strong&gt;Django&lt;/strong&gt;&lt;/a&gt;等。本範例是使用&lt;a href=&#34;https://zh.wikipedia.org/wiki/Flask&amp;quot;target=&amp;quot;_blank&#34;&gt;Flask&lt;/a&gt;這個微框架,並搭配&lt;strong&gt;Nginx&lt;/strong&gt; (Web Server) 及 透過&lt;strong&gt;uWSGI&lt;/strong&gt; (server ,或是一種可與支援的程式溝通的協議)與 Python 溝通。&lt;/p&gt;
+
+&lt;h2 id=&#34;架構說明&#34;&gt;架構說明&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;程式目錄內容
+&lt;code&gt;
+/var/www/html/WebPython/
+├── getip.py
+└── uwsgi2.ini
+&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;圖示說明
+&lt;img src=&#34;http://myghost.aligogo.pw/content/images/2017/01/nginx_uWSGI_Python.png&#34; alt=&#34;nginx_uWSGi_Python&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;install-nginx&#34;&gt;install  nginx&lt;/h2&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;um install nginx&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;install-flask-uwsgi&#34;&gt;install  Flask  ,uwsgi&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;pip install flask&lt;/li&gt;
+&lt;li&gt;pip install uwsgi&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;編輯-python-程式&#34;&gt;編輯 Python 程式&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;from flask import Flask , request , jsonify
+from geoip import open_database
+
+GeoipDataBase=&amp;quot;/usr/local/share/GeoIP/GeoLite2-Country.mmdb&amp;quot;
+dbip=open_database(GeoipDataBase)
+
+def getcountry(ip):
+    ipstr=str(dbip.lookup(ip).country)
+    return ipstr
+    dbip.close()
+
+
+app = Flask(__name__)
+
+#@app.route(&#39;/&#39;)
+#def index():
+#    return &amp;quot;&amp;lt;h1&amp;gt;Hello Andy&amp;lt;/h1&amp;gt;&amp;quot;
+
+@app.route(&amp;quot;/&amp;quot;,methods=[&amp;quot;GET&amp;quot;])
+def getip():
+    ip=request.remote_addr
+    ip_country=&amp;quot;&amp;lt;h1&amp;gt;&amp;quot;  + getcountry(ip) + &amp;quot;\t&amp;quot; + ip + &amp;quot;&amp;lt;/h1&amp;gt;&amp;quot;
+    return ip_country  , 200
+
+
+
+if __name__ == &amp;quot;__main__&amp;quot;:
+    app.run(host=&#39;188.166.241.76&#39;,port=80, debug=True)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;uwsgi&#34;&gt;uWSGi&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;edit uWSGi Config  (uwsgi2.ini)
+&lt;code&gt;
+[uwsgi]
+socket = 127.0.0.1:9091
+uid = 997
+chdir = /var/www/html/WebPython/
+module = getip
+callable = app
+master = true
+workers = 3
+reload-mercy = 10   
+max-requests = 100
+pidfile = /var/run/uwsgi9090.pid
+daemonize = /var/log/uwsgi9090.log
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;開啟uWSGi服務
+&lt;code&gt;
+uwsgi --ini  uwsgi2.ini
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;觀察是否有uWSgi程序或是開啟 9091阜口&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;ps aux|grep uwsgi
+nginx    15803  0.0  3.5 235132 17592 ?        S    10:51   0:01 uwsgi --ini uwsgi2.ini
+nginx    15808  0.0  2.8 235264 14196 ?        S    10:51   0:00 uwsgi --ini uwsgi2.ini
+nginx    15809  0.0  2.9 235696 14776 ?        S    10:51   0:00 uwsgi --ini uwsgi2.ini
+nginx    15810  0.0  2.9 235728 14812 ?        S    10:51   0:00 uwsgi --ini uwsgi2.ini
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;netstat  -tlnp
+
+tcp        0      0 127.0.0.1:9091          0.0.0.0:*               LISTEN      15803/uwsgi
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;stop-or-reload-uwsgi&#34;&gt;stop or reload uwsgi&lt;/h2&gt;
+
+&lt;p&gt;在修改python 程序後,並不會立即生效,需要reload uwsgi&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;stop uwsgi
+&lt;code&gt;
+uwsgi  --stop /var/run/uwsgi9090.pid
+rm -rf /var/run/uwsgi9090.pid
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;reload uwsgi
+&lt;code&gt;
+uwsgi --reload /var/run/uwsgi9090.pid
+&lt;/code&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;edit-nginx-config-and-start-nginx&#34;&gt;edit Nginx Config and  Start Nginx&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;/etc/nginx/conf.d/uwsgi.conf&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;     server {
+        listen       80; 
+        server_name 192.168.200.1 ip.aligogo.pw;
+        location / { 
+          include  uwsgi_params;
+          uwsgi_pass  127.0.0.1:9091;
+          #uwsgi_pass  unix:/var/www/html/uwsgi.sock;                                                                                 
+          #uwsgi_param UWSGI_SCRIPT hello.py;
+          #uwsgi_param UWSGI_CHDIR /root/Python/introducing-python/myTest;
+          #index  index.html index.htm;
+    
+        } 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;nginx -t  &amp;amp;&amp;amp; systemctl start  nginx&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;測試&#34;&gt;測試&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;curl http://ip.aligogo.pw
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;參考資料&#34;&gt;參考資料:&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://coder.tw/?p=6375&amp;quot;target=&amp;quot;_blank&#34;&gt;uWSGI – 碼人日誌&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.victorgau.com/?p=4140&amp;quot;target=&amp;quot;_blank&#34;&gt;[Flask] 怎麼取得使用者的 IP 位址?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,998 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Nginx on ALIBABA WIKI - 菩薩球球</title>
+    <link>http://myghost.aligogo.pw/categories/nginx/index.xml</link>
+    <description>Recent content in Nginx on ALIBABA WIKI - 菩薩球球</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <atom:link href="http://myghost.aligogo.pw/categories/nginx/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Nginx_Fastcgi_Cache &#43; Lua 執行過程</title>
+      <link>http://myghost.aligogo.pw/post/nginx_fastcgi_cache-lua-zhi-xing-guo-cheng/</link>
+      <pubDate>Sun, 19 Jun 2016 08:24:43 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/nginx_fastcgi_cache-lua-zhi-xing-guo-cheng/</guid>
+      <description>
+
+&lt;h1 id=&#34;nginx-proxy-cache&#34;&gt;Nginx Proxy Cache&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;應用於Reverse Proxy,負載均衡&lt;/li&gt;
+&lt;li&gt;作用是緩存後端服務器的內容，可能是任何內容，包括靜態的和動態&lt;/li&gt;
+&lt;li&gt;另外,也可作正向代理 (Nginx 這邊支援 web proxy)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://myghost.aligogo.pw/content/images/2017/01/nginx_cache_jpeg.jpg&#34; alt=&#34;Nginx_Proxy_Cache&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;nginx-fastcgi-cache&#34;&gt;Nginx Fastcgi Cache&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;proxy_cache 與 fastcgi_cache功能大至一樣。&lt;/li&gt;
+&lt;li&gt;用是緩存fastcgi生成的內容，很多情況是php生成的動態的內容。&lt;/li&gt;
+&lt;li&gt;緩存作用。減少了nginx與Application(php,python,cgi等等)通信的次數。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://myghost.aligogo.pw/content/images/2017/01/nginx_Fastcgi_cache_jpeg.jpg&#34; alt=&#34;Nginx_Fastcgi_Cache&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;nginx-cache-運作流程&#34;&gt;Nginx Cache 運作流程&lt;/h1&gt;
+
+&lt;p&gt;Nginx 除了 work Process 管理 Http Request 請求等其他工作外,Nginx Cache 也由另外程序來作管理。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Nginx Cache loader&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;主要Nginx 一開始初始化時,有呼叫Nginx Cache 相關模組,Nginx master process 會 fork Nginx Cache loader 去抓取 Nginx Cache Store(cache 儲存區),來重新建立索引(hash key)並存放在memory 中,
+       建立完成後, Cache loader process 就隨即結束。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Nginx Cache mamager&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;主要接受 master process 指令 去管理 Nginx Cache 大小事務,像是 Hash key 過期,或是搜尋 此筆資料是否存放在 cache 儲存區中 等工作。&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://myghost.aligogo.pw/content/images/2017/01/cache1-4_small_jpeg.jpg&#34; alt=&#34;Ngnx Cache運作流程&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://myghost.aligogo.pw/content/images/2017/01/60-26_master_worker_cachemanager_process.png&#34; alt=&#34;Ngnx Cache Manager&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;nginx-fastcgi-cache-簡要參數說明&#34;&gt;Nginx Fastcgi Cache 簡要參數說明&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code&gt;http{
+....
+fastcgi_cache_path /dev/shm/fastcgicache levels=1:2 keys_zone=democache:10m  max_size=1000m inactive=60s;
+server {
+...
+        location ~  ^/other_sport/A0017_0050/(.*) {
+                access_log /var/log/nginx/localhost-demo_cache-access.log  main;
+                error_log  /var/log/nginx/localhost-demo_cache-error.log;
+                try_files       $uri    $uri/  =404;
+                fastcgi_pass    127.0.0.1:9001;
+                fastcgi_index   index.php;
+                include         fastcgi_params;
+                set $prefix_fastcgi_name  $1;
+                if ($query_string != &amp;quot;&amp;quot;){ set $prefix_fastcgi_name $1?$query_string;}
+                
+                include     /etc/nginx/conf.d/skip_cache_new;
+                fastcgi_cache_key &amp;quot;$scheme$request_method$host$request_uri&amp;quot;;
+                fastcgi_cache_use_stale error timeout invalid_header http_500;
+                fastcgi_ignore_headers Cache-Control Expires Set-Cookie;
+                
+                fastcgi_cache_bypass $skip_cache;
+                fastcgi_no_cache $skip_cache;
+                fastcgi_cache democache;
+                fastcgi_cache_valid  1m;
+
+        }
+....
+
+    location /123.html {
+        internal;
+        set  $memc_cmd $arg_cmd;
+        set $memc_key  $arg_key;
+        memc_pass 127.0.0.1:11211;
+
+    }
+
+
+}
+
+....
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;fastcgi-cache-path&#34;&gt;fastcgi_cache_path&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;/dev/shm/fastcgicache   &lt;strong&gt;儲存cache的地方&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;levels=1:2              &lt;strong&gt;設定目錄階層&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;/dev/shm/fastcgicache
+|-- 1
+|   `-- a7
+|       `-- a5225f331f10bbe6099bfe0e48e82a71
+|-- 6
+|   `-- 8f
+`-- a
+    `-- fe
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;keys_zone=democache:10m                               **為cache 空間設定名字為 democache , 此空間10MB  **&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;10MB 是儲存在 share memory,,比較常存取(hot data)會被儲存在share memory&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;max_size=1000m                                         &lt;strong&gt;最大使用1G空間 ,是指定儲存cache的容量&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;inactive=60s                                          &lt;strong&gt;cache 1分鐘,預設值10分鐘&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;fastcgi-cache-key&#34;&gt;fastcgi_cache_key&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;將 &amp;ldquo;$scheme$request_method$host$request_uri&amp;rdquo; 用MD5方法來 當作 hash key&lt;/p&gt;
+
+&lt;h3 id=&#34;fastcgi-cache&#34;&gt;fastcgi_cache&lt;/h3&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;指定 key_zone 名字為 democache&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;參數: inactive  ,指在一段時間內文件沒被存取使用,就會被緩存管理器自動刪除。 ,預設 10m(10分鐘)&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;fastcgi-cache-valid&#34;&gt;fastcgi_cache_valid&lt;/h3&gt;
+
+&lt;p&gt;指定接收到回應程式 的 http code 快取時間&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;fastcgi_cache_valid [http code &amp;hellip;] time;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;若只有指定時間。預設只有 http code  :200, 301, and 302 等回應狀態會被快取
+ex: 當Nginx 收到回應程式 http 狀態碼 200 時,就快取 1 小時&lt;/p&gt;
+
+&lt;h3 id=&#34;fastcgi-cache-use-stale&#34;&gt;fastcgi_cache_use_stale&lt;/h3&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;定義那些情況使用過期cache&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;invalid_header  無效的回應&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;error           回應的Header 發生錯誤&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;http_500        回應500錯誤&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;time            當Nginx 與 Application 建立連接時,Nginx 等待 Application 回應超時&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;fastcgi-ignore-headers&#34;&gt;fastcgi_ignore_headers&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;忽略 Http header 帶有 Cache-Control , Expires ,Set-Cookie&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;若從後端 Application回應 http header 帶有Cache-Control , Expires ,Set-Cookie 會影響fastcgi_cache 不會cache 回應資料&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;fastcgi-no-cache&#34;&gt;fastcgi_no_cache&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;不等於空值 及 值不等於 0 都不被 cache。 &lt;strong&gt;只要是 0 或 空值 就指定 cache&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;fastcgi-cache-bypass&#34;&gt;fastcgi_cache_bypass&lt;/h3&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;不等於空值 及 值不等於 0 ,即是 不從cache區 回應資料給Client端,而是 By_Pass 到後端 。 &lt;strong&gt;只要是 0 或 空值 就指定 cache&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;upstream-cache-status-包含以下幾種狀態&#34;&gt;$upstream_cache_status 包含以下幾種狀態&lt;/h2&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;狀態&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;說明&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;MISS&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;未命中，請求被傳送到後端&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;HIT&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;緩存命中&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;EXPIRED&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;緩存已經過期請求被傳送到後端&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;UPDATING&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;正在更新緩存，將使用舊的應答&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;STALE&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;後端將得到過期的應答&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;BYPASS&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;request會By_Pass到後端伺服器上,因為請求匹配了一個proxy_cache_bypass 或是 fastcgi_cache_bypass&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h1 id=&#34;執行nginx-lua-之前-需要了解的一些事&#34;&gt;執行Nginx + lua 之前 需要了解的一些事&lt;/h1&gt;
+
+&lt;h3 id=&#34;載入-lua-模組-測試是否可以運作&#34;&gt;載入 lua 模組, 測試是否可以運作&lt;/h3&gt;
+
+&lt;p&gt;1-1.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;    dso{
+                path /etc/nginx/modules/;
+                load ngx_http_lua_module.so;
+       }
+    http{
+          .....
+        }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;    #nginx -t
+    #/etc/init.d/nginx reload
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;驗證lua 模組是否有載入&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;    #nginx -m
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;        ...
+        ...
+        ngx_http_lua_module (shared, 3.1)
+        ...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;1-2. 測試 lua 模組是否可用&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;        http{
+                ....
+                server{
+                ....
+                location /lua3{
+                        default_type text/html;
+                        set $RRR I come from Taiwan;
+                        content_by_lua &#39;ngx.say(&amp;quot;&amp;lt;h1&amp;gt;&amp;lt;a href=http://tw.yahoo.com&amp;gt;&amp;quot;,ngx.var.RRR,&amp;quot;&amp;lt;/a&amp;gt;&amp;lt;/h1&amp;gt;&amp;quot;)&#39;;
+                }
+                .....
+                }
+        ..
+        }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;nginx-hander處理模組將-http-request-劃分11個階段來處理-及了解每個階段執行順序&#34;&gt;Nginx hander處理模組將 http request 劃分11個階段來處理,及了解每個階段執行順序。&lt;/h3&gt;
+
+&lt;p&gt;2-1.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;先由Nginx核心 讀取 http Header&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;根據Nginx設定檔,Nginx 核心 挑選一個Hander模組 處理 Http 請求 ,並將 http Header 交給 Hander 模組&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;由Hander 模組 讀取 Http Body ,並處理好 Http 請求&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Hander 模組處理Http 請求後,再 發送給 Fliters 模組處理。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Fliter 模組處理好後,再發送給客戶端
+&lt;img src=&#34;http://myghost.aligogo.pw/content/images/2017/01/Http_Request_Nginx_small.png&#34; alt=&#34;Http請求處理流程圖&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;2-2. Handers模組 精細處理 Http 請求 ,分成 11 個階段處理。下表所列處理階段分別依序處理&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Handers階段&lt;/th&gt;
+&lt;th&gt;說明&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;NGX_HTTP_POST_READ_PHAS&lt;/td&gt;
+&lt;td&gt;讀取請求內容階段&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;NGX_HTTP_SERVER_REWRITE_PHASE&lt;/td&gt;
+&lt;td&gt;Server請求位址重寫階段&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;NGX_HTTP_FIND_CONFIG_PHASE&lt;/td&gt;
+&lt;td&gt;配置查找階段:&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;NGX_HTTP_REWRITE_PHASE&lt;/td&gt;
+&lt;td&gt;Location請求位址重寫階段&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;NGX_HTTP_POST_REWRITE_PHASE&lt;/td&gt;
+&lt;td&gt;請求位址重寫提交階段&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;NGX_HTTP_PREACCESS_PHASE&lt;/td&gt;
+&lt;td&gt;訪問許可權檢查準備階段&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;NGX_HTTP_ACCESS_PHASE&lt;/td&gt;
+&lt;td&gt;訪問許可權檢查階段&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;NGX_HTTP_POST_ACCESS_PHASE&lt;/td&gt;
+&lt;td&gt;訪問許可權檢查提交階段&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;NGX_HTTP_TRY_FILES_PHASE&lt;/td&gt;
+&lt;td&gt;配置項try_files處理階段&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;NGX_HTTP_CONTENT_PHASE&lt;/td&gt;
+&lt;td&gt;內容產生階段&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;NGX_HTTP_LOG_PHASE&lt;/td&gt;
+&lt;td&gt;日誌模組處理階段&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h1 id=&#34;ngx-http-memc-module-so-模組&#34;&gt;ngx_http_memc_module.so 模組&lt;/h1&gt;
+
+&lt;p&gt;使Nginx  能利用 memcached 相關指令 (set ,get ,stat..等等)存取memcached server&lt;/p&gt;
+
+&lt;h2 id=&#34;install&#34;&gt;Install&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;# cd /use/local/src;git clone https://github.com/openresty/memc-nginx-module.git
+# dso_tool --dst=/etc/nginx/modules/ --add-module=/usr/local/src/memc-nginx-module/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;修改設定檔-載入此模組-etc-nginx-modules-ngx-http-memc-module-so&#34;&gt;修改設定檔 ,載入此模組 (/etc/nginx/modules/ngx_http_memc_module.so )&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;dso {
+ ....
+      load ngx_http_memc_module.so;
+}
+http{
+....
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;#nginx -t &amp;amp;&amp;amp; /etc/init.d/nginx reload
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;nginx-access-memcached&#34;&gt;Nginx access memcached&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;先啟動 memcached ,並插入一些資料 ,這邊測試,插入 andy 和 amy&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;  #echo &amp;quot;Google&amp;quot; &amp;gt; andy
+  #echo  &amp;quot;Good&amp;quot;  &amp;gt; amy
+  #memcp --verbose --debug --servers=127.0.0.1 --expire=120  andy
+  #memcp --verbose --debug --servers=127.0.0.1 --expire=120  amy
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;測試抓取 andy , amy  key 的值&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;  curl &#39;http://192.168.0.3/memt.html?cmd=get&amp;amp;key=andy&#39;
+  curl &#39;http://192.168.0.3/memt.html?cmd=get&amp;amp;key=amy&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;為了能安全取得 memcached key 值&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;可以不要讓外部直接利用Nginx  存取 memcached Server,需要修改 nginx 設定檔&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  http{
+    ...
+    server {
+        location /memt.html {
+                internal;
+                set  $memc_cmd $arg_cmd;
+                set $memc_key  $arg_key;
+                memc_pass 127.0.0.1:11211;
+        }
+    }
+  }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;測試&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;目標結果 : 404 沒找到&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;   curl &#39;http://192.168.0.3/memt.html?cmd=get&amp;amp;key=andy&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;自行撰寫lua流程說明&#34;&gt;自行撰寫lua流程說明&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;先判斷是否有 帶 cookie ; 若沒帶 則 By_Pass 後端php-cgi處理&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;再確定 cookie 是否有帶 &amp;ldquo;WEBSESSID=&amp;rdquo; 字串 ; 若沒帶 則 By_Pass 後端php-cgi處理&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;有帶cookie , 利用(memcached API For Nginx) 讀取 cookie值&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;確定cookie 值的內容 是否有帶登入資訊 ;若沒帶 則By_Pass 後端php-cgi處理&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;有帶登入資訊, 是否為列表要cache 的對象 ; 若不是 則By_Pass 後端php-cgi處理&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;簡單演示-及-問題說明&#34;&gt;簡單演示 及 問題說明&lt;/h1&gt;
+
+&lt;h2 id=&#34;演示&#34;&gt;演示&lt;/h2&gt;
+
+&lt;h2 id=&#34;問題說明&#34;&gt;問題說明&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;說明背景:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;http://220.229.227.26/other_sport/A0017_0050/om/ 
+http://220.229.227.26/other_sport/A0017_0050/wlb/
+兩個位址都在同一個DocumentRoot /var/www/html/other_sport/A0017_0050/
+兩個位址都在同一個Nginx設定檔中 /etc/nginx/conf.d/00-default.conf
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;產生問題執行:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;用Firefox 瀏覽此url 並登入 http://220.229.227.26/other_sport/A0017_0050/om/
+執行設定會被cache的url http://220.229.227.26/other_sport/A0017_0050/om/league-listing.php (看 /var/log/nginx/localhost-demo_cache-access.log 是否有hit到,有被Hit到 就馬上執行下一個步驟)
+用IE 瀏覽此url 並登入 http://220.229.227.26/other_sport/A0017_0050/wlb/
+再瀏覽此url http://220.229.227.26/other_sport/A0017_0050/om/league-listing.php,就發生未登入即可以抓取的到頁面。
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;參考資料&#34;&gt;參考資料&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://nginx.org/en/docs/http/ngx_http_fastcgi_module.html&#34;&gt;Module ngx_http_fastcgi_module&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://czerasz.com/2015/03/30/nginx-caching-tutorial/&#34;&gt;Nginx Caching Tutorial - You Can Run Faster&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://blog.angryfox.com/?p=1930&#34;&gt;Nginx的緩存：proxy_cache和fastcgi_cache&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://www.cnxct.com/several-reminder-in-nginx-fastcgi_cache-and-php-session_cache_limiter/&#34;&gt;Nginx模塊fastcgi_cache的幾個注意點&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://281816327.blog.51cto.com/907015/1619920&#34;&gt;Nginx模塊和請求處理流程簡介&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/chiamingyen/nginxProject/blob/master/nginxProject/source/chapter_3.rst&#34;&gt;handler模組的掛載&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://www.pylist.com/topic/1445510269&#34;&gt;nginx與lua的執行順序和步驟說明&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/openresty/lua-nginx-module#nginx-api-for-lua&#34;&gt;Nginx API for Lua&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://www.pureage.info/2013/09/02/125.html&#34;&gt;nil、null與ngx.null&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://www.gitbook.com/book/moonbingbing/openresty-best-practices/details&#34;&gt;OpenResty最佳實踐&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Nginx_Fastcgi_Cache &#43; Lua 執行過程</title>
+      <link>http://myghost.aligogo.pw/post/old/nginx_fastcgi_cache-lua-zhi-xing-guo-cheng/</link>
+      <pubDate>Sun, 19 Jun 2016 08:24:43 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/old/nginx_fastcgi_cache-lua-zhi-xing-guo-cheng/</guid>
+      <description>
+
+&lt;h1 id=&#34;nginx-proxy-cache&#34;&gt;Nginx Proxy Cache&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;應用於Reverse Proxy,負載均衡&lt;/li&gt;
+&lt;li&gt;作用是緩存後端服務器的內容，可能是任何內容，包括靜態的和動態&lt;/li&gt;
+&lt;li&gt;另外,也可作正向代理 (Nginx 這邊支援 web proxy)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://myghost.aligogo.pw/content/images/2017/01/nginx_cache_jpeg.jpg&#34; alt=&#34;Nginx_Proxy_Cache&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;nginx-fastcgi-cache&#34;&gt;Nginx Fastcgi Cache&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;proxy_cache 與 fastcgi_cache功能大至一樣。&lt;/li&gt;
+&lt;li&gt;用是緩存fastcgi生成的內容，很多情況是php生成的動態的內容。&lt;/li&gt;
+&lt;li&gt;緩存作用。減少了nginx與Application(php,python,cgi等等)通信的次數。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://myghost.aligogo.pw/content/images/2017/01/nginx_Fastcgi_cache_jpeg.jpg&#34; alt=&#34;Nginx_Fastcgi_Cache&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;nginx-cache-運作流程&#34;&gt;Nginx Cache 運作流程&lt;/h1&gt;
+
+&lt;p&gt;Nginx 除了 work Process 管理 Http Request 請求等其他工作外,Nginx Cache 也由另外程序來作管理。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Nginx Cache loader&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;主要Nginx 一開始初始化時,有呼叫Nginx Cache 相關模組,Nginx master process 會 fork Nginx Cache loader 去抓取 Nginx Cache Store(cache 儲存區),來重新建立索引(hash key)並存放在memory 中,
+       建立完成後, Cache loader process 就隨即結束。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Nginx Cache mamager&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;主要接受 master process 指令 去管理 Nginx Cache 大小事務,像是 Hash key 過期,或是搜尋 此筆資料是否存放在 cache 儲存區中 等工作。&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://myghost.aligogo.pw/content/images/2017/01/cache1-4_small_jpeg.jpg&#34; alt=&#34;Ngnx Cache運作流程&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://myghost.aligogo.pw/content/images/2017/01/60-26_master_worker_cachemanager_process.png&#34; alt=&#34;Ngnx Cache Manager&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;nginx-fastcgi-cache-簡要參數說明&#34;&gt;Nginx Fastcgi Cache 簡要參數說明&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code&gt;http{
+....
+fastcgi_cache_path /dev/shm/fastcgicache levels=1:2 keys_zone=democache:10m  max_size=1000m inactive=60s;
+server {
+...
+        location ~  ^/other_sport/A0017_0050/(.*) {
+                access_log /var/log/nginx/localhost-demo_cache-access.log  main;
+                error_log  /var/log/nginx/localhost-demo_cache-error.log;
+                try_files       $uri    $uri/  =404;
+                fastcgi_pass    127.0.0.1:9001;
+                fastcgi_index   index.php;
+                include         fastcgi_params;
+                set $prefix_fastcgi_name  $1;
+                if ($query_string != &amp;quot;&amp;quot;){ set $prefix_fastcgi_name $1?$query_string;}
+                
+                include     /etc/nginx/conf.d/skip_cache_new;
+                fastcgi_cache_key &amp;quot;$scheme$request_method$host$request_uri&amp;quot;;
+                fastcgi_cache_use_stale error timeout invalid_header http_500;
+                fastcgi_ignore_headers Cache-Control Expires Set-Cookie;
+                
+                fastcgi_cache_bypass $skip_cache;
+                fastcgi_no_cache $skip_cache;
+                fastcgi_cache democache;
+                fastcgi_cache_valid  1m;
+
+        }
+....
+
+    location /123.html {
+        internal;
+        set  $memc_cmd $arg_cmd;
+        set $memc_key  $arg_key;
+        memc_pass 127.0.0.1:11211;
+
+    }
+
+
+}
+
+....
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;fastcgi-cache-path&#34;&gt;fastcgi_cache_path&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;/dev/shm/fastcgicache   &lt;strong&gt;儲存cache的地方&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;levels=1:2              &lt;strong&gt;設定目錄階層&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;/dev/shm/fastcgicache
+|-- 1
+|   `-- a7
+|       `-- a5225f331f10bbe6099bfe0e48e82a71
+|-- 6
+|   `-- 8f
+`-- a
+    `-- fe
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;keys_zone=democache:10m                               **為cache 空間設定名字為 democache , 此空間10MB  **&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;10MB 是儲存在 share memory,,比較常存取(hot data)會被儲存在share memory&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;max_size=1000m                                         &lt;strong&gt;最大使用1G空間 ,是指定儲存cache的容量&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;inactive=60s                                          &lt;strong&gt;cache 1分鐘,預設值10分鐘&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;fastcgi-cache-key&#34;&gt;fastcgi_cache_key&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;將 &amp;ldquo;$scheme$request_method$host$request_uri&amp;rdquo; 用MD5方法來 當作 hash key&lt;/p&gt;
+
+&lt;h3 id=&#34;fastcgi-cache&#34;&gt;fastcgi_cache&lt;/h3&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;指定 key_zone 名字為 democache&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;參數: inactive  ,指在一段時間內文件沒被存取使用,就會被緩存管理器自動刪除。 ,預設 10m(10分鐘)&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;fastcgi-cache-valid&#34;&gt;fastcgi_cache_valid&lt;/h3&gt;
+
+&lt;p&gt;指定接收到回應程式 的 http code 快取時間&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;fastcgi_cache_valid [http code &amp;hellip;] time;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;若只有指定時間。預設只有 http code  :200, 301, and 302 等回應狀態會被快取
+ex: 當Nginx 收到回應程式 http 狀態碼 200 時,就快取 1 小時&lt;/p&gt;
+
+&lt;h3 id=&#34;fastcgi-cache-use-stale&#34;&gt;fastcgi_cache_use_stale&lt;/h3&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;定義那些情況使用過期cache&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;invalid_header  無效的回應&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;error           回應的Header 發生錯誤&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;http_500        回應500錯誤&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;time            當Nginx 與 Application 建立連接時,Nginx 等待 Application 回應超時&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;fastcgi-ignore-headers&#34;&gt;fastcgi_ignore_headers&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;忽略 Http header 帶有 Cache-Control , Expires ,Set-Cookie&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;若從後端 Application回應 http header 帶有Cache-Control , Expires ,Set-Cookie 會影響fastcgi_cache 不會cache 回應資料&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;fastcgi-no-cache&#34;&gt;fastcgi_no_cache&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;不等於空值 及 值不等於 0 都不被 cache。 &lt;strong&gt;只要是 0 或 空值 就指定 cache&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;fastcgi-cache-bypass&#34;&gt;fastcgi_cache_bypass&lt;/h3&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;不等於空值 及 值不等於 0 ,即是 不從cache區 回應資料給Client端,而是 By_Pass 到後端 。 &lt;strong&gt;只要是 0 或 空值 就指定 cache&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;upstream-cache-status-包含以下幾種狀態&#34;&gt;$upstream_cache_status 包含以下幾種狀態&lt;/h2&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;狀態&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;說明&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;MISS&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;未命中，請求被傳送到後端&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;HIT&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;緩存命中&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;EXPIRED&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;緩存已經過期請求被傳送到後端&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;UPDATING&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;正在更新緩存，將使用舊的應答&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;STALE&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;後端將得到過期的應答&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;BYPASS&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;request會By_Pass到後端伺服器上,因為請求匹配了一個proxy_cache_bypass 或是 fastcgi_cache_bypass&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h1 id=&#34;執行nginx-lua-之前-需要了解的一些事&#34;&gt;執行Nginx + lua 之前 需要了解的一些事&lt;/h1&gt;
+
+&lt;h3 id=&#34;載入-lua-模組-測試是否可以運作&#34;&gt;載入 lua 模組, 測試是否可以運作&lt;/h3&gt;
+
+&lt;p&gt;1-1.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;    dso{
+                path /etc/nginx/modules/;
+                load ngx_http_lua_module.so;
+       }
+    http{
+          .....
+        }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;    #nginx -t
+    #/etc/init.d/nginx reload
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;驗證lua 模組是否有載入&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;    #nginx -m
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;        ...
+        ...
+        ngx_http_lua_module (shared, 3.1)
+        ...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;1-2. 測試 lua 模組是否可用&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;        http{
+                ....
+                server{
+                ....
+                location /lua3{
+                        default_type text/html;
+                        set $RRR I come from Taiwan;
+                        content_by_lua &#39;ngx.say(&amp;quot;&amp;lt;h1&amp;gt;&amp;lt;a href=http://tw.yahoo.com&amp;gt;&amp;quot;,ngx.var.RRR,&amp;quot;&amp;lt;/a&amp;gt;&amp;lt;/h1&amp;gt;&amp;quot;)&#39;;
+                }
+                .....
+                }
+        ..
+        }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;nginx-hander處理模組將-http-request-劃分11個階段來處理-及了解每個階段執行順序&#34;&gt;Nginx hander處理模組將 http request 劃分11個階段來處理,及了解每個階段執行順序。&lt;/h3&gt;
+
+&lt;p&gt;2-1.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;先由Nginx核心 讀取 http Header&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;根據Nginx設定檔,Nginx 核心 挑選一個Hander模組 處理 Http 請求 ,並將 http Header 交給 Hander 模組&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;由Hander 模組 讀取 Http Body ,並處理好 Http 請求&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Hander 模組處理Http 請求後,再 發送給 Fliters 模組處理。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Fliter 模組處理好後,再發送給客戶端
+&lt;img src=&#34;http://myghost.aligogo.pw/content/images/2017/01/Http_Request_Nginx_small.png&#34; alt=&#34;Http請求處理流程圖&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;2-2. Handers模組 精細處理 Http 請求 ,分成 11 個階段處理。下表所列處理階段分別依序處理&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Handers階段&lt;/th&gt;
+&lt;th&gt;說明&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;NGX_HTTP_POST_READ_PHAS&lt;/td&gt;
+&lt;td&gt;讀取請求內容階段&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;NGX_HTTP_SERVER_REWRITE_PHASE&lt;/td&gt;
+&lt;td&gt;Server請求位址重寫階段&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;NGX_HTTP_FIND_CONFIG_PHASE&lt;/td&gt;
+&lt;td&gt;配置查找階段:&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;NGX_HTTP_REWRITE_PHASE&lt;/td&gt;
+&lt;td&gt;Location請求位址重寫階段&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;NGX_HTTP_POST_REWRITE_PHASE&lt;/td&gt;
+&lt;td&gt;請求位址重寫提交階段&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;NGX_HTTP_PREACCESS_PHASE&lt;/td&gt;
+&lt;td&gt;訪問許可權檢查準備階段&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;NGX_HTTP_ACCESS_PHASE&lt;/td&gt;
+&lt;td&gt;訪問許可權檢查階段&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;NGX_HTTP_POST_ACCESS_PHASE&lt;/td&gt;
+&lt;td&gt;訪問許可權檢查提交階段&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;NGX_HTTP_TRY_FILES_PHASE&lt;/td&gt;
+&lt;td&gt;配置項try_files處理階段&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;NGX_HTTP_CONTENT_PHASE&lt;/td&gt;
+&lt;td&gt;內容產生階段&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;NGX_HTTP_LOG_PHASE&lt;/td&gt;
+&lt;td&gt;日誌模組處理階段&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h1 id=&#34;ngx-http-memc-module-so-模組&#34;&gt;ngx_http_memc_module.so 模組&lt;/h1&gt;
+
+&lt;p&gt;使Nginx  能利用 memcached 相關指令 (set ,get ,stat..等等)存取memcached server&lt;/p&gt;
+
+&lt;h2 id=&#34;install&#34;&gt;Install&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;# cd /use/local/src;git clone https://github.com/openresty/memc-nginx-module.git
+# dso_tool --dst=/etc/nginx/modules/ --add-module=/usr/local/src/memc-nginx-module/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;修改設定檔-載入此模組-etc-nginx-modules-ngx-http-memc-module-so&#34;&gt;修改設定檔 ,載入此模組 (/etc/nginx/modules/ngx_http_memc_module.so )&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;dso {
+ ....
+      load ngx_http_memc_module.so;
+}
+http{
+....
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;#nginx -t &amp;amp;&amp;amp; /etc/init.d/nginx reload
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;nginx-access-memcached&#34;&gt;Nginx access memcached&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;先啟動 memcached ,並插入一些資料 ,這邊測試,插入 andy 和 amy&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;  #echo &amp;quot;Google&amp;quot; &amp;gt; andy
+  #echo  &amp;quot;Good&amp;quot;  &amp;gt; amy
+  #memcp --verbose --debug --servers=127.0.0.1 --expire=120  andy
+  #memcp --verbose --debug --servers=127.0.0.1 --expire=120  amy
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;測試抓取 andy , amy  key 的值&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;  curl &#39;http://192.168.0.3/memt.html?cmd=get&amp;amp;key=andy&#39;
+  curl &#39;http://192.168.0.3/memt.html?cmd=get&amp;amp;key=amy&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;為了能安全取得 memcached key 值&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;可以不要讓外部直接利用Nginx  存取 memcached Server,需要修改 nginx 設定檔&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  http{
+    ...
+    server {
+        location /memt.html {
+                internal;
+                set  $memc_cmd $arg_cmd;
+                set $memc_key  $arg_key;
+                memc_pass 127.0.0.1:11211;
+        }
+    }
+  }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;測試&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;目標結果 : 404 沒找到&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;   curl &#39;http://192.168.0.3/memt.html?cmd=get&amp;amp;key=andy&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;自行撰寫lua流程說明&#34;&gt;自行撰寫lua流程說明&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;先判斷是否有 帶 cookie ; 若沒帶 則 By_Pass 後端php-cgi處理&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;再確定 cookie 是否有帶 &amp;ldquo;WEBSESSID=&amp;rdquo; 字串 ; 若沒帶 則 By_Pass 後端php-cgi處理&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;有帶cookie , 利用(memcached API For Nginx) 讀取 cookie值&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;確定cookie 值的內容 是否有帶登入資訊 ;若沒帶 則By_Pass 後端php-cgi處理&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;有帶登入資訊, 是否為列表要cache 的對象 ; 若不是 則By_Pass 後端php-cgi處理&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;簡單演示-及-問題說明&#34;&gt;簡單演示 及 問題說明&lt;/h1&gt;
+
+&lt;h2 id=&#34;演示&#34;&gt;演示&lt;/h2&gt;
+
+&lt;h2 id=&#34;問題說明&#34;&gt;問題說明&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;說明背景:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;http://220.229.227.26/other_sport/A0017_0050/om/ 
+http://220.229.227.26/other_sport/A0017_0050/wlb/
+兩個位址都在同一個DocumentRoot /var/www/html/other_sport/A0017_0050/
+兩個位址都在同一個Nginx設定檔中 /etc/nginx/conf.d/00-default.conf
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;產生問題執行:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;用Firefox 瀏覽此url 並登入 http://220.229.227.26/other_sport/A0017_0050/om/
+執行設定會被cache的url http://220.229.227.26/other_sport/A0017_0050/om/league-listing.php (看 /var/log/nginx/localhost-demo_cache-access.log 是否有hit到,有被Hit到 就馬上執行下一個步驟)
+用IE 瀏覽此url 並登入 http://220.229.227.26/other_sport/A0017_0050/wlb/
+再瀏覽此url http://220.229.227.26/other_sport/A0017_0050/om/league-listing.php,就發生未登入即可以抓取的到頁面。
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;參考資料&#34;&gt;參考資料&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://nginx.org/en/docs/http/ngx_http_fastcgi_module.html&#34;&gt;Module ngx_http_fastcgi_module&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://czerasz.com/2015/03/30/nginx-caching-tutorial/&#34;&gt;Nginx Caching Tutorial - You Can Run Faster&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://blog.angryfox.com/?p=1930&#34;&gt;Nginx的緩存：proxy_cache和fastcgi_cache&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://www.cnxct.com/several-reminder-in-nginx-fastcgi_cache-and-php-session_cache_limiter/&#34;&gt;Nginx模塊fastcgi_cache的幾個注意點&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://281816327.blog.51cto.com/907015/1619920&#34;&gt;Nginx模塊和請求處理流程簡介&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/chiamingyen/nginxProject/blob/master/nginxProject/source/chapter_3.rst&#34;&gt;handler模組的掛載&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://www.pylist.com/topic/1445510269&#34;&gt;nginx與lua的執行順序和步驟說明&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/openresty/lua-nginx-module#nginx-api-for-lua&#34;&gt;Nginx API for Lua&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://www.pureage.info/2013/09/02/125.html&#34;&gt;nil、null與ngx.null&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://www.gitbook.com/book/moonbingbing/openresty-best-practices/details&#34;&gt;OpenResty最佳實踐&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

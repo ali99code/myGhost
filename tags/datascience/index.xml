@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Datascience on ALIBABA WIKI - 菩薩球球</title>
+    <link>http://myghost.aligogo.pw/tags/datascience/index.xml</link>
+    <description>Recent content in Datascience on ALIBABA WIKI - 菩薩球球</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <atom:link href="http://myghost.aligogo.pw/tags/datascience/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>ndarray ,  Series , DataFrame For Python ... 未完成</title>
+      <link>http://myghost.aligogo.pw/post/datascience1/</link>
+      <pubDate>Sat, 10 Dec 2016 02:36:10 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/datascience1/</guid>
+      <description>
+
+&lt;h2 id=&#34;三種資料結構-ndarray-series-dataframe&#34;&gt;三種資料結構  : ndarray ,  Series , DataFrame&lt;/h2&gt;
+
+&lt;h6 id=&#34;ndarray-由-numpy-這個套件所提供的-處理-一維及多維陣列的儲存運算&#34;&gt;ndarray 由 NumPy 這個套件所提供的 ,處理 一維及多維陣列的儲存運算。&lt;/h6&gt;
+
+&lt;h6 id=&#34;series-具有-index-一維的ndarray-由-pandas-套件所提共的-pandas-是建構在-numpy的基礎上&#34;&gt;Series : 具有 index 一維的ndarray ,由 pandas 套件所提共的。pandas 是建構在 Numpy的基礎上&lt;/h6&gt;
+
+&lt;h6 id=&#34;dataframe-是由-pandas-套件所提供的-此資料結構像是spreadsheet-excel-那樣表格-這邊演示使用python-3-x&#34;&gt;DataFrame 是由 Pandas 套件所提供的。此資料結構像是spreadsheet(excel 那樣表格)~這邊演示使用Python 3.x&lt;/h6&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;利用 pip 先安裝pandas&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# pip install pandas
+# pip list --format=columns
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;創建資料 (方式1)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; df=pd.DataFrame({&#39;pid&#39;:[&#39;p01&#39;,&#39;p02&#39;,&#39;p03&#39;],&#39;cost&#39;:[100,300,1000]})
+&amp;gt;&amp;gt;&amp;gt; df
+cost  pid
+0   100  p01
+1   300  p02
+2  1000  p03
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;創建資料 (方式2)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; df2=pd.DataFrame([{&#39;pid&#39;:&#39;p01&#39;,&#39;cost&#39;:100},{&#39;pid&#39;:&#39;p02&#39;,&#39;cost&#39;:300},{&#39;pid&#39;:&#39;p03&#39;,&#39;cost&#39;:1000}])
+&amp;gt;&amp;gt;&amp;gt; df2
+cost  pid
+0   100  p01
+1   300  p02
+2  1000  p03
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;取值 By &lt;strong&gt;欄位&lt;/strong&gt;
+```
+&amp;gt;&amp;gt;&amp;gt; df2[&amp;lsquo;cost&amp;rsquo;]
+0     100
+1     300
+2    1000
+Name: cost, dtype: int64&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;df2[[&amp;lsquo;cost&amp;rsquo;,&amp;lsquo;pid&amp;rsquo;]]
+   cost  pid
+0   100  p01
+1   300  p02
+2  1000  p03&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- 取值 By **列** (取第1 ,2 筆資料)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;df2[0:2]
+   cost  pid
+0   100  p01
+1   300  p02&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- 取值 By **條件**
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;df2[df2[&amp;lsquo;cost&amp;rsquo;] &amp;lt;200]
+   cost  pid
+0   100  p01&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- 新增資料 By **欄位**
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;df3=pd.DataFrame()
+df3[&amp;lsquo;cid&amp;rsquo;]=[&amp;lsquo;c01&amp;rsquo;,&amp;lsquo;c02&amp;rsquo;,&amp;lsquo;c03&amp;rsquo;,&amp;lsquo;c04&amp;rsquo;,&amp;lsquo;c05&amp;rsquo;]
+df3
+   cid
+0  c01
+1  c02
+2  c03
+3  c04
+4  c05&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- 新增資料 By **列**
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;df2=df2.append(pd.DataFrame([{&amp;lsquo;pid&amp;rsquo;:&amp;lsquo;p04&amp;rsquo;,&amp;lsquo;cost&amp;rsquo;:350},{&amp;lsquo;pid&amp;rsquo;:&amp;lsquo;p05&amp;rsquo;,&amp;lsquo;cost&amp;rsquo;:1500},{&amp;lsquo;pid&amp;rsquo;:&amp;lsquo;p06&amp;rsquo;,&amp;lsquo;cost&amp;rsquo;:3500}]))
+df2
+   cost  pid
+0   100  p01
+1   300  p02
+2  1000  p03
+0   350  p04
+1  1500  p05
+2  3500  p06&lt;/p&gt;
+
+&lt;p&gt;df2=df2.reset_index(drop=True)
+df2
+   cost  pid
+0   100  p01
+1   300  p02
+2  1000  p03
+3   350  p04
+4  1500  p05
+5  3500  p06&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- 修改欄位名稱
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;df2=df2.rename(columns={&amp;lsquo;cost&amp;rsquo;:&amp;lsquo;spent&amp;rsquo;})
+df2
+   spent  pid
+0    100  p01
+1    300  p02
+2   1000  p03
+3    350  p04
+4   1500  p05
+5   3500  p06&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- 修改第一列資料
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;df2[0:1]=pd.DataFrame([{&amp;lsquo;pid&amp;rsquo;:&amp;lsquo;p001&amp;rsquo;,&amp;lsquo;spent&amp;rsquo;:1900}])
+df2[0:1]
+   spent   pid
+0   1900  p001&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- 刪除欄位
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;del df2[&amp;lsquo;pid&amp;rsquo;]
+df2
+   spent
+0   1900
+1    300
+2   1000
+3    350
+4   1500
+5   3500&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code&gt;- 刪除欄位(使用drop方法)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;df=df.drop(&amp;lsquo;pid&amp;rsquo;,axis=1)
+df
+   cost
+0   100
+1   300
+2  1000&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- 刪除列
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;df2
+   spent
+0   1900
+1    300
+2   1000
+3    350
+4   1500
+5   3500
+df2=df2.drop([0,1])
+df2
+   spent
+2   1000
+3    350
+4   1500
+5   3500&lt;/p&gt;
+
+&lt;p&gt;df2=df2.reset_index(drop=True)
+df2
+   spent
+0   1000
+1    350
+2   1500
+3   3500
+```&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>ndarray ,  Series , DataFrame For Python ... 未完成</title>
+      <link>http://myghost.aligogo.pw/post/old/datascience1/</link>
+      <pubDate>Sat, 10 Dec 2016 02:36:10 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/old/datascience1/</guid>
+      <description>
+
+&lt;h2 id=&#34;三種資料結構-ndarray-series-dataframe&#34;&gt;三種資料結構  : ndarray ,  Series , DataFrame&lt;/h2&gt;
+
+&lt;h6 id=&#34;ndarray-由-numpy-這個套件所提供的-處理-一維及多維陣列的儲存運算&#34;&gt;ndarray 由 NumPy 這個套件所提供的 ,處理 一維及多維陣列的儲存運算。&lt;/h6&gt;
+
+&lt;h6 id=&#34;series-具有-index-一維的ndarray-由-pandas-套件所提共的-pandas-是建構在-numpy的基礎上&#34;&gt;Series : 具有 index 一維的ndarray ,由 pandas 套件所提共的。pandas 是建構在 Numpy的基礎上&lt;/h6&gt;
+
+&lt;h6 id=&#34;dataframe-是由-pandas-套件所提供的-此資料結構像是spreadsheet-excel-那樣表格-這邊演示使用python-3-x&#34;&gt;DataFrame 是由 Pandas 套件所提供的。此資料結構像是spreadsheet(excel 那樣表格)~這邊演示使用Python 3.x&lt;/h6&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;利用 pip 先安裝pandas&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# pip install pandas
+# pip list --format=columns
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;創建資料 (方式1)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; df=pd.DataFrame({&#39;pid&#39;:[&#39;p01&#39;,&#39;p02&#39;,&#39;p03&#39;],&#39;cost&#39;:[100,300,1000]})
+&amp;gt;&amp;gt;&amp;gt; df
+cost  pid
+0   100  p01
+1   300  p02
+2  1000  p03
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;創建資料 (方式2)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; df2=pd.DataFrame([{&#39;pid&#39;:&#39;p01&#39;,&#39;cost&#39;:100},{&#39;pid&#39;:&#39;p02&#39;,&#39;cost&#39;:300},{&#39;pid&#39;:&#39;p03&#39;,&#39;cost&#39;:1000}])
+&amp;gt;&amp;gt;&amp;gt; df2
+cost  pid
+0   100  p01
+1   300  p02
+2  1000  p03
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;取值 By &lt;strong&gt;欄位&lt;/strong&gt;
+```
+&amp;gt;&amp;gt;&amp;gt; df2[&amp;lsquo;cost&amp;rsquo;]
+0     100
+1     300
+2    1000
+Name: cost, dtype: int64&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;df2[[&amp;lsquo;cost&amp;rsquo;,&amp;lsquo;pid&amp;rsquo;]]
+   cost  pid
+0   100  p01
+1   300  p02
+2  1000  p03&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- 取值 By **列** (取第1 ,2 筆資料)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;df2[0:2]
+   cost  pid
+0   100  p01
+1   300  p02&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- 取值 By **條件**
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;df2[df2[&amp;lsquo;cost&amp;rsquo;] &amp;lt;200]
+   cost  pid
+0   100  p01&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- 新增資料 By **欄位**
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;df3=pd.DataFrame()
+df3[&amp;lsquo;cid&amp;rsquo;]=[&amp;lsquo;c01&amp;rsquo;,&amp;lsquo;c02&amp;rsquo;,&amp;lsquo;c03&amp;rsquo;,&amp;lsquo;c04&amp;rsquo;,&amp;lsquo;c05&amp;rsquo;]
+df3
+   cid
+0  c01
+1  c02
+2  c03
+3  c04
+4  c05&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- 新增資料 By **列**
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;df2=df2.append(pd.DataFrame([{&amp;lsquo;pid&amp;rsquo;:&amp;lsquo;p04&amp;rsquo;,&amp;lsquo;cost&amp;rsquo;:350},{&amp;lsquo;pid&amp;rsquo;:&amp;lsquo;p05&amp;rsquo;,&amp;lsquo;cost&amp;rsquo;:1500},{&amp;lsquo;pid&amp;rsquo;:&amp;lsquo;p06&amp;rsquo;,&amp;lsquo;cost&amp;rsquo;:3500}]))
+df2
+   cost  pid
+0   100  p01
+1   300  p02
+2  1000  p03
+0   350  p04
+1  1500  p05
+2  3500  p06&lt;/p&gt;
+
+&lt;p&gt;df2=df2.reset_index(drop=True)
+df2
+   cost  pid
+0   100  p01
+1   300  p02
+2  1000  p03
+3   350  p04
+4  1500  p05
+5  3500  p06&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- 修改欄位名稱
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;df2=df2.rename(columns={&amp;lsquo;cost&amp;rsquo;:&amp;lsquo;spent&amp;rsquo;})
+df2
+   spent  pid
+0    100  p01
+1    300  p02
+2   1000  p03
+3    350  p04
+4   1500  p05
+5   3500  p06&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- 修改第一列資料
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;df2[0:1]=pd.DataFrame([{&amp;lsquo;pid&amp;rsquo;:&amp;lsquo;p001&amp;rsquo;,&amp;lsquo;spent&amp;rsquo;:1900}])
+df2[0:1]
+   spent   pid
+0   1900  p001&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- 刪除欄位
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;del df2[&amp;lsquo;pid&amp;rsquo;]
+df2
+   spent
+0   1900
+1    300
+2   1000
+3    350
+4   1500
+5   3500&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code&gt;- 刪除欄位(使用drop方法)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;df=df.drop(&amp;lsquo;pid&amp;rsquo;,axis=1)
+df
+   cost
+0   100
+1   300
+2  1000&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- 刪除列
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;df2
+   spent
+0   1900
+1    300
+2   1000
+3    350
+4   1500
+5   3500
+df2=df2.drop([0,1])
+df2
+   spent
+2   1000
+3    350
+4   1500
+5   3500&lt;/p&gt;
+
+&lt;p&gt;df2=df2.reset_index(drop=True)
+df2
+   spent
+0   1000
+1    350
+2   1500
+3   3500
+```&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

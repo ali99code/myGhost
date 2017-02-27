@@ -1,0 +1,1534 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Python on ALIBABA WIKI - 菩薩球球</title>
+    <link>http://myghost.aligogo.pw/categories/python/index.xml</link>
+    <description>Recent content in Python on ALIBABA WIKI - 菩薩球球</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <atom:link href="http://myghost.aligogo.pw/categories/python/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Python 的 生成式 (List Comprehensions)...待續</title>
+      <link>http://myghost.aligogo.pw/post/list_comprehensions/</link>
+      <pubDate>Sun, 26 Feb 2017 11:55:26 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/list_comprehensions/</guid>
+      <description>
+
+&lt;h2 id=&#34;串列生成式&#34;&gt;串列生成式&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;語法: [運算式 for 項目 in 可佚代項目] 或是 [運算式 for 項目 in 可佚代項目 if 條件式]&lt;/li&gt;
+&lt;li&gt;一個典型例子,列出1 - 100 屬於偶數是哪些&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;傳統寫法&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#!/usr/bin/env python
+yy=[]
+for xx in range(1,101):
+    if xx % 2 == 0:
+    ┆   yy.append(xx)
+print(yy)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;使用串列生成式寫法,是不是很簡潔只要一列就可解決。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#!/usr/bin/env python
+print([xx for xx in range(1,101) if xx % 2 == 0])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;字典生成式&#34;&gt;字典生成式&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;語法: {鍵運算式:值運算式 for 運算式 in 可佚代項目}&lt;/li&gt;
+&lt;li&gt;看例子,有一個字串為 &amp;ldquo;jkjireddrrgkQQkfdcSSSewfjwfwwszzssEEWW&amp;rdquo;,要計算每個大寫或小寫字母出現的次數。
+看盤重點在 &lt;strong&gt;letter_count={world:strT.count(world) for world in set(strT)}&lt;/strong&gt;
+&lt;code&gt;
+#!/usr/bin/env python                                                                                                                 
+strT=&amp;quot;jkjireddrrgkQQkfdcSSSewfjwfwwszzssEEWW&amp;quot;                                                                                         
+letter_count={world:strT.count(world) for world in set(strT)}                                                                         
+for  world, worldcount in  letter_count.items():                                                                                      
+print(world +  &amp;quot; ==&amp;gt; &amp;quot;+  str(worldcount))
+&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;參考資料&#34;&gt;參考資料:&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.books.com.tw/products/0010690075&#34;&gt;Introducing-Python&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Python 的 生成式 (List Comprehensions)...待續</title>
+      <link>http://myghost.aligogo.pw/post/old/list_comprehensions/</link>
+      <pubDate>Sun, 26 Feb 2017 11:55:26 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/old/list_comprehensions/</guid>
+      <description>
+
+&lt;h2 id=&#34;串列生成式&#34;&gt;串列生成式&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;語法: [運算式 for 項目 in 可佚代項目] 或是 [運算式 for 項目 in 可佚代項目 if 條件式]&lt;/li&gt;
+&lt;li&gt;一個典型例子,列出1 - 100 屬於偶數是哪些&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;傳統寫法&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#!/usr/bin/env python
+yy=[]
+for xx in range(1,101):
+    if xx % 2 == 0:
+    ┆   yy.append(xx)
+print(yy)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;使用串列生成式寫法,是不是很簡潔只要一列就可解決。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#!/usr/bin/env python
+print([xx for xx in range(1,101) if xx % 2 == 0])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;字典生成式&#34;&gt;字典生成式&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;語法: {鍵運算式:值運算式 for 運算式 in 可佚代項目}&lt;/li&gt;
+&lt;li&gt;看例子,有一個字串為 &amp;ldquo;jkjireddrrgkQQkfdcSSSewfjwfwwszzssEEWW&amp;rdquo;,要計算每個大寫或小寫字母出現的次數。
+看盤重點在 &lt;strong&gt;letter_count={world:strT.count(world) for world in set(strT)}&lt;/strong&gt;
+&lt;code&gt;
+#!/usr/bin/env python                                                                                                                 
+strT=&amp;quot;jkjireddrrgkQQkfdcSSSewfjwfwwszzssEEWW&amp;quot;                                                                                         
+letter_count={world:strT.count(world) for world in set(strT)}                                                                         
+for  world, worldcount in  letter_count.items():                                                                                      
+print(world +  &amp;quot; ==&amp;gt; &amp;quot;+  str(worldcount))
+&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;參考資料&#34;&gt;參考資料:&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.books.com.tw/products/0010690075&#34;&gt;Introducing-Python&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Nginx &#43; uwsgi &#43; Flask</title>
+      <link>http://myghost.aligogo.pw/post/nginx-uwsgi-flask/</link>
+      <pubDate>Sun, 22 Jan 2017 18:04:18 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/nginx-uwsgi-flask/</guid>
+      <description>
+
+&lt;h2 id=&#34;目標&#34;&gt;目標&lt;/h2&gt;
+
+&lt;p&gt;本範例主要演示利用Python 撰寫一個取得目前自己的IP及此IP是屬於哪個國家。類似這樣一個網站&lt;a href=&#34;https://ifconfig.co/&amp;quot;target=&amp;quot;_blank&#34;&gt;What is my IP address&lt;/a&gt;,另外要使用Python 做一個動態網頁可以使用支援Python 的框架(FrameWork),如 &lt;a href=&#34;http://docs.jinkan.org/docs/flask/&amp;quot;target=&amp;quot;_blank&#34;&gt;&lt;strong&gt;Flask&lt;/strong&gt;&lt;/a&gt; &lt;a href=&#34;http://bottlepy.org/docs/dev/&amp;quot;target=&amp;quot;_blank&#34;&gt;&lt;strong&gt;Bottle&lt;/strong&gt;&lt;/a&gt; &lt;a href=&#34;https://www.djangoproject.com/&#34;&gt;&lt;strong&gt;Django&lt;/strong&gt;&lt;/a&gt;等。本範例是使用&lt;a href=&#34;https://zh.wikipedia.org/wiki/Flask&amp;quot;target=&amp;quot;_blank&#34;&gt;Flask&lt;/a&gt;這個微框架,並搭配&lt;strong&gt;Nginx&lt;/strong&gt; (Web Server) 及 透過&lt;strong&gt;uWSGI&lt;/strong&gt; (server ,或是一種可與支援的程式溝通的協議)與 Python 溝通。&lt;/p&gt;
+
+&lt;h2 id=&#34;架構說明&#34;&gt;架構說明&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;程式目錄內容
+&lt;code&gt;
+/var/www/html/WebPython/
+├── getip.py
+└── uwsgi2.ini
+&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;圖示說明
+&lt;img src=&#34;http://myghost.aligogo.pw/content/images/2017/01/nginx_uWSGI_Python.png&#34; alt=&#34;nginx_uWSGi_Python&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;install-nginx&#34;&gt;install  nginx&lt;/h2&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;um install nginx&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;install-flask-uwsgi&#34;&gt;install  Flask  ,uwsgi&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;pip install flask&lt;/li&gt;
+&lt;li&gt;pip install uwsgi&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;編輯-python-程式&#34;&gt;編輯 Python 程式&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;from flask import Flask , request , jsonify
+from geoip import open_database
+
+GeoipDataBase=&amp;quot;/usr/local/share/GeoIP/GeoLite2-Country.mmdb&amp;quot;
+dbip=open_database(GeoipDataBase)
+
+def getcountry(ip):
+    ipstr=str(dbip.lookup(ip).country)
+    return ipstr
+    dbip.close()
+
+
+app = Flask(__name__)
+
+#@app.route(&#39;/&#39;)
+#def index():
+#    return &amp;quot;&amp;lt;h1&amp;gt;Hello Andy&amp;lt;/h1&amp;gt;&amp;quot;
+
+@app.route(&amp;quot;/&amp;quot;,methods=[&amp;quot;GET&amp;quot;])
+def getip():
+    ip=request.remote_addr
+    ip_country=&amp;quot;&amp;lt;h1&amp;gt;&amp;quot;  + getcountry(ip) + &amp;quot;\t&amp;quot; + ip + &amp;quot;&amp;lt;/h1&amp;gt;&amp;quot;
+    return ip_country  , 200
+
+
+
+if __name__ == &amp;quot;__main__&amp;quot;:
+    app.run(host=&#39;188.166.241.76&#39;,port=80, debug=True)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;uwsgi&#34;&gt;uWSGi&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;edit uWSGi Config  (uwsgi2.ini)
+&lt;code&gt;
+[uwsgi]
+socket = 127.0.0.1:9091
+uid = 997
+chdir = /var/www/html/WebPython/
+module = getip
+callable = app
+master = true
+workers = 3
+reload-mercy = 10   
+max-requests = 100
+pidfile = /var/run/uwsgi9090.pid
+daemonize = /var/log/uwsgi9090.log
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;開啟uWSGi服務
+&lt;code&gt;
+uwsgi --ini  uwsgi2.ini
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;觀察是否有uWSgi程序或是開啟 9091阜口&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;ps aux|grep uwsgi
+nginx    15803  0.0  3.5 235132 17592 ?        S    10:51   0:01 uwsgi --ini uwsgi2.ini
+nginx    15808  0.0  2.8 235264 14196 ?        S    10:51   0:00 uwsgi --ini uwsgi2.ini
+nginx    15809  0.0  2.9 235696 14776 ?        S    10:51   0:00 uwsgi --ini uwsgi2.ini
+nginx    15810  0.0  2.9 235728 14812 ?        S    10:51   0:00 uwsgi --ini uwsgi2.ini
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;netstat  -tlnp
+
+tcp        0      0 127.0.0.1:9091          0.0.0.0:*               LISTEN      15803/uwsgi
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;stop-or-reload-uwsgi&#34;&gt;stop or reload uwsgi&lt;/h2&gt;
+
+&lt;p&gt;在修改python 程序後,並不會立即生效,需要reload uwsgi&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;stop uwsgi
+&lt;code&gt;
+uwsgi  --stop /var/run/uwsgi9090.pid
+rm -rf /var/run/uwsgi9090.pid
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;reload uwsgi
+&lt;code&gt;
+uwsgi --reload /var/run/uwsgi9090.pid
+&lt;/code&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;edit-nginx-config-and-start-nginx&#34;&gt;edit Nginx Config and  Start Nginx&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;/etc/nginx/conf.d/uwsgi.conf&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;     server {
+        listen       80; 
+        server_name 192.168.200.1 ip.aligogo.pw;
+        location / { 
+          include  uwsgi_params;
+          uwsgi_pass  127.0.0.1:9091;
+          #uwsgi_pass  unix:/var/www/html/uwsgi.sock;                                                                                 
+          #uwsgi_param UWSGI_SCRIPT hello.py;
+          #uwsgi_param UWSGI_CHDIR /root/Python/introducing-python/myTest;
+          #index  index.html index.htm;
+    
+        } 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;nginx -t  &amp;amp;&amp;amp; systemctl start  nginx&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;測試&#34;&gt;測試&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;curl http://ip.aligogo.pw
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;參考資料&#34;&gt;參考資料:&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://coder.tw/?p=6375&amp;quot;target=&amp;quot;_blank&#34;&gt;uWSGI – 碼人日誌&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.victorgau.com/?p=4140&amp;quot;target=&amp;quot;_blank&#34;&gt;[Flask] 怎麼取得使用者的 IP 位址?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Nginx &#43; uwsgi &#43; Flask</title>
+      <link>http://myghost.aligogo.pw/post/old/nginx-uwsgi-flask/</link>
+      <pubDate>Sun, 22 Jan 2017 18:04:18 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/old/nginx-uwsgi-flask/</guid>
+      <description>
+
+&lt;h2 id=&#34;目標&#34;&gt;目標&lt;/h2&gt;
+
+&lt;p&gt;本範例主要演示利用Python 撰寫一個取得目前自己的IP及此IP是屬於哪個國家。類似這樣一個網站&lt;a href=&#34;https://ifconfig.co/&amp;quot;target=&amp;quot;_blank&#34;&gt;What is my IP address&lt;/a&gt;,另外要使用Python 做一個動態網頁可以使用支援Python 的框架(FrameWork),如 &lt;a href=&#34;http://docs.jinkan.org/docs/flask/&amp;quot;target=&amp;quot;_blank&#34;&gt;&lt;strong&gt;Flask&lt;/strong&gt;&lt;/a&gt; &lt;a href=&#34;http://bottlepy.org/docs/dev/&amp;quot;target=&amp;quot;_blank&#34;&gt;&lt;strong&gt;Bottle&lt;/strong&gt;&lt;/a&gt; &lt;a href=&#34;https://www.djangoproject.com/&#34;&gt;&lt;strong&gt;Django&lt;/strong&gt;&lt;/a&gt;等。本範例是使用&lt;a href=&#34;https://zh.wikipedia.org/wiki/Flask&amp;quot;target=&amp;quot;_blank&#34;&gt;Flask&lt;/a&gt;這個微框架,並搭配&lt;strong&gt;Nginx&lt;/strong&gt; (Web Server) 及 透過&lt;strong&gt;uWSGI&lt;/strong&gt; (server ,或是一種可與支援的程式溝通的協議)與 Python 溝通。&lt;/p&gt;
+
+&lt;h2 id=&#34;架構說明&#34;&gt;架構說明&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;程式目錄內容
+&lt;code&gt;
+/var/www/html/WebPython/
+├── getip.py
+└── uwsgi2.ini
+&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;圖示說明
+&lt;img src=&#34;http://myghost.aligogo.pw/content/images/2017/01/nginx_uWSGI_Python.png&#34; alt=&#34;nginx_uWSGi_Python&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;install-nginx&#34;&gt;install  nginx&lt;/h2&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;um install nginx&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;install-flask-uwsgi&#34;&gt;install  Flask  ,uwsgi&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;pip install flask&lt;/li&gt;
+&lt;li&gt;pip install uwsgi&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;編輯-python-程式&#34;&gt;編輯 Python 程式&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;from flask import Flask , request , jsonify
+from geoip import open_database
+
+GeoipDataBase=&amp;quot;/usr/local/share/GeoIP/GeoLite2-Country.mmdb&amp;quot;
+dbip=open_database(GeoipDataBase)
+
+def getcountry(ip):
+    ipstr=str(dbip.lookup(ip).country)
+    return ipstr
+    dbip.close()
+
+
+app = Flask(__name__)
+
+#@app.route(&#39;/&#39;)
+#def index():
+#    return &amp;quot;&amp;lt;h1&amp;gt;Hello Andy&amp;lt;/h1&amp;gt;&amp;quot;
+
+@app.route(&amp;quot;/&amp;quot;,methods=[&amp;quot;GET&amp;quot;])
+def getip():
+    ip=request.remote_addr
+    ip_country=&amp;quot;&amp;lt;h1&amp;gt;&amp;quot;  + getcountry(ip) + &amp;quot;\t&amp;quot; + ip + &amp;quot;&amp;lt;/h1&amp;gt;&amp;quot;
+    return ip_country  , 200
+
+
+
+if __name__ == &amp;quot;__main__&amp;quot;:
+    app.run(host=&#39;188.166.241.76&#39;,port=80, debug=True)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;uwsgi&#34;&gt;uWSGi&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;edit uWSGi Config  (uwsgi2.ini)
+&lt;code&gt;
+[uwsgi]
+socket = 127.0.0.1:9091
+uid = 997
+chdir = /var/www/html/WebPython/
+module = getip
+callable = app
+master = true
+workers = 3
+reload-mercy = 10   
+max-requests = 100
+pidfile = /var/run/uwsgi9090.pid
+daemonize = /var/log/uwsgi9090.log
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;開啟uWSGi服務
+&lt;code&gt;
+uwsgi --ini  uwsgi2.ini
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;觀察是否有uWSgi程序或是開啟 9091阜口&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;ps aux|grep uwsgi
+nginx    15803  0.0  3.5 235132 17592 ?        S    10:51   0:01 uwsgi --ini uwsgi2.ini
+nginx    15808  0.0  2.8 235264 14196 ?        S    10:51   0:00 uwsgi --ini uwsgi2.ini
+nginx    15809  0.0  2.9 235696 14776 ?        S    10:51   0:00 uwsgi --ini uwsgi2.ini
+nginx    15810  0.0  2.9 235728 14812 ?        S    10:51   0:00 uwsgi --ini uwsgi2.ini
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;netstat  -tlnp
+
+tcp        0      0 127.0.0.1:9091          0.0.0.0:*               LISTEN      15803/uwsgi
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;stop-or-reload-uwsgi&#34;&gt;stop or reload uwsgi&lt;/h2&gt;
+
+&lt;p&gt;在修改python 程序後,並不會立即生效,需要reload uwsgi&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;stop uwsgi
+&lt;code&gt;
+uwsgi  --stop /var/run/uwsgi9090.pid
+rm -rf /var/run/uwsgi9090.pid
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;reload uwsgi
+&lt;code&gt;
+uwsgi --reload /var/run/uwsgi9090.pid
+&lt;/code&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;edit-nginx-config-and-start-nginx&#34;&gt;edit Nginx Config and  Start Nginx&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;/etc/nginx/conf.d/uwsgi.conf&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;     server {
+        listen       80; 
+        server_name 192.168.200.1 ip.aligogo.pw;
+        location / { 
+          include  uwsgi_params;
+          uwsgi_pass  127.0.0.1:9091;
+          #uwsgi_pass  unix:/var/www/html/uwsgi.sock;                                                                                 
+          #uwsgi_param UWSGI_SCRIPT hello.py;
+          #uwsgi_param UWSGI_CHDIR /root/Python/introducing-python/myTest;
+          #index  index.html index.htm;
+    
+        } 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;nginx -t  &amp;amp;&amp;amp; systemctl start  nginx&lt;br /&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;測試&#34;&gt;測試&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;curl http://ip.aligogo.pw
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;參考資料&#34;&gt;參考資料:&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://coder.tw/?p=6375&amp;quot;target=&amp;quot;_blank&#34;&gt;uWSGI – 碼人日誌&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.victorgau.com/?p=4140&amp;quot;target=&amp;quot;_blank&#34;&gt;[Flask] 怎麼取得使用者的 IP 位址?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>簡單示範 Beautiful Soup用法</title>
+      <link>http://myghost.aligogo.pw/post/bs4/</link>
+      <pubDate>Sat, 14 Jan 2017 07:24:46 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/bs4/</guid>
+      <description>
+
+&lt;h2 id=&#34;簡介&#34;&gt;簡介&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Beautiful Soup&lt;/strong&gt; 是剖析HTML 及 xml 的Python Library。通常在寫網路機器人或是網路爬蟲相關程式時,會大量取回HTML資料,透過正規表示法及其他工具運用來處理取回的資料,來獲取我們所需要的資料,但資料處理的過程中是很繁瑣的,因此使用&lt;strong&gt;Beautiful Soup&lt;/strong&gt; 可以 從 HTML 或 XML提取我們要的資料,使過程簡單化。&lt;/p&gt;
+
+&lt;h2 id=&#34;安裝&#34;&gt;安裝&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;這邊演示是用&lt;strong&gt;Python 2.7.x&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;pip install beautifulsoup4
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;為抓取網路上的資料,再額外裝&lt;a href=&#34;http://docs.python-requests.org/en/master/&amp;quot;target=&amp;quot;_blank&#34;&gt;requests&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;pip  install requests
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;示範抓取資料&#34;&gt;示範抓取資料&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;這邊使用 proxpn VPN 商提供VPN 服務資料來當作&lt;a href=&#34;http://proxpn.com/updater/locations-v3.xml&amp;quot;target=&amp;quot;_blank&#34;&gt;此範例&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;載入 requests 及 BeautifulSoup模組
+&lt;code&gt;
+Type &amp;quot;help&amp;quot;, &amp;quot;copyright&amp;quot;, &amp;quot;credits&amp;quot; or &amp;quot;license&amp;quot; for more information.
+&amp;gt;&amp;gt;&amp;gt; import requests
+&amp;gt;&amp;gt;&amp;gt; from bs4 import BeautifulSoup
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;抓取資料,會response回來很多HTML相關tag資料。
+&lt;code&gt;
+&amp;gt;&amp;gt;&amp;gt; url=&amp;quot;http://proxpn.com/updater/locations-v3.xml&amp;quot;
+&amp;gt;&amp;gt;&amp;gt; rs=requests.get(url)
+&amp;gt;&amp;gt;&amp;gt; rs.text
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;開始使用Beautiful Soup
+&lt;code&gt;
+&amp;gt;&amp;gt;&amp;gt; soup=BeautifulSoup(rs.text,&#39;html.parser&#39;)
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;依照此資料格是的tag (location)抓取第一筆資料
+```
+&amp;gt;&amp;gt;&amp;gt; soup.location&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;location&gt;\n&lt;name&gt;Free Chicago, IL&lt;/name&gt;\n&lt;type&gt;free&lt;/type&gt;\n&lt;openvpn-udp ip=&#34;196.52.21.65&#34; key=&#34;free-chi1&#34;&gt;\n&lt;/openvpn-udp&gt;\n&lt;openvpn-udp ip=&#34;196.52.21.134&#34; key=&#34;free-chi2&#34;&gt;\n&lt;/openvpn-udp&gt;\n&lt;/location&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt; - 呈上,取的&amp;quot;type&amp;quot; tag 的資料
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;soup.location.type.string
+u&amp;rsquo;free&amp;rsquo;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt; - 利用 find_all 搜索 屬於 &amp;quot;name&amp;quot;的tag,資料回應以串列格式,並計算筆數,列出第二筆 &amp;quot;name&amp;quot; tag 資料
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;soup.find_all(&amp;lsquo;name&amp;rsquo;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;[&lt;name&gt;Free Chicago, IL&lt;/name&gt;, &lt;name&gt;New York, USA&lt;/name&gt;, &lt;name&gt;Miami, USA&lt;/name&gt;, &lt;name&gt;Los Angeles, USA&lt;/name&gt;, &lt;name&gt;Seattle, USA&lt;/name&gt;, &lt;name&gt;Chicago, USA&lt;/name&gt;, &lt;name&gt;Toronto, CA&lt;/name&gt;, &lt;name&gt;Amsterdam, NL&lt;/name&gt;, &lt;name&gt;Stockholm, SE&lt;/name&gt;, &lt;name&gt;London, UK&lt;/name&gt;, &lt;name&gt;Bucharest, RO&lt;/name&gt;, &lt;name&gt;Sydney, AU&lt;/name&gt;, &lt;name&gt;Frankfurt, DE&lt;/name&gt;, &lt;name&gt;Singapore, SG&lt;/name&gt;, &lt;name&gt;Hong Kong, CN&lt;/name&gt;, &lt;name&gt;San Jose, CR&lt;/name&gt;, &lt;name&gt;Hafnarfjordur, IS&lt;/name&gt;, &lt;name&gt;Zurich, CH&lt;/name&gt;, &lt;name&gt;Trial&lt;/name&gt;, &lt;name&gt;Miami&lt;/name&gt;, &lt;name&gt;New York&lt;/name&gt;, &lt;name&gt;Chicago&lt;/name&gt;, &lt;name&gt;Seattle&lt;/name&gt;, &lt;name&gt;Frankfurt&lt;/name&gt;, &lt;name&gt;Stockholm&lt;/name&gt;, &lt;name&gt;Amsterdam&lt;/name&gt;, &lt;name&gt;London&lt;/name&gt;]
+&amp;gt;&amp;gt;&amp;gt; len(soup.find_all(&amp;lsquo;name&amp;rsquo;))
+27&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;soup.find_all(&amp;lsquo;name&amp;rsquo;)[1].string
+u&amp;rsquo;New York, USA&amp;rsquo;&lt;/p&gt;
+
+&lt;p&gt;soup.find_all(&amp;lsquo;name&amp;rsquo;)[1].text
+u&amp;rsquo;New York, USA&amp;rsquo;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+- 使用像 CSS 選擇器的方式,篩選出 &amp;quot;location&amp;quot; tag 中 &amp;quot;openvpn&amp;quot; tag 的資料。資料回應以串列輸出
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;soup.select(&amp;lsquo;location &amp;gt; openvpn&amp;rsquo;)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+ - 呈上, 取第二筆資料 ,屬性值 &amp;quot;key&amp;quot; 及 &amp;quot;ip&amp;quot;。或是使用attrs 方法使屬性資料,回應成字典的格式
+ 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;soup.select(&amp;lsquo;location &amp;gt; openvpn&amp;rsquo;)[1]
+&lt;openvpn ip=&#34;192.240.98.3&#34; key=&#34;openvpn-mfl&#34;&gt;\n&lt;/openvpn&gt;&lt;/p&gt;
+
+&lt;p&gt;soup.select(&amp;lsquo;location &amp;gt; openvpn&amp;rsquo;)[1][&amp;lsquo;ip&amp;rsquo;]
+u&amp;rsquo;192.240.98.3&amp;rsquo;&lt;/p&gt;
+
+&lt;p&gt;soup.select(&amp;lsquo;location &amp;gt; openvpn&amp;rsquo;)[1][&amp;lsquo;key&amp;rsquo;]
+u&amp;rsquo;openvpn-mfl&amp;rsquo;&lt;/p&gt;
+
+&lt;p&gt;soup.select(&amp;lsquo;location &amp;gt; openvpn&amp;rsquo;)[1].attrs
+{u&amp;rsquo;ip&amp;rsquo;: u&amp;rsquo;192.240.98.3&amp;rsquo;, u&amp;rsquo;key&amp;rsquo;: u&amp;rsquo;openvpn-mfl&amp;rsquo;}&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+## 利用此範例 及 上面取資料方法,組合一個簡單的程式
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;#!/usr/bin/env python
+import requests
+from bs4 import BeautifulSoup
+url=&amp;ldquo;&lt;a href=&#34;http://proxpn.com/updater/locations-v3.xml&amp;quot;&#34;&gt;http://proxpn.com/updater/locations-v3.xml&amp;quot;&lt;/a&gt;
+sess=requests.Session()
+rs=sess.get(url)
+soup=BeautifulSoup(rs.text,&amp;lsquo;html.parser&amp;rsquo;)
+for  iteam in soup.find_all(&amp;lsquo;location&amp;rsquo;):
+     vpnName=iteam.select(&amp;lsquo;name&amp;rsquo;)[0].text
+     vpnType=len(iteam.select(&amp;lsquo;type&amp;rsquo;))
+     vpnUdp=len(iteam.select(&amp;lsquo;openvpn-udp&amp;rsquo;))
+     vpnTcp=len(iteam.select(&amp;lsquo;openvpn&amp;rsquo;))
+     if vpnType &amp;gt;0:
+        vpnType=iteam.select(&amp;lsquo;type&amp;rsquo;)[0].text
+     if vpnTcp &amp;gt;0:
+        for vpnTcp in iteam.select(&amp;lsquo;openvpn&amp;rsquo;):
+            print &amp;ldquo;TCP&amp;rdquo;,vpnName,&amp;ldquo;;&amp;rdquo;,vpnType,&amp;ldquo;;&amp;rdquo;,vpnTcp.get(&amp;lsquo;key&amp;rsquo;),&amp;ldquo;;&amp;rdquo;,vpnTcp.get(&amp;lsquo;ip&amp;rsquo;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code&gt; if vpnUdp &amp;gt;0:
+    for vpnUdp in iteam.select(&#39;openvpn-udp&#39;):
+        print &amp;quot;UDP&amp;quot;,vpnName,&amp;quot;;&amp;quot;,vpnType,&amp;quot;;&amp;quot;,vpnUdp.get(&#39;key&#39;),&amp;quot;;&amp;quot;,vpnUdp.get(&#39;ip&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;h2 id=&#34;參考資料&#34;&gt;參考資料:&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.crummy.com/software/BeautifulSoup/bs4/doc/&amp;quot;target=&amp;quot;_blank&#34;&gt;官方 Beautiful Soup Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.crummy.com/software/BeautifulSoup/bs4/doc/index.zh.html&amp;quot;target=&amp;quot;_blank&#34;&gt;中文版-官方 Beautiful Soup Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://wiki.jikexueyuan.com/project/python-crawler-guide/beautiful-soup.html&amp;quot;target=&amp;quot;_blank&#34;&gt;Beautiful Soup 的用法&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>簡單示範 Beautiful Soup用法</title>
+      <link>http://myghost.aligogo.pw/post/old/bs4/</link>
+      <pubDate>Sat, 14 Jan 2017 07:24:46 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/old/bs4/</guid>
+      <description>
+
+&lt;h2 id=&#34;簡介&#34;&gt;簡介&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Beautiful Soup&lt;/strong&gt; 是剖析HTML 及 xml 的Python Library。通常在寫網路機器人或是網路爬蟲相關程式時,會大量取回HTML資料,透過正規表示法及其他工具運用來處理取回的資料,來獲取我們所需要的資料,但資料處理的過程中是很繁瑣的,因此使用&lt;strong&gt;Beautiful Soup&lt;/strong&gt; 可以 從 HTML 或 XML提取我們要的資料,使過程簡單化。&lt;/p&gt;
+
+&lt;h2 id=&#34;安裝&#34;&gt;安裝&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;這邊演示是用&lt;strong&gt;Python 2.7.x&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;pip install beautifulsoup4
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;為抓取網路上的資料,再額外裝&lt;a href=&#34;http://docs.python-requests.org/en/master/&amp;quot;target=&amp;quot;_blank&#34;&gt;requests&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;pip  install requests
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;示範抓取資料&#34;&gt;示範抓取資料&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;這邊使用 proxpn VPN 商提供VPN 服務資料來當作&lt;a href=&#34;http://proxpn.com/updater/locations-v3.xml&amp;quot;target=&amp;quot;_blank&#34;&gt;此範例&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;載入 requests 及 BeautifulSoup模組
+&lt;code&gt;
+Type &amp;quot;help&amp;quot;, &amp;quot;copyright&amp;quot;, &amp;quot;credits&amp;quot; or &amp;quot;license&amp;quot; for more information.
+&amp;gt;&amp;gt;&amp;gt; import requests
+&amp;gt;&amp;gt;&amp;gt; from bs4 import BeautifulSoup
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;抓取資料,會response回來很多HTML相關tag資料。
+&lt;code&gt;
+&amp;gt;&amp;gt;&amp;gt; url=&amp;quot;http://proxpn.com/updater/locations-v3.xml&amp;quot;
+&amp;gt;&amp;gt;&amp;gt; rs=requests.get(url)
+&amp;gt;&amp;gt;&amp;gt; rs.text
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;開始使用Beautiful Soup
+&lt;code&gt;
+&amp;gt;&amp;gt;&amp;gt; soup=BeautifulSoup(rs.text,&#39;html.parser&#39;)
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;依照此資料格是的tag (location)抓取第一筆資料
+```
+&amp;gt;&amp;gt;&amp;gt; soup.location&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;location&gt;\n&lt;name&gt;Free Chicago, IL&lt;/name&gt;\n&lt;type&gt;free&lt;/type&gt;\n&lt;openvpn-udp ip=&#34;196.52.21.65&#34; key=&#34;free-chi1&#34;&gt;\n&lt;/openvpn-udp&gt;\n&lt;openvpn-udp ip=&#34;196.52.21.134&#34; key=&#34;free-chi2&#34;&gt;\n&lt;/openvpn-udp&gt;\n&lt;/location&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt; - 呈上,取的&amp;quot;type&amp;quot; tag 的資料
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;soup.location.type.string
+u&amp;rsquo;free&amp;rsquo;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt; - 利用 find_all 搜索 屬於 &amp;quot;name&amp;quot;的tag,資料回應以串列格式,並計算筆數,列出第二筆 &amp;quot;name&amp;quot; tag 資料
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;soup.find_all(&amp;lsquo;name&amp;rsquo;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;[&lt;name&gt;Free Chicago, IL&lt;/name&gt;, &lt;name&gt;New York, USA&lt;/name&gt;, &lt;name&gt;Miami, USA&lt;/name&gt;, &lt;name&gt;Los Angeles, USA&lt;/name&gt;, &lt;name&gt;Seattle, USA&lt;/name&gt;, &lt;name&gt;Chicago, USA&lt;/name&gt;, &lt;name&gt;Toronto, CA&lt;/name&gt;, &lt;name&gt;Amsterdam, NL&lt;/name&gt;, &lt;name&gt;Stockholm, SE&lt;/name&gt;, &lt;name&gt;London, UK&lt;/name&gt;, &lt;name&gt;Bucharest, RO&lt;/name&gt;, &lt;name&gt;Sydney, AU&lt;/name&gt;, &lt;name&gt;Frankfurt, DE&lt;/name&gt;, &lt;name&gt;Singapore, SG&lt;/name&gt;, &lt;name&gt;Hong Kong, CN&lt;/name&gt;, &lt;name&gt;San Jose, CR&lt;/name&gt;, &lt;name&gt;Hafnarfjordur, IS&lt;/name&gt;, &lt;name&gt;Zurich, CH&lt;/name&gt;, &lt;name&gt;Trial&lt;/name&gt;, &lt;name&gt;Miami&lt;/name&gt;, &lt;name&gt;New York&lt;/name&gt;, &lt;name&gt;Chicago&lt;/name&gt;, &lt;name&gt;Seattle&lt;/name&gt;, &lt;name&gt;Frankfurt&lt;/name&gt;, &lt;name&gt;Stockholm&lt;/name&gt;, &lt;name&gt;Amsterdam&lt;/name&gt;, &lt;name&gt;London&lt;/name&gt;]
+&amp;gt;&amp;gt;&amp;gt; len(soup.find_all(&amp;lsquo;name&amp;rsquo;))
+27&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;soup.find_all(&amp;lsquo;name&amp;rsquo;)[1].string
+u&amp;rsquo;New York, USA&amp;rsquo;&lt;/p&gt;
+
+&lt;p&gt;soup.find_all(&amp;lsquo;name&amp;rsquo;)[1].text
+u&amp;rsquo;New York, USA&amp;rsquo;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+- 使用像 CSS 選擇器的方式,篩選出 &amp;quot;location&amp;quot; tag 中 &amp;quot;openvpn&amp;quot; tag 的資料。資料回應以串列輸出
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;soup.select(&amp;lsquo;location &amp;gt; openvpn&amp;rsquo;)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+ - 呈上, 取第二筆資料 ,屬性值 &amp;quot;key&amp;quot; 及 &amp;quot;ip&amp;quot;。或是使用attrs 方法使屬性資料,回應成字典的格式
+ 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;soup.select(&amp;lsquo;location &amp;gt; openvpn&amp;rsquo;)[1]
+&lt;openvpn ip=&#34;192.240.98.3&#34; key=&#34;openvpn-mfl&#34;&gt;\n&lt;/openvpn&gt;&lt;/p&gt;
+
+&lt;p&gt;soup.select(&amp;lsquo;location &amp;gt; openvpn&amp;rsquo;)[1][&amp;lsquo;ip&amp;rsquo;]
+u&amp;rsquo;192.240.98.3&amp;rsquo;&lt;/p&gt;
+
+&lt;p&gt;soup.select(&amp;lsquo;location &amp;gt; openvpn&amp;rsquo;)[1][&amp;lsquo;key&amp;rsquo;]
+u&amp;rsquo;openvpn-mfl&amp;rsquo;&lt;/p&gt;
+
+&lt;p&gt;soup.select(&amp;lsquo;location &amp;gt; openvpn&amp;rsquo;)[1].attrs
+{u&amp;rsquo;ip&amp;rsquo;: u&amp;rsquo;192.240.98.3&amp;rsquo;, u&amp;rsquo;key&amp;rsquo;: u&amp;rsquo;openvpn-mfl&amp;rsquo;}&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+## 利用此範例 及 上面取資料方法,組合一個簡單的程式
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;#!/usr/bin/env python
+import requests
+from bs4 import BeautifulSoup
+url=&amp;ldquo;&lt;a href=&#34;http://proxpn.com/updater/locations-v3.xml&amp;quot;&#34;&gt;http://proxpn.com/updater/locations-v3.xml&amp;quot;&lt;/a&gt;
+sess=requests.Session()
+rs=sess.get(url)
+soup=BeautifulSoup(rs.text,&amp;lsquo;html.parser&amp;rsquo;)
+for  iteam in soup.find_all(&amp;lsquo;location&amp;rsquo;):
+     vpnName=iteam.select(&amp;lsquo;name&amp;rsquo;)[0].text
+     vpnType=len(iteam.select(&amp;lsquo;type&amp;rsquo;))
+     vpnUdp=len(iteam.select(&amp;lsquo;openvpn-udp&amp;rsquo;))
+     vpnTcp=len(iteam.select(&amp;lsquo;openvpn&amp;rsquo;))
+     if vpnType &amp;gt;0:
+        vpnType=iteam.select(&amp;lsquo;type&amp;rsquo;)[0].text
+     if vpnTcp &amp;gt;0:
+        for vpnTcp in iteam.select(&amp;lsquo;openvpn&amp;rsquo;):
+            print &amp;ldquo;TCP&amp;rdquo;,vpnName,&amp;ldquo;;&amp;rdquo;,vpnType,&amp;ldquo;;&amp;rdquo;,vpnTcp.get(&amp;lsquo;key&amp;rsquo;),&amp;ldquo;;&amp;rdquo;,vpnTcp.get(&amp;lsquo;ip&amp;rsquo;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code&gt; if vpnUdp &amp;gt;0:
+    for vpnUdp in iteam.select(&#39;openvpn-udp&#39;):
+        print &amp;quot;UDP&amp;quot;,vpnName,&amp;quot;;&amp;quot;,vpnType,&amp;quot;;&amp;quot;,vpnUdp.get(&#39;key&#39;),&amp;quot;;&amp;quot;,vpnUdp.get(&#39;ip&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;h2 id=&#34;參考資料&#34;&gt;參考資料:&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.crummy.com/software/BeautifulSoup/bs4/doc/&amp;quot;target=&amp;quot;_blank&#34;&gt;官方 Beautiful Soup Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.crummy.com/software/BeautifulSoup/bs4/doc/index.zh.html&amp;quot;target=&amp;quot;_blank&#34;&gt;中文版-官方 Beautiful Soup Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://wiki.jikexueyuan.com/project/python-crawler-guide/beautiful-soup.html&amp;quot;target=&amp;quot;_blank&#34;&gt;Beautiful Soup 的用法&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>ndarray ,  Series , DataFrame For Python ... 未完成</title>
+      <link>http://myghost.aligogo.pw/post/datascience1/</link>
+      <pubDate>Sat, 10 Dec 2016 02:36:10 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/datascience1/</guid>
+      <description>
+
+&lt;h2 id=&#34;三種資料結構-ndarray-series-dataframe&#34;&gt;三種資料結構  : ndarray ,  Series , DataFrame&lt;/h2&gt;
+
+&lt;h6 id=&#34;ndarray-由-numpy-這個套件所提供的-處理-一維及多維陣列的儲存運算&#34;&gt;ndarray 由 NumPy 這個套件所提供的 ,處理 一維及多維陣列的儲存運算。&lt;/h6&gt;
+
+&lt;h6 id=&#34;series-具有-index-一維的ndarray-由-pandas-套件所提共的-pandas-是建構在-numpy的基礎上&#34;&gt;Series : 具有 index 一維的ndarray ,由 pandas 套件所提共的。pandas 是建構在 Numpy的基礎上&lt;/h6&gt;
+
+&lt;h6 id=&#34;dataframe-是由-pandas-套件所提供的-此資料結構像是spreadsheet-excel-那樣表格-這邊演示使用python-3-x&#34;&gt;DataFrame 是由 Pandas 套件所提供的。此資料結構像是spreadsheet(excel 那樣表格)~這邊演示使用Python 3.x&lt;/h6&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;利用 pip 先安裝pandas&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# pip install pandas
+# pip list --format=columns
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;創建資料 (方式1)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; df=pd.DataFrame({&#39;pid&#39;:[&#39;p01&#39;,&#39;p02&#39;,&#39;p03&#39;],&#39;cost&#39;:[100,300,1000]})
+&amp;gt;&amp;gt;&amp;gt; df
+cost  pid
+0   100  p01
+1   300  p02
+2  1000  p03
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;創建資料 (方式2)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; df2=pd.DataFrame([{&#39;pid&#39;:&#39;p01&#39;,&#39;cost&#39;:100},{&#39;pid&#39;:&#39;p02&#39;,&#39;cost&#39;:300},{&#39;pid&#39;:&#39;p03&#39;,&#39;cost&#39;:1000}])
+&amp;gt;&amp;gt;&amp;gt; df2
+cost  pid
+0   100  p01
+1   300  p02
+2  1000  p03
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;取值 By &lt;strong&gt;欄位&lt;/strong&gt;
+```
+&amp;gt;&amp;gt;&amp;gt; df2[&amp;lsquo;cost&amp;rsquo;]
+0     100
+1     300
+2    1000
+Name: cost, dtype: int64&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;df2[[&amp;lsquo;cost&amp;rsquo;,&amp;lsquo;pid&amp;rsquo;]]
+   cost  pid
+0   100  p01
+1   300  p02
+2  1000  p03&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- 取值 By **列** (取第1 ,2 筆資料)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;df2[0:2]
+   cost  pid
+0   100  p01
+1   300  p02&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- 取值 By **條件**
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;df2[df2[&amp;lsquo;cost&amp;rsquo;] &amp;lt;200]
+   cost  pid
+0   100  p01&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- 新增資料 By **欄位**
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;df3=pd.DataFrame()
+df3[&amp;lsquo;cid&amp;rsquo;]=[&amp;lsquo;c01&amp;rsquo;,&amp;lsquo;c02&amp;rsquo;,&amp;lsquo;c03&amp;rsquo;,&amp;lsquo;c04&amp;rsquo;,&amp;lsquo;c05&amp;rsquo;]
+df3
+   cid
+0  c01
+1  c02
+2  c03
+3  c04
+4  c05&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- 新增資料 By **列**
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;df2=df2.append(pd.DataFrame([{&amp;lsquo;pid&amp;rsquo;:&amp;lsquo;p04&amp;rsquo;,&amp;lsquo;cost&amp;rsquo;:350},{&amp;lsquo;pid&amp;rsquo;:&amp;lsquo;p05&amp;rsquo;,&amp;lsquo;cost&amp;rsquo;:1500},{&amp;lsquo;pid&amp;rsquo;:&amp;lsquo;p06&amp;rsquo;,&amp;lsquo;cost&amp;rsquo;:3500}]))
+df2
+   cost  pid
+0   100  p01
+1   300  p02
+2  1000  p03
+0   350  p04
+1  1500  p05
+2  3500  p06&lt;/p&gt;
+
+&lt;p&gt;df2=df2.reset_index(drop=True)
+df2
+   cost  pid
+0   100  p01
+1   300  p02
+2  1000  p03
+3   350  p04
+4  1500  p05
+5  3500  p06&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- 修改欄位名稱
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;df2=df2.rename(columns={&amp;lsquo;cost&amp;rsquo;:&amp;lsquo;spent&amp;rsquo;})
+df2
+   spent  pid
+0    100  p01
+1    300  p02
+2   1000  p03
+3    350  p04
+4   1500  p05
+5   3500  p06&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- 修改第一列資料
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;df2[0:1]=pd.DataFrame([{&amp;lsquo;pid&amp;rsquo;:&amp;lsquo;p001&amp;rsquo;,&amp;lsquo;spent&amp;rsquo;:1900}])
+df2[0:1]
+   spent   pid
+0   1900  p001&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- 刪除欄位
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;del df2[&amp;lsquo;pid&amp;rsquo;]
+df2
+   spent
+0   1900
+1    300
+2   1000
+3    350
+4   1500
+5   3500&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code&gt;- 刪除欄位(使用drop方法)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;df=df.drop(&amp;lsquo;pid&amp;rsquo;,axis=1)
+df
+   cost
+0   100
+1   300
+2  1000&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- 刪除列
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;df2
+   spent
+0   1900
+1    300
+2   1000
+3    350
+4   1500
+5   3500
+df2=df2.drop([0,1])
+df2
+   spent
+2   1000
+3    350
+4   1500
+5   3500&lt;/p&gt;
+
+&lt;p&gt;df2=df2.reset_index(drop=True)
+df2
+   spent
+0   1000
+1    350
+2   1500
+3   3500
+```&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>ndarray ,  Series , DataFrame For Python ... 未完成</title>
+      <link>http://myghost.aligogo.pw/post/old/datascience1/</link>
+      <pubDate>Sat, 10 Dec 2016 02:36:10 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/old/datascience1/</guid>
+      <description>
+
+&lt;h2 id=&#34;三種資料結構-ndarray-series-dataframe&#34;&gt;三種資料結構  : ndarray ,  Series , DataFrame&lt;/h2&gt;
+
+&lt;h6 id=&#34;ndarray-由-numpy-這個套件所提供的-處理-一維及多維陣列的儲存運算&#34;&gt;ndarray 由 NumPy 這個套件所提供的 ,處理 一維及多維陣列的儲存運算。&lt;/h6&gt;
+
+&lt;h6 id=&#34;series-具有-index-一維的ndarray-由-pandas-套件所提共的-pandas-是建構在-numpy的基礎上&#34;&gt;Series : 具有 index 一維的ndarray ,由 pandas 套件所提共的。pandas 是建構在 Numpy的基礎上&lt;/h6&gt;
+
+&lt;h6 id=&#34;dataframe-是由-pandas-套件所提供的-此資料結構像是spreadsheet-excel-那樣表格-這邊演示使用python-3-x&#34;&gt;DataFrame 是由 Pandas 套件所提供的。此資料結構像是spreadsheet(excel 那樣表格)~這邊演示使用Python 3.x&lt;/h6&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;利用 pip 先安裝pandas&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# pip install pandas
+# pip list --format=columns
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;創建資料 (方式1)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; df=pd.DataFrame({&#39;pid&#39;:[&#39;p01&#39;,&#39;p02&#39;,&#39;p03&#39;],&#39;cost&#39;:[100,300,1000]})
+&amp;gt;&amp;gt;&amp;gt; df
+cost  pid
+0   100  p01
+1   300  p02
+2  1000  p03
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;創建資料 (方式2)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; df2=pd.DataFrame([{&#39;pid&#39;:&#39;p01&#39;,&#39;cost&#39;:100},{&#39;pid&#39;:&#39;p02&#39;,&#39;cost&#39;:300},{&#39;pid&#39;:&#39;p03&#39;,&#39;cost&#39;:1000}])
+&amp;gt;&amp;gt;&amp;gt; df2
+cost  pid
+0   100  p01
+1   300  p02
+2  1000  p03
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;取值 By &lt;strong&gt;欄位&lt;/strong&gt;
+```
+&amp;gt;&amp;gt;&amp;gt; df2[&amp;lsquo;cost&amp;rsquo;]
+0     100
+1     300
+2    1000
+Name: cost, dtype: int64&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;df2[[&amp;lsquo;cost&amp;rsquo;,&amp;lsquo;pid&amp;rsquo;]]
+   cost  pid
+0   100  p01
+1   300  p02
+2  1000  p03&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- 取值 By **列** (取第1 ,2 筆資料)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;df2[0:2]
+   cost  pid
+0   100  p01
+1   300  p02&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- 取值 By **條件**
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;df2[df2[&amp;lsquo;cost&amp;rsquo;] &amp;lt;200]
+   cost  pid
+0   100  p01&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- 新增資料 By **欄位**
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;df3=pd.DataFrame()
+df3[&amp;lsquo;cid&amp;rsquo;]=[&amp;lsquo;c01&amp;rsquo;,&amp;lsquo;c02&amp;rsquo;,&amp;lsquo;c03&amp;rsquo;,&amp;lsquo;c04&amp;rsquo;,&amp;lsquo;c05&amp;rsquo;]
+df3
+   cid
+0  c01
+1  c02
+2  c03
+3  c04
+4  c05&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- 新增資料 By **列**
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;df2=df2.append(pd.DataFrame([{&amp;lsquo;pid&amp;rsquo;:&amp;lsquo;p04&amp;rsquo;,&amp;lsquo;cost&amp;rsquo;:350},{&amp;lsquo;pid&amp;rsquo;:&amp;lsquo;p05&amp;rsquo;,&amp;lsquo;cost&amp;rsquo;:1500},{&amp;lsquo;pid&amp;rsquo;:&amp;lsquo;p06&amp;rsquo;,&amp;lsquo;cost&amp;rsquo;:3500}]))
+df2
+   cost  pid
+0   100  p01
+1   300  p02
+2  1000  p03
+0   350  p04
+1  1500  p05
+2  3500  p06&lt;/p&gt;
+
+&lt;p&gt;df2=df2.reset_index(drop=True)
+df2
+   cost  pid
+0   100  p01
+1   300  p02
+2  1000  p03
+3   350  p04
+4  1500  p05
+5  3500  p06&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- 修改欄位名稱
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;df2=df2.rename(columns={&amp;lsquo;cost&amp;rsquo;:&amp;lsquo;spent&amp;rsquo;})
+df2
+   spent  pid
+0    100  p01
+1    300  p02
+2   1000  p03
+3    350  p04
+4   1500  p05
+5   3500  p06&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- 修改第一列資料
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;df2[0:1]=pd.DataFrame([{&amp;lsquo;pid&amp;rsquo;:&amp;lsquo;p001&amp;rsquo;,&amp;lsquo;spent&amp;rsquo;:1900}])
+df2[0:1]
+   spent   pid
+0   1900  p001&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- 刪除欄位
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;del df2[&amp;lsquo;pid&amp;rsquo;]
+df2
+   spent
+0   1900
+1    300
+2   1000
+3    350
+4   1500
+5   3500&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code&gt;- 刪除欄位(使用drop方法)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;df=df.drop(&amp;lsquo;pid&amp;rsquo;,axis=1)
+df
+   cost
+0   100
+1   300
+2  1000&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- 刪除列
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;df2
+   spent
+0   1900
+1    300
+2   1000
+3    350
+4   1500
+5   3500
+df2=df2.drop([0,1])
+df2
+   spent
+2   1000
+3    350
+4   1500
+5   3500&lt;/p&gt;
+
+&lt;p&gt;df2=df2.reset_index(drop=True)
+df2
+   spent
+0   1000
+1    350
+2   1500
+3   3500
+```&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Python2.x 與 Python3.x 在中文編碼差異</title>
+      <link>http://myghost.aligogo.pw/post/old/unicode-python/</link>
+      <pubDate>Tue, 15 Nov 2016 18:03:14 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/old/unicode-python/</guid>
+      <description>
+
+&lt;p&gt;Python 3.x 支援 Unicode, 而 Python2.x 要呈現中文需在 Script 的開頭 標上 &amp;lsquo;# -&lt;em&gt;- coding: utf-8 -&lt;/em&gt;-&amp;rsquo;&lt;/p&gt;
+
+&lt;h2 id=&#34;將特殊字元轉換一般字元&#34;&gt;將特殊字元轉換一般字元&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; print r&amp;quot;Hello\tWorld&amp;quot;
+Hello\tWorld
+&amp;gt;&amp;gt;&amp;gt; print &amp;quot;Hello\\tWorld&amp;quot;
+Hello\tWorld
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;unicode&#34;&gt;Unicode&lt;/h2&gt;
+
+&lt;p&gt;無論平台、程式、語言是甚麼,Unicode為每一個字元提供一個獨一無二的號。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Python 2.x 所有文字都是str實例 ,用前置 u 表示 使用 unicode型態封裝文字。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; aa=u&#39;HelloWorld&#39;
+&amp;gt;&amp;gt;&amp;gt; type(aa)
+&amp;lt;type &#39;unicode&#39;&amp;gt;
+
+&amp;gt;&amp;gt;&amp;gt; ss=u&amp;quot;峻&amp;quot;
+&amp;gt;&amp;gt;&amp;gt; type(ss)
+&amp;lt;type &#39;unicode&#39;&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; len(ss)  #使用unicode,表1個字
+1
+
+&amp;gt;&amp;gt;&amp;gt; st=&amp;quot;峻&amp;quot;
+&amp;gt;&amp;gt;&amp;gt; type(st)
+&amp;lt;type &#39;str&#39;&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; len(st)  #表使用 3 個 Byte,位元組序列 
+3
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Python 3 所有文字都是 unicode 字串&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;Python 3.4.4 (default, Mar 22 2016, 14:02:38) 
+&amp;gt;&amp;gt;&amp;gt; st=&amp;quot;峻&amp;quot;
+&amp;gt;&amp;gt;&amp;gt; type(st)
+&amp;lt;class &#39;str&#39;&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; len(st) #使用unicode,表1個字。可以與Python 2.x比較 
+1
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Python2.x 與 Python3.x 在中文編碼差異</title>
+      <link>http://myghost.aligogo.pw/post/unicode-python/</link>
+      <pubDate>Tue, 15 Nov 2016 18:03:14 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/unicode-python/</guid>
+      <description>
+
+&lt;p&gt;Python 3.x 支援 Unicode, 而 Python2.x 要呈現中文需在 Script 的開頭 標上 &amp;lsquo;# -&lt;em&gt;- coding: utf-8 -&lt;/em&gt;-&amp;rsquo;&lt;/p&gt;
+
+&lt;h2 id=&#34;將特殊字元轉換一般字元&#34;&gt;將特殊字元轉換一般字元&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; print r&amp;quot;Hello\tWorld&amp;quot;
+Hello\tWorld
+&amp;gt;&amp;gt;&amp;gt; print &amp;quot;Hello\\tWorld&amp;quot;
+Hello\tWorld
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;unicode&#34;&gt;Unicode&lt;/h2&gt;
+
+&lt;p&gt;無論平台、程式、語言是甚麼,Unicode為每一個字元提供一個獨一無二的號。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Python 2.x 所有文字都是str實例 ,用前置 u 表示 使用 unicode型態封裝文字。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; aa=u&#39;HelloWorld&#39;
+&amp;gt;&amp;gt;&amp;gt; type(aa)
+&amp;lt;type &#39;unicode&#39;&amp;gt;
+
+&amp;gt;&amp;gt;&amp;gt; ss=u&amp;quot;峻&amp;quot;
+&amp;gt;&amp;gt;&amp;gt; type(ss)
+&amp;lt;type &#39;unicode&#39;&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; len(ss)  #使用unicode,表1個字
+1
+
+&amp;gt;&amp;gt;&amp;gt; st=&amp;quot;峻&amp;quot;
+&amp;gt;&amp;gt;&amp;gt; type(st)
+&amp;lt;type &#39;str&#39;&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; len(st)  #表使用 3 個 Byte,位元組序列 
+3
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Python 3 所有文字都是 unicode 字串&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;Python 3.4.4 (default, Mar 22 2016, 14:02:38) 
+&amp;gt;&amp;gt;&amp;gt; st=&amp;quot;峻&amp;quot;
+&amp;gt;&amp;gt;&amp;gt; type(st)
+&amp;lt;class &#39;str&#39;&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; len(st) #使用unicode,表1個字。可以與Python 2.x比較 
+1
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Virtualenv for Python</title>
+      <link>http://myghost.aligogo.pw/post/old/virtualenv/</link>
+      <pubDate>Mon, 07 Nov 2016 06:17:05 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/old/virtualenv/</guid>
+      <description>
+
+&lt;p&gt;#Virtualenv&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;virtualenv 是Python開發者的利器。解決Python 套件相依衝突,可
+使用 virtualenv 隔離出 不同的Python環境。
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;以下展示是在 CEntos 7 環境下進行。Python 版本是 2.7.x 
+另外,也透過epel repo 安裝 Python3.4
+yum --enablerepo=epel install python34 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;virtualenv-instlall&#34;&gt;Virtualenv Instlall&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;pip install virtualenv&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;virtualenv-基本操作&#34;&gt;Virtualenv 基本操作&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;在/tmp 下,隔離出 名稱為 env1 env2 兩個 python環境。
+envT1 是 python2.7.x
+envT2 是 python 3.4.x
+之後利用 active,進入 envT1 或 envT2
+退出使用 deactive
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;cd /tmp&lt;/li&gt;
+&lt;li&gt;virtualenv envT1&lt;/li&gt;
+&lt;li&gt;virtualenv &amp;ndash;python=python3  envT2&lt;/li&gt;
+&lt;li&gt;cd /tmp/envT1/; source bin/activate&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;(envT1) [root@centos7 envT1]# python -c &amp;quot;import sys;print sys.version&amp;quot;
+2.7.5 (default, Sep 15 2016, 22:37:39)
+(envT1) [root@centos7 envT1]# deactivate 
+[root@centos7 envT1]#
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;cd /tmp/envT2/;source bin/activate&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;[root@centos7 envT2]#source bin/activate
+(envT2)[root@centos7 envT2]#
+(envT2)[root@centos7 envT2]# python -c &amp;quot;import sys;print(sys.version)&amp;quot;
+
+3.4.5 (default, Oct 20 2016, 22:54:51) 
+(envT2)[root@centos7 envT2]# deactivate
+[root@centos7 envT2]#
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Virtualenv for Python</title>
+      <link>http://myghost.aligogo.pw/post/virtualenv/</link>
+      <pubDate>Mon, 07 Nov 2016 06:17:05 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/virtualenv/</guid>
+      <description>
+
+&lt;p&gt;#Virtualenv&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;virtualenv 是Python開發者的利器。解決Python 套件相依衝突,可
+使用 virtualenv 隔離出 不同的Python環境。
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;以下展示是在 CEntos 7 環境下進行。Python 版本是 2.7.x 
+另外,也透過epel repo 安裝 Python3.4
+yum --enablerepo=epel install python34 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;virtualenv-instlall&#34;&gt;Virtualenv Instlall&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;pip install virtualenv&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;virtualenv-基本操作&#34;&gt;Virtualenv 基本操作&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;在/tmp 下,隔離出 名稱為 env1 env2 兩個 python環境。
+envT1 是 python2.7.x
+envT2 是 python 3.4.x
+之後利用 active,進入 envT1 或 envT2
+退出使用 deactive
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;cd /tmp&lt;/li&gt;
+&lt;li&gt;virtualenv envT1&lt;/li&gt;
+&lt;li&gt;virtualenv &amp;ndash;python=python3  envT2&lt;/li&gt;
+&lt;li&gt;cd /tmp/envT1/; source bin/activate&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;(envT1) [root@centos7 envT1]# python -c &amp;quot;import sys;print sys.version&amp;quot;
+2.7.5 (default, Sep 15 2016, 22:37:39)
+(envT1) [root@centos7 envT1]# deactivate 
+[root@centos7 envT1]#
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;cd /tmp/envT2/;source bin/activate&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;[root@centos7 envT2]#source bin/activate
+(envT2)[root@centos7 envT2]#
+(envT2)[root@centos7 envT2]# python -c &amp;quot;import sys;print(sys.version)&amp;quot;
+
+3.4.5 (default, Oct 20 2016, 22:54:51) 
+(envT2)[root@centos7 envT2]# deactivate
+[root@centos7 envT2]#
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Debug 工具 for Python</title>
+      <link>http://myghost.aligogo.pw/post/debug-python/</link>
+      <pubDate>Mon, 24 Oct 2016 08:53:27 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/debug-python/</guid>
+      <description>
+
+&lt;h2 id=&#34;try-except&#34;&gt;try/except&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;#!/usr/bin/env python
+try:                                                                                                                                  
+    myHours=raw_input(&#39;Enter Hours: &#39;)
+    myRate=raw_input(&#39;Enter Rate: &#39;)
+    mypay=int(myHours) * float(myRate)
+    print(mypay)
+except:
+    print &amp;quot;The Error&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;正常執行&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;# python test.py 
+Enter Hours: 20
+Enter Rate: 30
+600.0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;錯誤執行&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;# python test.py 
+Enter Hours: ee
+Enter Rate: eee
+The Error
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;利用邏輯表達截斷有問題的語句&#34;&gt;利用邏輯表達截斷有問題的語句&lt;/h2&gt;
+
+&lt;p&gt;利用從左至右進行判斷, y!=0 and x/y &amp;gt;1 。當 y=0時,就會顯示
+False&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; x=6
+&amp;gt;&amp;gt;&amp;gt; y=1
+&amp;gt;&amp;gt;&amp;gt; x/y &amp;gt;1
+True
+&amp;gt;&amp;gt;&amp;gt; x=6
+&amp;gt;&amp;gt;&amp;gt; y=0
+&amp;gt;&amp;gt;&amp;gt; x/y &amp;gt;1
+Traceback (most recent call last):
+  File &amp;quot;&amp;lt;stdin&amp;gt;&amp;quot;, line 1, in &amp;lt;module&amp;gt;
+ZeroDivisionError: integer division or modulo by zero
+&amp;gt;&amp;gt;&amp;gt; x=6
+&amp;gt;&amp;gt;&amp;gt; y=0
+&amp;gt;&amp;gt;&amp;gt; y!=0 and x/y &amp;gt;1
+False
+&amp;gt;&amp;gt;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Debug 工具 for Python</title>
+      <link>http://myghost.aligogo.pw/post/old/debug-python/</link>
+      <pubDate>Mon, 24 Oct 2016 08:53:27 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/old/debug-python/</guid>
+      <description>
+
+&lt;h2 id=&#34;try-except&#34;&gt;try/except&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;#!/usr/bin/env python
+try:                                                                                                                                  
+    myHours=raw_input(&#39;Enter Hours: &#39;)
+    myRate=raw_input(&#39;Enter Rate: &#39;)
+    mypay=int(myHours) * float(myRate)
+    print(mypay)
+except:
+    print &amp;quot;The Error&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;正常執行&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;# python test.py 
+Enter Hours: 20
+Enter Rate: 30
+600.0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;錯誤執行&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;# python test.py 
+Enter Hours: ee
+Enter Rate: eee
+The Error
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;利用邏輯表達截斷有問題的語句&#34;&gt;利用邏輯表達截斷有問題的語句&lt;/h2&gt;
+
+&lt;p&gt;利用從左至右進行判斷, y!=0 and x/y &amp;gt;1 。當 y=0時,就會顯示
+False&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; x=6
+&amp;gt;&amp;gt;&amp;gt; y=1
+&amp;gt;&amp;gt;&amp;gt; x/y &amp;gt;1
+True
+&amp;gt;&amp;gt;&amp;gt; x=6
+&amp;gt;&amp;gt;&amp;gt; y=0
+&amp;gt;&amp;gt;&amp;gt; x/y &amp;gt;1
+Traceback (most recent call last):
+  File &amp;quot;&amp;lt;stdin&amp;gt;&amp;quot;, line 1, in &amp;lt;module&amp;gt;
+ZeroDivisionError: integer division or modulo by zero
+&amp;gt;&amp;gt;&amp;gt; x=6
+&amp;gt;&amp;gt;&amp;gt; y=0
+&amp;gt;&amp;gt;&amp;gt; y!=0 and x/y &amp;gt;1
+False
+&amp;gt;&amp;gt;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>輸入 for Pyhton</title>
+      <link>http://myghost.aligogo.pw/post/input-pyhton/</link>
+      <pubDate>Mon, 24 Oct 2016 08:24:00 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/input-pyhton/</guid>
+      <description>
+
+&lt;h2 id=&#34;raw-input-example-只適用於-2-x-python&#34;&gt;raw_input Example  (只適用於 2.x python )&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;#!/ussr/bin/env python
+Name=raw_input(&#39;Please Input your Name &#39;)
+Age=raw_input(&#39;Please Input your Age &#39;)
+
+Summary=&#39;&#39;&#39;My Summary Name: %s Age:  %s&#39;&#39;&#39; %(Name,Age)                         
+print Summary
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;input等效於-raw-input-只適用於-3-x-python&#34;&gt;input等效於 raw_input (只適用於 3.x python)&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;#!/ussr/bin/env python
+Name=input(&#39;Please Input your Name &#39;)
+Age=input(&#39;Please Input your Age &#39;)
+
+Summary=&#39;&#39;&#39;My Summary Name: %s Age:  %s&#39;&#39;&#39; %(Name,Age)
+print(Summary)
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

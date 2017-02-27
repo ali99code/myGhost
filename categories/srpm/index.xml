@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Srpm on ALIBABA WIKI - 菩薩球球</title>
+    <link>http://myghost.aligogo.pw/categories/srpm/index.xml</link>
+    <description>Recent content in Srpm on ALIBABA WIKI - 菩薩球球</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <atom:link href="http://myghost.aligogo.pw/categories/srpm/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>自編RPM ... 待續</title>
+      <link>http://myghost.aligogo.pw/post/old/srpm/</link>
+      <pubDate>Tue, 03 Jan 2017 15:10:05 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/old/srpm/</guid>
+      <description>
+
+&lt;h2 id=&#34;macros&#34;&gt;Macros&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;在執行rpmbuild 指令編譯及打包時,定義一些環境變數。大陸用語稱為&lt;strong&gt;宏&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;一般來說以RedHat系列版本,都定義在此檔&lt;strong&gt;/usr/lib/rpm/macros&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;藉由rpm指令顯示出&lt;strong&gt;rpmrc&lt;/strong&gt;及&lt;strong&gt;macro&lt;/strong&gt;
+&lt;code&gt;
+rpm --showrc
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;藉由rpm指令顯示出 macro 的值。example: %{_topdir}
+&lt;code&gt;
+rpm --eval %{_topdir}
+&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;rpmbuild常用指令&#34;&gt;rpmbuild常用指令&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;只會打包成 &lt;strong&gt;FileName.rpm&lt;/strong&gt;檔(二進制Binary)。
+&lt;code&gt;
+rpmbuild -bb
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;打包成 &lt;strong&gt;rpm&lt;/strong&gt;也同時打包成&lt;strong&gt;srpm&lt;/strong&gt;
+&lt;code&gt;
+rpmbuild -ba 
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;檢測SPEC文件中&lt;strong&gt;BuildRequires&lt;/strong&gt;的相依套件此環境是否已完成
+&lt;code&gt;
+rpmbuild --nobuild
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;其餘參數如下
+&lt;code&gt;
+-bc  #僅執行到spec文件中的%build階段即停止進行
+-bp  #僅執行至spec文件中的%prep階段即停止進行
+-bi  #僅運行至spec文件中的%install階段即停止運行
+-bl  #檢查spec文件中%file段所列出的文件是不是與BUILDROOT目錄中存在的文件完全匹配
+-bs  #僅製作生成源碼格式的rpm包
+&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;參考資料&#34;&gt;參考資料:&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://mageedu.blog.51cto.com/4265610/1205205&amp;quot;target=&amp;quot;_blank&#34;&gt;【 馬哥教育內部文檔】-RPM製作指南 &lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://fedoraproject.org/wiki/How_to_create_an_RPM_package/zh-tw&amp;quot;target=&amp;quot;_blank&#34;&gt;Fedora_How to create an RPM package_繁體中文版&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://mattshma.github.io/2015/11/04/rpm%E6%89%93%E5%8C%85/&amp;quot;target=&amp;quot;_blank&#34;&gt;RPM打包&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>自編RPM ... 待續</title>
+      <link>http://myghost.aligogo.pw/post/srpm/</link>
+      <pubDate>Tue, 03 Jan 2017 15:10:05 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/srpm/</guid>
+      <description>
+
+&lt;h2 id=&#34;macros&#34;&gt;Macros&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;在執行rpmbuild 指令編譯及打包時,定義一些環境變數。大陸用語稱為&lt;strong&gt;宏&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;一般來說以RedHat系列版本,都定義在此檔&lt;strong&gt;/usr/lib/rpm/macros&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;藉由rpm指令顯示出&lt;strong&gt;rpmrc&lt;/strong&gt;及&lt;strong&gt;macro&lt;/strong&gt;
+&lt;code&gt;
+rpm --showrc
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;藉由rpm指令顯示出 macro 的值。example: %{_topdir}
+&lt;code&gt;
+rpm --eval %{_topdir}
+&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;rpmbuild常用指令&#34;&gt;rpmbuild常用指令&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;只會打包成 &lt;strong&gt;FileName.rpm&lt;/strong&gt;檔(二進制Binary)。
+&lt;code&gt;
+rpmbuild -bb
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;打包成 &lt;strong&gt;rpm&lt;/strong&gt;也同時打包成&lt;strong&gt;srpm&lt;/strong&gt;
+&lt;code&gt;
+rpmbuild -ba 
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;檢測SPEC文件中&lt;strong&gt;BuildRequires&lt;/strong&gt;的相依套件此環境是否已完成
+&lt;code&gt;
+rpmbuild --nobuild
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;其餘參數如下
+&lt;code&gt;
+-bc  #僅執行到spec文件中的%build階段即停止進行
+-bp  #僅執行至spec文件中的%prep階段即停止進行
+-bi  #僅運行至spec文件中的%install階段即停止運行
+-bl  #檢查spec文件中%file段所列出的文件是不是與BUILDROOT目錄中存在的文件完全匹配
+-bs  #僅製作生成源碼格式的rpm包
+&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;參考資料&#34;&gt;參考資料:&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://mageedu.blog.51cto.com/4265610/1205205&amp;quot;target=&amp;quot;_blank&#34;&gt;【 馬哥教育內部文檔】-RPM製作指南 &lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://fedoraproject.org/wiki/How_to_create_an_RPM_package/zh-tw&amp;quot;target=&amp;quot;_blank&#34;&gt;Fedora_How to create an RPM package_繁體中文版&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://mattshma.github.io/2015/11/04/rpm%E6%89%93%E5%8C%85/&amp;quot;target=&amp;quot;_blank&#34;&gt;RPM打包&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Vmware on ALIBABA WIKI - 菩薩球球</title>
+    <link>http://myghost.aligogo.pw/categories/vmware/index.xml</link>
+    <description>Recent content in Vmware on ALIBABA WIKI - 菩薩球球</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <atom:link href="http://myghost.aligogo.pw/categories/vmware/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>KVM in VMware Esxi</title>
+      <link>http://myghost.aligogo.pw/post/kvm-in-vmware-esxi/</link>
+      <pubDate>Sun, 27 Nov 2016 14:31:00 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/kvm-in-vmware-esxi/</guid>
+      <description>
+
+&lt;h1 id=&#34;kvm-install&#34;&gt;KVM install&lt;/h1&gt;
+
+&lt;p&gt;KVM 全名為 &lt;strong&gt;Kernel-Based Virtual Machine&lt;/strong&gt;,是一個用於Linux核心中的虛擬化基礎設施。
+本單元主要演示安裝KVM過程,主要利用VMware Esxi 平台建立Netsed hypervisors環境,即是 在 Esxi 平台建立一個 虛擬機 ,在此虛擬機安裝KVM ,再由kvm 建立一台虛擬機。&lt;/p&gt;
+
+&lt;h2 id=&#34;環境需求&#34;&gt;環境需求&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;實體機的 CPU 需支持 Intel (&lt;strong&gt;Intel Virtualization Technology, Intel VT-x&lt;/strong&gt;); AMD (&lt;strong&gt;AMD Secure Virtual Machine, AMD&lt;/strong&gt;)&lt;/li&gt;
+&lt;li&gt;VMware ESXi 5 或 6&lt;/li&gt;
+&lt;li&gt;Ubuntu 16.04 Desktop LTS ,&lt;a href=&#34;https://www.ubuntu-tw.org/modules/tinyd0/&amp;quot;target=&amp;quot;_blank&#34;&gt;下載點&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;步驟&#34;&gt;步驟&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;在esxi 平台上建立虛擬機，主要關鍵,勾選硬體虛擬化項目&lt;strong&gt;向Guest OS 公開硬體協助虛擬化&lt;/strong&gt;,此操作可以在 &lt;strong&gt;ESXi Web Client or ESXi Host Client&lt;/strong&gt;下完成。
+&lt;img src=&#34;http://myghost.aligogo.pw/content/images/2016/11/GuestoS1.GIF&#34; alt=&#34;如圖示說明&#34; /&gt;
+2.網路部分,需要將VSS Security Policies的&lt;strong&gt;Promiscuous mode&lt;/strong&gt; 設為允許。此功能相當於HUB,將port 收到的封包,會廣播向其它的Port傳送
+&lt;img src=&#34;http://myghost.aligogo.pw/content/images/2016/11/VM_Network_PortGroup_Security.GIF&#34; alt=&#34;Promiscuous mode&#34; /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;3.之後,虛擬機安裝OS ,Ubuntu 16.04 Desktop LTS
+4.之後,安裝完OS。先確定以下項目,每項都必須確認無誤後,才能做下一步
+* VM是否支援CPU虛擬化&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;grep -E -i &#39;vmx|svm&#39; /etc/cpuinfo
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;確認kvm是否安奘
+&lt;code&gt;
+apt-get install cpu-checker
+kvm-ok
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;確認是否有載入KVM 相關模組
+&lt;code&gt;
+lsmod|grep kvm
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;安裝 libvirt,及看使用者(這邊以 andy)是否在指定群組
+&lt;code&gt;
+apt-get install qemu-kvm libvirt-bin
+grep andy /etc/group
+&lt;/code&gt;
+&lt;code&gt;
+adm:x:4:syslog,andy
+cdrom:x:24:andy
+sudo:x:27:andy
+dip:x:30:andy
+plugdev:x:46:andy
+lpadmin:x:113:andy
+andy:x:1000:
+sambashare:x:128:andy
+libvirtd:x:130:andy
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;安裝 virt-manager , bridge-utils
+&lt;code&gt;
+apt-get install virt-manager bridge-utils
+&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;開始執行virt-manager 建立虛擬機,會跳出以下圖示&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ sudo virt-manager
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://myghost.aligogo.pw/content/images/2016/11/kvm-virt-manager.GIF&#34; alt=&#34;virt-manager&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;參考資料&#34;&gt;參考資料&lt;/h2&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://www.vladan.fr/nested-esxi-6-in-a-lab/&amp;quot;target=&amp;quot;_blank&#34;&gt;Nested ESXi 6 in a Lab&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://www.ntueees.tp.edu.tw/wordpress/?p=2981&amp;quot;target=&amp;quot;_blank&#34;&gt;Fedora 17 KVM於ESXi 5.1參數設定與安裝VMTools&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>KVM in VMware Esxi</title>
+      <link>http://myghost.aligogo.pw/post/old/kvm-in-vmware-esxi/</link>
+      <pubDate>Sun, 27 Nov 2016 14:31:00 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/old/kvm-in-vmware-esxi/</guid>
+      <description>
+
+&lt;h1 id=&#34;kvm-install&#34;&gt;KVM install&lt;/h1&gt;
+
+&lt;p&gt;KVM 全名為 &lt;strong&gt;Kernel-Based Virtual Machine&lt;/strong&gt;,是一個用於Linux核心中的虛擬化基礎設施。
+本單元主要演示安裝KVM過程,主要利用VMware Esxi 平台建立Netsed hypervisors環境,即是 在 Esxi 平台建立一個 虛擬機 ,在此虛擬機安裝KVM ,再由kvm 建立一台虛擬機。&lt;/p&gt;
+
+&lt;h2 id=&#34;環境需求&#34;&gt;環境需求&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;實體機的 CPU 需支持 Intel (&lt;strong&gt;Intel Virtualization Technology, Intel VT-x&lt;/strong&gt;); AMD (&lt;strong&gt;AMD Secure Virtual Machine, AMD&lt;/strong&gt;)&lt;/li&gt;
+&lt;li&gt;VMware ESXi 5 或 6&lt;/li&gt;
+&lt;li&gt;Ubuntu 16.04 Desktop LTS ,&lt;a href=&#34;https://www.ubuntu-tw.org/modules/tinyd0/&amp;quot;target=&amp;quot;_blank&#34;&gt;下載點&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;步驟&#34;&gt;步驟&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;在esxi 平台上建立虛擬機，主要關鍵,勾選硬體虛擬化項目&lt;strong&gt;向Guest OS 公開硬體協助虛擬化&lt;/strong&gt;,此操作可以在 &lt;strong&gt;ESXi Web Client or ESXi Host Client&lt;/strong&gt;下完成。
+&lt;img src=&#34;http://myghost.aligogo.pw/content/images/2016/11/GuestoS1.GIF&#34; alt=&#34;如圖示說明&#34; /&gt;
+2.網路部分,需要將VSS Security Policies的&lt;strong&gt;Promiscuous mode&lt;/strong&gt; 設為允許。此功能相當於HUB,將port 收到的封包,會廣播向其它的Port傳送
+&lt;img src=&#34;http://myghost.aligogo.pw/content/images/2016/11/VM_Network_PortGroup_Security.GIF&#34; alt=&#34;Promiscuous mode&#34; /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;3.之後,虛擬機安裝OS ,Ubuntu 16.04 Desktop LTS
+4.之後,安裝完OS。先確定以下項目,每項都必須確認無誤後,才能做下一步
+* VM是否支援CPU虛擬化&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;grep -E -i &#39;vmx|svm&#39; /etc/cpuinfo
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;確認kvm是否安奘
+&lt;code&gt;
+apt-get install cpu-checker
+kvm-ok
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;確認是否有載入KVM 相關模組
+&lt;code&gt;
+lsmod|grep kvm
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;安裝 libvirt,及看使用者(這邊以 andy)是否在指定群組
+&lt;code&gt;
+apt-get install qemu-kvm libvirt-bin
+grep andy /etc/group
+&lt;/code&gt;
+&lt;code&gt;
+adm:x:4:syslog,andy
+cdrom:x:24:andy
+sudo:x:27:andy
+dip:x:30:andy
+plugdev:x:46:andy
+lpadmin:x:113:andy
+andy:x:1000:
+sambashare:x:128:andy
+libvirtd:x:130:andy
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;安裝 virt-manager , bridge-utils
+&lt;code&gt;
+apt-get install virt-manager bridge-utils
+&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;開始執行virt-manager 建立虛擬機,會跳出以下圖示&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ sudo virt-manager
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://myghost.aligogo.pw/content/images/2016/11/kvm-virt-manager.GIF&#34; alt=&#34;virt-manager&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;參考資料&#34;&gt;參考資料&lt;/h2&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://www.vladan.fr/nested-esxi-6-in-a-lab/&amp;quot;target=&amp;quot;_blank&#34;&gt;Nested ESXi 6 in a Lab&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://www.ntueees.tp.edu.tw/wordpress/?p=2981&amp;quot;target=&amp;quot;_blank&#34;&gt;Fedora 17 KVM於ESXi 5.1參數設定與安裝VMTools&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Monitor For VMware ... 未完待續</title>
+      <link>http://myghost.aligogo.pw/post/monitor-vmware/</link>
+      <pubDate>Wed, 26 Oct 2016 17:15:01 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/monitor-vmware/</guid>
+      <description>
+
+&lt;h2 id=&#34;esxtop-or-resxtop&#34;&gt;esxtop or resxtop&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;利用 esxtop 分析 CPU 情況,以下哪三個指標顯示 CPU 爭奪 &lt;a href=&#34;https://communities.vmware.com/docs/DOC-9279&#34;&gt;參考解讀CPU統計值_英文 &lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;http://www.360doc.com/content/16/0225/11/22078350_537242602.shtml&#34;&gt;esxtop 詳細命令_中文&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;%RDY (Ready Time: 說明vCPU 要等候多久才有可用的LCPU)&lt;/li&gt;
+&lt;li&gt;%RUN&lt;/li&gt;
+&lt;li&gt;%MLMTD (%RDY值會包含%MLMTD的。與設置了&lt;strong&gt;CPU limit&lt;/strong&gt;有關)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;通常 %RDY &amp;gt; 10% 情況:
+
+&lt;ul&gt;
+&lt;li&gt;% RDY 約等於 %USED 表示 OK&lt;/li&gt;
+&lt;li&gt;% RDY 與 %USED 相差太多 表示 不 OK&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;通常 (%RDY - %MLMTD) &amp;gt; 20%,表示CPU資源不足&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Monitor For VMware ... 未完待續</title>
+      <link>http://myghost.aligogo.pw/post/old/monitor-vmware/</link>
+      <pubDate>Wed, 26 Oct 2016 17:15:01 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/old/monitor-vmware/</guid>
+      <description>
+
+&lt;h2 id=&#34;esxtop-or-resxtop&#34;&gt;esxtop or resxtop&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;利用 esxtop 分析 CPU 情況,以下哪三個指標顯示 CPU 爭奪 &lt;a href=&#34;https://communities.vmware.com/docs/DOC-9279&#34;&gt;參考解讀CPU統計值_英文 &lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;http://www.360doc.com/content/16/0225/11/22078350_537242602.shtml&#34;&gt;esxtop 詳細命令_中文&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;%RDY (Ready Time: 說明vCPU 要等候多久才有可用的LCPU)&lt;/li&gt;
+&lt;li&gt;%RUN&lt;/li&gt;
+&lt;li&gt;%MLMTD (%RDY值會包含%MLMTD的。與設置了&lt;strong&gt;CPU limit&lt;/strong&gt;有關)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;通常 %RDY &amp;gt; 10% 情況:
+
+&lt;ul&gt;
+&lt;li&gt;% RDY 約等於 %USED 表示 OK&lt;/li&gt;
+&lt;li&gt;% RDY 與 %USED 相差太多 表示 不 OK&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;通常 (%RDY - %MLMTD) &amp;gt; 20%,表示CPU資源不足&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

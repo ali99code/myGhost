@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Webbench on ALIBABA WIKI - 菩薩球球</title>
+    <link>http://myghost.aligogo.pw/tags/webbench/index.xml</link>
+    <description>Recent content in Webbench on ALIBABA WIKI - 菩薩球球</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <atom:link href="http://myghost.aligogo.pw/tags/webbench/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Web壓力測試- webbench</title>
+      <link>http://myghost.aligogo.pw/post/old/webya-li-ce-shi-webbench/</link>
+      <pubDate>Thu, 07 Jul 2016 03:07:34 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/old/webya-li-ce-shi-webbench/</guid>
+      <description>&lt;p&gt;#Web Bench
+1.安裝&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cd /usr/local/src/
+wget http://home.tiscali.cz/~cz210552/distfiles/webbench-1.5.tar.gz
+tar zxf webbench-1.5.tar.gz
+cd webbench-1.5/
+make 
+make install
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;1-2.若是在 Centos 平台下安裝的話,在 make install 會出現 錯誤訊息&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;install: cannot create regular file ‘/usr/local/man/man1’: No such file or directory&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;1-3.在執行編譯之前,需要更改 Makefile (cd /usr/local/src/webbench-1.5/)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;....
+#install -m 644 webbench.1 $(DESTDIR)$(PREFIX)/man/man1   改成 下面的方式
+install -m 644 webbench.1 /usr/local/share/man/man
+....
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;2.使用法:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./webbench -c 50 -t 10 http://test100man.wbao88.com/showSession.php
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;-c 平行數量
+-t  持續時間  ; -t 120 ;表 持續120秒
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;##參考資料:
+* &lt;a href=&#34;http://home.tiscali.cz/~cz210552/webbench.html&#34;&gt;Web Bench 1.5&lt;/a&gt;
+* &lt;a href=&#34;http://shinchuan1.blogspot.tw/2013/11/web.html&#34;&gt;WEB 壓測軟體-siege and Webbench&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Web壓力測試- webbench</title>
+      <link>http://myghost.aligogo.pw/post/webya-li-ce-shi-webbench/</link>
+      <pubDate>Thu, 07 Jul 2016 03:07:34 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/webya-li-ce-shi-webbench/</guid>
+      <description>&lt;p&gt;#Web Bench
+1.安裝&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cd /usr/local/src/
+wget http://home.tiscali.cz/~cz210552/distfiles/webbench-1.5.tar.gz
+tar zxf webbench-1.5.tar.gz
+cd webbench-1.5/
+make 
+make install
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;1-2.若是在 Centos 平台下安裝的話,在 make install 會出現 錯誤訊息&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;install: cannot create regular file ‘/usr/local/man/man1’: No such file or directory&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;1-3.在執行編譯之前,需要更改 Makefile (cd /usr/local/src/webbench-1.5/)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;....
+#install -m 644 webbench.1 $(DESTDIR)$(PREFIX)/man/man1   改成 下面的方式
+install -m 644 webbench.1 /usr/local/share/man/man
+....
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;2.使用法:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./webbench -c 50 -t 10 http://test100man.wbao88.com/showSession.php
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;-c 平行數量
+-t  持續時間  ; -t 120 ;表 持續120秒
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;##參考資料:
+* &lt;a href=&#34;http://home.tiscali.cz/~cz210552/webbench.html&#34;&gt;Web Bench 1.5&lt;/a&gt;
+* &lt;a href=&#34;http://shinchuan1.blogspot.tw/2013/11/web.html&#34;&gt;WEB 壓測軟體-siege and Webbench&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

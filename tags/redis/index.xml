@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Redis on ALIBABA WIKI - 菩薩球球</title>
+    <link>http://myghost.aligogo.pw/tags/redis/index.xml</link>
+    <description>Recent content in Redis on ALIBABA WIKI - 菩薩球球</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <atom:link href="http://myghost.aligogo.pw/tags/redis/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Redis - 初體驗</title>
+      <link>http://myghost.aligogo.pw/post/old/redis-chu-ti-yan/</link>
+      <pubDate>Tue, 16 Aug 2016 17:18:36 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/old/redis-chu-ti-yan/</guid>
+      <description>
+
+&lt;h2 id=&#34;安裝-redis-server&#34;&gt;安裝 redis server&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;yum 安裝 ,先使用epel repo 方式。
+&lt;code&gt;
+yum install epel-release
+&lt;/code&gt;
+1-1.更改 /etc/yum.repos.d/epel.repo
+&lt;code&gt;
+[epel]
+.....
+enabled=0
+.....
+&lt;/code&gt;
+1-2.安裝 redi
+&lt;code&gt;
+yum --enablerepo=epel install redis
+&lt;/code&gt;
+2.注意事項:
+2-1. &lt;strong&gt;安裝 redis-server,與jemalloc有相依性&lt;/strong&gt;
+2-2. &lt;strong&gt;centos5需要有TCL套件 8.5 以上版本才能支援,因此 redis 3.x預設是無法安裝,需update tcl 到 8.5以上&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;3./etc/redis.conf 預設  port 6379; bind 127.0.0.1 ,若只要讓本機存取 redis server,不用設定直接啟動即可。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/etc/init.d/redis start
+netstat -tlnp
+
+Proto Recv-Q Send-Q Local Address               Foreign Address             State       PID/Program name   
+tcp        0      0 127.0.0.1:6379              0.0.0.0:*                   LISTEN      3454/redis-server
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;3-1. 若需要更改設定 ,以下是基本&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt; port  6379      #指定 port 6379 ,(Default)
+ bind  0.0.0.0   #若要讓其他Host 連進來,就要聽 0.0.0.0 (記的防火牆要開 port) 
+ maxmemory 1G    #指定份配 記憶體 1G容量
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;redis-基本指令&#34;&gt;redis 基本指令&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;指令help
+&lt;code&gt;
+redis 127.0.0.1:6379&amp;gt; help keys
+	redis 127.0.0.1:6379&amp;gt; help type
+		TYPE key
+		summary: Determine the type stored at key
+		since: 1.0.0
+		group: generic
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;查看key 是哪一種數據結構
+&lt;code&gt;
+	127.0.0.1:6379&amp;gt; type andy
+	string
+127.0.0.1:6379&amp;gt; type it
+	list
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;看目前所有的keys
+&lt;code&gt;
+redis 127.0.0.1:6379&amp;gt; keys * 
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;設定 key valuse
+&lt;code&gt;
+redis 127.0.0.1:6379&amp;gt; set andy Google
+	OK
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;取key的值
+&lt;code&gt;
+redis 127.0.0.1:6379&amp;gt; get andy
+&amp;quot;Google&amp;quot;
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;清除所有 redis DB
+&lt;code&gt;
+redis 127.0.0.1:6379&amp;gt; flushdb
+OK
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;show redis 相關資訊
+&lt;code&gt;
+redis 127.0.0.1:6379&amp;gt; info
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;設定slave
+&lt;code&gt;
+redis 127.0.0.1:6379&amp;gt; slaveof  master  port
+redis 127.0.0.1:6379&amp;gt; slaveof  172.17.0.15 6378
+&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;取消設定slave&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;redis 127.0.0.1:6379&amp;gt; slaveof on one
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;參考資料&#34;&gt;參考資料&lt;/h2&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://wiki.jikexueyuan.com/project/redis-guide/instruction.html&#34;&gt;redis介紹&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://blog.csdn.net/ithomer/article/details/9232891&#34;&gt;redis.conf 配置詳解 &lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Redis - 初體驗</title>
+      <link>http://myghost.aligogo.pw/post/redis-chu-ti-yan/</link>
+      <pubDate>Tue, 16 Aug 2016 17:18:36 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/redis-chu-ti-yan/</guid>
+      <description>
+
+&lt;h2 id=&#34;安裝-redis-server&#34;&gt;安裝 redis server&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;yum 安裝 ,先使用epel repo 方式。
+&lt;code&gt;
+yum install epel-release
+&lt;/code&gt;
+1-1.更改 /etc/yum.repos.d/epel.repo
+&lt;code&gt;
+[epel]
+.....
+enabled=0
+.....
+&lt;/code&gt;
+1-2.安裝 redi
+&lt;code&gt;
+yum --enablerepo=epel install redis
+&lt;/code&gt;
+2.注意事項:
+2-1. &lt;strong&gt;安裝 redis-server,與jemalloc有相依性&lt;/strong&gt;
+2-2. &lt;strong&gt;centos5需要有TCL套件 8.5 以上版本才能支援,因此 redis 3.x預設是無法安裝,需update tcl 到 8.5以上&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;3./etc/redis.conf 預設  port 6379; bind 127.0.0.1 ,若只要讓本機存取 redis server,不用設定直接啟動即可。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/etc/init.d/redis start
+netstat -tlnp
+
+Proto Recv-Q Send-Q Local Address               Foreign Address             State       PID/Program name   
+tcp        0      0 127.0.0.1:6379              0.0.0.0:*                   LISTEN      3454/redis-server
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;3-1. 若需要更改設定 ,以下是基本&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt; port  6379      #指定 port 6379 ,(Default)
+ bind  0.0.0.0   #若要讓其他Host 連進來,就要聽 0.0.0.0 (記的防火牆要開 port) 
+ maxmemory 1G    #指定份配 記憶體 1G容量
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;redis-基本指令&#34;&gt;redis 基本指令&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;指令help
+&lt;code&gt;
+redis 127.0.0.1:6379&amp;gt; help keys
+	redis 127.0.0.1:6379&amp;gt; help type
+		TYPE key
+		summary: Determine the type stored at key
+		since: 1.0.0
+		group: generic
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;查看key 是哪一種數據結構
+&lt;code&gt;
+	127.0.0.1:6379&amp;gt; type andy
+	string
+127.0.0.1:6379&amp;gt; type it
+	list
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;看目前所有的keys
+&lt;code&gt;
+redis 127.0.0.1:6379&amp;gt; keys * 
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;設定 key valuse
+&lt;code&gt;
+redis 127.0.0.1:6379&amp;gt; set andy Google
+	OK
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;取key的值
+&lt;code&gt;
+redis 127.0.0.1:6379&amp;gt; get andy
+&amp;quot;Google&amp;quot;
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;清除所有 redis DB
+&lt;code&gt;
+redis 127.0.0.1:6379&amp;gt; flushdb
+OK
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;show redis 相關資訊
+&lt;code&gt;
+redis 127.0.0.1:6379&amp;gt; info
+&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;設定slave
+&lt;code&gt;
+redis 127.0.0.1:6379&amp;gt; slaveof  master  port
+redis 127.0.0.1:6379&amp;gt; slaveof  172.17.0.15 6378
+&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;取消設定slave&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;redis 127.0.0.1:6379&amp;gt; slaveof on one
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;參考資料&#34;&gt;參考資料&lt;/h2&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://wiki.jikexueyuan.com/project/redis-guide/instruction.html&#34;&gt;redis介紹&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://blog.csdn.net/ithomer/article/details/9232891&#34;&gt;redis.conf 配置詳解 &lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

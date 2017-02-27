@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Alpine on ALIBABA WIKI - 菩薩球球</title>
+    <link>http://myghost.aligogo.pw/tags/alpine/index.xml</link>
+    <description>Recent content in Alpine on ALIBABA WIKI - 菩薩球球</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <atom:link href="http://myghost.aligogo.pw/tags/alpine/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Alpine Linux Docker container with sshd</title>
+      <link>http://myghost.aligogo.pw/post/alpine-ssh/</link>
+      <pubDate>Sun, 15 Jan 2017 08:21:31 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/alpine-ssh/</guid>
+      <description>
+
+&lt;h2 id=&#34;簡介&#34;&gt;簡介&lt;/h2&gt;
+
+&lt;p&gt;Alpine Linux 是很輕量級且安全度很高的發行版本。基本系統（包含可執行核心）在5MB以下,非常適合運作在 嵌入式系統及單板電腦上。幾乎可以與BusyBox Linux 這個發行版本相比拼,但與BusyBox 不同的是它支援需多popular套件可以安裝。因此此篇章試著用Alpine image 運作在 Docker上。&lt;/p&gt;
+
+&lt;h2 id=&#34;建立dockerfile&#34;&gt;建立Dockerfile&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;先建立 目錄 名為 Alpine, 此目錄下建 Dockerfile&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;mkdir /tmp/Alpine &amp;amp;&amp;amp; touch /tmp/Dockerfile
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;編寫 Dockerfile&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;FROM alpine:latest
+RUN  apk update
+RUN  apk add openssh
+RUN  /usr/bin/ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key
+RUN  /usr/bin/ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key
+RUN  /usr/bin/ssh-keygen -t ecdsa -f  /etc/ssh/ssh_host_ecdsa_key                                                                     
+RUN  /usr/bin/ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key
+RUN  echo &#39;root:qwedcxza&#39;|chpasswd
+RUN  echo &#39;PermitRootLogin yes&#39; &amp;gt;&amp;gt; /etc/ssh/sshd_config
+CMD [&amp;quot;/usr/sbin/sshd&amp;quot;, &amp;quot;-D&amp;quot;, &amp;quot;-f&amp;quot;, &amp;quot;/etc/ssh/sshd_config&amp;quot;]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;執行建立docker image&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;cd /tmp/Alpine
+docker build  -t ali:Alpine .
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;從剛建立的 ali:Alpine 這 image,建立container,並執行它&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;docker run  -d --name=AlpineTest --hostname=Alpine ali:Alpine
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;看 此 Container 目前分配的 IP 是多少&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;docker inspect -f  &#39;{{.NetworkSettings.IPAddress}}&#39; AlpineTest
+
+172.17.0.2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;測試登入看看&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;ssh 172.17.0.2
+
+Welcome to Alpine!
+
+The Alpine Wiki contains a large amount of how-to guides and general
+information about administrating Alpine systems.
+See &amp;lt;http://wiki.alpinelinux.org&amp;gt;.
+
+You can setup the system with the command: setup-alpine
+
+You may change this message by editing /etc/motd.
+
+Alpine:~#
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;參考資料&#34;&gt;參考資料:&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://wiki.alpinelinux.org/wiki/Main_Page&amp;quot;target=&amp;quot;_blank&#34;&gt;官方 Alpine wiki&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://wiki.alpinelinux.org/wiki/Alpine_Linux_package_management&amp;quot;target=&amp;quot;_blank&#34;&gt;官方 Alpine apk 套件管理&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://blog.wu-boy.com/2015/12/a-super-small-docker-image-based-on-alpine-linux/&amp;quot;target=&amp;quot;_blank&#34;&gt;Alpine Linux 挑戰最小 docker image OS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://firesk.blog.51cto.com/180373/46625&amp;quot;target=&amp;quot;_blank&#34;&gt;解決啟動SSHD服務時報錯&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Alpine Linux Docker container with sshd</title>
+      <link>http://myghost.aligogo.pw/post/old/alpine-ssh/</link>
+      <pubDate>Sun, 15 Jan 2017 08:21:31 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/old/alpine-ssh/</guid>
+      <description>
+
+&lt;h2 id=&#34;簡介&#34;&gt;簡介&lt;/h2&gt;
+
+&lt;p&gt;Alpine Linux 是很輕量級且安全度很高的發行版本。基本系統（包含可執行核心）在5MB以下,非常適合運作在 嵌入式系統及單板電腦上。幾乎可以與BusyBox Linux 這個發行版本相比拼,但與BusyBox 不同的是它支援需多popular套件可以安裝。因此此篇章試著用Alpine image 運作在 Docker上。&lt;/p&gt;
+
+&lt;h2 id=&#34;建立dockerfile&#34;&gt;建立Dockerfile&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;先建立 目錄 名為 Alpine, 此目錄下建 Dockerfile&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;mkdir /tmp/Alpine &amp;amp;&amp;amp; touch /tmp/Dockerfile
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;編寫 Dockerfile&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;FROM alpine:latest
+RUN  apk update
+RUN  apk add openssh
+RUN  /usr/bin/ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key
+RUN  /usr/bin/ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key
+RUN  /usr/bin/ssh-keygen -t ecdsa -f  /etc/ssh/ssh_host_ecdsa_key                                                                     
+RUN  /usr/bin/ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key
+RUN  echo &#39;root:qwedcxza&#39;|chpasswd
+RUN  echo &#39;PermitRootLogin yes&#39; &amp;gt;&amp;gt; /etc/ssh/sshd_config
+CMD [&amp;quot;/usr/sbin/sshd&amp;quot;, &amp;quot;-D&amp;quot;, &amp;quot;-f&amp;quot;, &amp;quot;/etc/ssh/sshd_config&amp;quot;]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;執行建立docker image&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;cd /tmp/Alpine
+docker build  -t ali:Alpine .
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;從剛建立的 ali:Alpine 這 image,建立container,並執行它&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;docker run  -d --name=AlpineTest --hostname=Alpine ali:Alpine
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;看 此 Container 目前分配的 IP 是多少&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;docker inspect -f  &#39;{{.NetworkSettings.IPAddress}}&#39; AlpineTest
+
+172.17.0.2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;測試登入看看&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;ssh 172.17.0.2
+
+Welcome to Alpine!
+
+The Alpine Wiki contains a large amount of how-to guides and general
+information about administrating Alpine systems.
+See &amp;lt;http://wiki.alpinelinux.org&amp;gt;.
+
+You can setup the system with the command: setup-alpine
+
+You may change this message by editing /etc/motd.
+
+Alpine:~#
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;參考資料&#34;&gt;參考資料:&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://wiki.alpinelinux.org/wiki/Main_Page&amp;quot;target=&amp;quot;_blank&#34;&gt;官方 Alpine wiki&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://wiki.alpinelinux.org/wiki/Alpine_Linux_package_management&amp;quot;target=&amp;quot;_blank&#34;&gt;官方 Alpine apk 套件管理&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://blog.wu-boy.com/2015/12/a-super-small-docker-image-based-on-alpine-linux/&amp;quot;target=&amp;quot;_blank&#34;&gt;Alpine Linux 挑戰最小 docker image OS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://firesk.blog.51cto.com/180373/46625&amp;quot;target=&amp;quot;_blank&#34;&gt;解決啟動SSHD服務時報錯&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

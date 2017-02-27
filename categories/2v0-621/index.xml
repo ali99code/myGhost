@@ -1,0 +1,964 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>2v0 621 on ALIBABA WIKI - 菩薩球球</title>
+    <link>http://myghost.aligogo.pw/categories/2v0-621/index.xml</link>
+    <description>Recent content in 2v0 621 on ALIBABA WIKI - 菩薩球球</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <atom:link href="http://myghost.aligogo.pw/categories/2v0-621/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>2v0-621_Section7</title>
+      <link>http://myghost.aligogo.pw/post/2v0-621-7/</link>
+      <pubDate>Wed, 21 Sep 2016 18:43:13 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/2v0-621-7/</guid>
+      <description>
+
+&lt;h1 id=&#34;troubleshoot-a-vsphere-deployment&#34;&gt;Troubleshoot a vSphere Deployment&lt;/h1&gt;
+
+&lt;ol&gt;
+&lt;li&gt;內容程式庫的直接父系為全域根物件。&lt;/li&gt;
+&lt;li&gt;當Content library 被刪除之後,後端Storage 也會被刪除。&lt;/li&gt;
+&lt;li&gt;如果在安裝 vCenter Server、Inventory Service 或 Web client 的過程中遇到有關 vCenter SSO 的問題，請執行以下步驟：
+
+&lt;ul&gt;
+&lt;li&gt;確保 vCenter SSO 服務器與 Active Directory 域控制器之間存在時差。如果時差超過 5 分鐘，Kerboros 身份驗證會失敗&lt;/li&gt;
+&lt;li&gt;驗證 SSO 服務器的配置&lt;/li&gt;
+&lt;li&gt;驗證每個域控制器在 DNS 中是否均有正確配置的 PTR 記錄，並確保 PTR 記錄的內容準確。要從 Windows 命令行對此進行檢查，可對名稱和 IP 運行 nslookup 命令&lt;/li&gt;
+&lt;li&gt;如果在域控制器中啟用了 SSL，請確認 SSL 證書仍然有效。&lt;/li&gt;
+&lt;li&gt;移除 vCenter SSO 主機，然後將其重新加入到域中。這樣，如果在向域添加的過程中出現故障，便可發現任何連接或基於信任的錯誤&lt;/li&gt;
+&lt;li&gt;安裝完成後，查看 install.log 和 imsTrace.log 文件 SSO_Server_Directory\utils\logs\，以瞭解是否在自動發現過程中出現錯誤。&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;假若在vCenter Server 無法看到 上週 Performance 統計資訊的原因
+
+&lt;ul&gt;
+&lt;li&gt;Performance statistics are turned off&lt;/li&gt;
+&lt;li&gt;The Past Day rollup job is not present.&lt;/li&gt;
+&lt;li&gt;The stats_rollup_1_proc is not present&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;當 ESXi 5.&lt;sup&gt;1&lt;/sup&gt;&amp;frasl;&lt;sub&gt;5&lt;/sub&gt;.5 主機由 vCenter Server 5.1 和 5.5 進行管理時，將安裝兩個組件，每個組件都有自己的日誌&lt;a href=&#34;https://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;amp;cmd=displayKC&amp;amp;externalId=2095394&#34;&gt;ESXi 5.1 和 5.5 日誌文件的位置 (2095394) &lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;/var/log/vpxa.log：vCenter Server vpxa 代理日誌，包括與 vCenter Server 和主機管理 hostd 代理之間的通信。&lt;/li&gt;
+&lt;li&gt;/var/log/fdm.log：vSphere High Availability 日誌，由 fdm 服務生成。&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;虛擬機已意外關閉,可以看以下兩個Log&lt;a href=&#34;https://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;amp;cmd=displayKC&amp;amp;externalId=2078043&#34;&gt;確定虛擬機關閉電源或重新啟動的原因 (2078043) &lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;vmware.log&lt;/li&gt;
+&lt;li&gt;hostd.log&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;在 vSphere Web Client 中有&lt;strong&gt;孤立(orphaned)&lt;/strong&gt;的虛擬機,發生原因如下:&lt;a href=&#34;https://pubs.vmware.com/vsphere-50/index.jsp#com.vmware.vsphere.troubleshooting.doc_50/GUID-BFD8C9BC-30FB-4A92-AFEC-2FC9FF387920.html&#34;&gt;在 vSphere Web Client 中恢復孤立的虛擬機&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;主機故障切換失敗&lt;/li&gt;
+&lt;li&gt;直接在主機上取消對虛擬機的註冊時&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;無法開啟VirtualMachine &lt;a href=&#34;https://pubs.vmware.com/vsphere-50/index.jsp?topic=%2Fcom.vmware.vsphere.troubleshooting.doc_50%2FGUID-D4770546-9F9A-4F1E-AC1C-CF313E6130F4.html&#34;&gt;無法打開虛擬機電源&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The virtual machine is running on an ESXi host which has an expired license.&lt;/li&gt;
+&lt;li&gt;The virtual machine is running on a datastore which has insufficient disk space for the .vswp file&lt;/li&gt;
+&lt;li&gt;The virtual machine is in a cluster with vSphere HA Admission control enabled&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;哪個指令可以檢驗 VMFS3 and VMFS5 Datastore for metadata inconsistency(metadata 一致性) &lt;a href=&#34;http://www.running-system.com/how-to-check-vmfs-for-metadata-corruption-esxi-5-1-and-later/&#34;&gt;參考check VMFS &lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;voma(Vmware Ondisk Metadata Analyser)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;哪兩個原因造成 VirtualSAN 無法用 local flash device&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;It has a VMFS datastore present.&lt;/li&gt;
+&lt;li&gt;It is in use by the vFlash Read Cache feature.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;對於配置Virtual Machine template造成 slow Performance,以下三項動作來改善它&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Increase network throughput by adding additional uplinks to the vSwitch.&lt;/li&gt;
+&lt;li&gt;Change the destination datastore or volume for the virtual machine template.&lt;/li&gt;
+&lt;li&gt;Configure a Provisioning Traffic vmkernel port to perform the deployment operation.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;無法從分散式交換器中移除主機或刪除主機代理交換器，原因如下。 &lt;a href=&#34;https://pubs.vmware.com/vsphere-55/index.jsp?topic=%2Fcom.vmware.vsphere.troubleshooting.doc%2FGUID-038AC93F-D710-48ED-8E3B-258A23FB2930.html&#34;&gt;無法從 vSphere Distributed Switch 中移除主機&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;使用中的交換器上有 VMkernel 介面卡。&lt;/li&gt;
+&lt;li&gt;有連線到交換器的虛擬機器網路介面卡。&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;IF the NFS datastore is showing 0 bytes of capacity when you use &lt;strong&gt;df -h&lt;/strong&gt; command, it means that the NFS server that hosts datastore is down.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;vCenter server Appliance 5 要升級到  6 的版本,需間接升級。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;5.0 -&amp;gt; 5.1 update 3 -&amp;gt; vcenter 6.0&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;調查 vCenter Server upgrade 發生的錯誤訊息,可以用以下三個 Log 來調查&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;vminst.log&lt;/li&gt;
+&lt;li&gt;vim-vcs-msi.log&lt;/li&gt;
+&lt;li&gt;pkgmgr.log&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;利用 esxtop 分析 CPU 情況,以下哪三個指標顯示 CPU 爭奪&lt;a href=&#34;https://communities.vmware.com/docs/DOC-9279&#34;&gt;參考解讀CPU統計值_英文&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;%RDY  (Ready Time: 說明vCPU 要等候多久才有可用的LCPU)&lt;/li&gt;
+&lt;li&gt;%RUN&lt;/li&gt;
+&lt;li&gt;%MLMTD&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;在VM 設定檔中設定 CPU Performance&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;numa.vcpu.preferHT=TRUE&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;要使用vNUMA 功能需更新 Virtual Hardware version 8&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;通常 %RDY &amp;gt; 10% 情況:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;% RDY 約等於 %USED  表示 OK&lt;/li&gt;
+&lt;li&gt;% RDY 與 %USED 相差太多 表示 不 OK&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;VMware FT 是保護 Host零停機。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Fault Tolerance is not licensed in all editions of VMware vSphere. Check the edition you are running and upgrade to an edition that includes Fault Tolerance.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;數據存儲群集中的數據存儲無法進入維護模式。「正在進入維護模式」狀態保持為 1%,造成此原因如下:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Storage DRS is disabled on the disk.&lt;/li&gt;
+&lt;li&gt;Storage DRS rules prevent Storage DRS from making migration recommendations for the disk.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;以下是SDRS負載不平衡的可能原因：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The migration threshold is too high.(遷移閾值過高。)&lt;/li&gt;
+&lt;li&gt;VM/VM or VM/Host DRS rules prevent virtual machines from being moved.(虛擬機/虛擬機或虛擬機/主機 DRS 規則可阻止移動虛擬機。)&lt;/li&gt;
+&lt;li&gt;DRS is disabled for one or more virtual machines.(
+為一個或多個虛擬機禁用了 DRS。)&lt;/li&gt;
+&lt;li&gt;A device is mounted to one or more virtual machines preventing DRS from moving the virtual machine in order to balance the load.(擬機與 DRS 要將它們移動到的主機不兼容。這就是說，群集中至少有一個主機與將要遷移的虛擬機不兼容。例如，如果主機 A 的 CPU 不與主機 B 的 CPU vMotion 兼容，則主機 A 將與在主機 B 上運行的已打開電源虛擬機變得不兼容。)&lt;/li&gt;
+&lt;li&gt;Virtual machines are not compatible with the hosts to which DRS would move them. That is, at least one of the hosts in the cluster is incompatible for the virtual machines that would be migrated. For example, if host A&amp;rsquo;s CPU is not vMotion-compatible with host B&amp;rsquo;s CPU, then host A becomes incompatible for powered-on virtual machines running on host B.(虛擬機與 DRS 要將它們移動到的主機不兼容。這就是說，群集中至少有一個主機與將要遷移的虛擬機不兼容。例如，如果主機 A 的 CPU 不與主機 B 的 CPU vMotion 兼容，則主機 A 將與在主機 B 上運行的已打開電源虛擬機變得不兼容)&lt;/li&gt;
+&lt;li&gt;It would be more detrimental for the virtual machine&amp;rsquo;s performance to move it than for it to run where it is currently located. This may occur when loads are unstable or the migration cost is high compared to the benefit gained from moving the virtual machine.(與虛擬機保留在當前位置繼續運行相比，移動虛擬機可能會對其性能更加不利。當負載不穩定或者遷移成本比移動虛擬機所帶來的收益要高時，就會出現上述情況。)&lt;/li&gt;
+&lt;li&gt;vMotion is not enabled or set up for the hosts in the cluster.(沒有為群集中的主機啟用或設置 vMotion。)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;如果在共享存儲中沒有允許數據存儲檢測信號的冗餘，則會發生此問題。 自 vSphere 5.0 開始，vSphere HA 至少需要在群集中的所有主機之間共享兩個共享數據存儲，才能正常運行數據存儲檢測信號。&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>2v0-621_Section7</title>
+      <link>http://myghost.aligogo.pw/post/old/2v0-621-7/</link>
+      <pubDate>Wed, 21 Sep 2016 18:43:13 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/old/2v0-621-7/</guid>
+      <description>
+
+&lt;h1 id=&#34;troubleshoot-a-vsphere-deployment&#34;&gt;Troubleshoot a vSphere Deployment&lt;/h1&gt;
+
+&lt;ol&gt;
+&lt;li&gt;內容程式庫的直接父系為全域根物件。&lt;/li&gt;
+&lt;li&gt;當Content library 被刪除之後,後端Storage 也會被刪除。&lt;/li&gt;
+&lt;li&gt;如果在安裝 vCenter Server、Inventory Service 或 Web client 的過程中遇到有關 vCenter SSO 的問題，請執行以下步驟：
+
+&lt;ul&gt;
+&lt;li&gt;確保 vCenter SSO 服務器與 Active Directory 域控制器之間存在時差。如果時差超過 5 分鐘，Kerboros 身份驗證會失敗&lt;/li&gt;
+&lt;li&gt;驗證 SSO 服務器的配置&lt;/li&gt;
+&lt;li&gt;驗證每個域控制器在 DNS 中是否均有正確配置的 PTR 記錄，並確保 PTR 記錄的內容準確。要從 Windows 命令行對此進行檢查，可對名稱和 IP 運行 nslookup 命令&lt;/li&gt;
+&lt;li&gt;如果在域控制器中啟用了 SSL，請確認 SSL 證書仍然有效。&lt;/li&gt;
+&lt;li&gt;移除 vCenter SSO 主機，然後將其重新加入到域中。這樣，如果在向域添加的過程中出現故障，便可發現任何連接或基於信任的錯誤&lt;/li&gt;
+&lt;li&gt;安裝完成後，查看 install.log 和 imsTrace.log 文件 SSO_Server_Directory\utils\logs\，以瞭解是否在自動發現過程中出現錯誤。&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;假若在vCenter Server 無法看到 上週 Performance 統計資訊的原因
+
+&lt;ul&gt;
+&lt;li&gt;Performance statistics are turned off&lt;/li&gt;
+&lt;li&gt;The Past Day rollup job is not present.&lt;/li&gt;
+&lt;li&gt;The stats_rollup_1_proc is not present&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;當 ESXi 5.&lt;sup&gt;1&lt;/sup&gt;&amp;frasl;&lt;sub&gt;5&lt;/sub&gt;.5 主機由 vCenter Server 5.1 和 5.5 進行管理時，將安裝兩個組件，每個組件都有自己的日誌&lt;a href=&#34;https://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;amp;cmd=displayKC&amp;amp;externalId=2095394&#34;&gt;ESXi 5.1 和 5.5 日誌文件的位置 (2095394) &lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;/var/log/vpxa.log：vCenter Server vpxa 代理日誌，包括與 vCenter Server 和主機管理 hostd 代理之間的通信。&lt;/li&gt;
+&lt;li&gt;/var/log/fdm.log：vSphere High Availability 日誌，由 fdm 服務生成。&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;虛擬機已意外關閉,可以看以下兩個Log&lt;a href=&#34;https://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;amp;cmd=displayKC&amp;amp;externalId=2078043&#34;&gt;確定虛擬機關閉電源或重新啟動的原因 (2078043) &lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;vmware.log&lt;/li&gt;
+&lt;li&gt;hostd.log&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;在 vSphere Web Client 中有&lt;strong&gt;孤立(orphaned)&lt;/strong&gt;的虛擬機,發生原因如下:&lt;a href=&#34;https://pubs.vmware.com/vsphere-50/index.jsp#com.vmware.vsphere.troubleshooting.doc_50/GUID-BFD8C9BC-30FB-4A92-AFEC-2FC9FF387920.html&#34;&gt;在 vSphere Web Client 中恢復孤立的虛擬機&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;主機故障切換失敗&lt;/li&gt;
+&lt;li&gt;直接在主機上取消對虛擬機的註冊時&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;無法開啟VirtualMachine &lt;a href=&#34;https://pubs.vmware.com/vsphere-50/index.jsp?topic=%2Fcom.vmware.vsphere.troubleshooting.doc_50%2FGUID-D4770546-9F9A-4F1E-AC1C-CF313E6130F4.html&#34;&gt;無法打開虛擬機電源&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The virtual machine is running on an ESXi host which has an expired license.&lt;/li&gt;
+&lt;li&gt;The virtual machine is running on a datastore which has insufficient disk space for the .vswp file&lt;/li&gt;
+&lt;li&gt;The virtual machine is in a cluster with vSphere HA Admission control enabled&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;哪個指令可以檢驗 VMFS3 and VMFS5 Datastore for metadata inconsistency(metadata 一致性) &lt;a href=&#34;http://www.running-system.com/how-to-check-vmfs-for-metadata-corruption-esxi-5-1-and-later/&#34;&gt;參考check VMFS &lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;voma(Vmware Ondisk Metadata Analyser)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;哪兩個原因造成 VirtualSAN 無法用 local flash device&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;It has a VMFS datastore present.&lt;/li&gt;
+&lt;li&gt;It is in use by the vFlash Read Cache feature.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;對於配置Virtual Machine template造成 slow Performance,以下三項動作來改善它&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Increase network throughput by adding additional uplinks to the vSwitch.&lt;/li&gt;
+&lt;li&gt;Change the destination datastore or volume for the virtual machine template.&lt;/li&gt;
+&lt;li&gt;Configure a Provisioning Traffic vmkernel port to perform the deployment operation.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;無法從分散式交換器中移除主機或刪除主機代理交換器，原因如下。 &lt;a href=&#34;https://pubs.vmware.com/vsphere-55/index.jsp?topic=%2Fcom.vmware.vsphere.troubleshooting.doc%2FGUID-038AC93F-D710-48ED-8E3B-258A23FB2930.html&#34;&gt;無法從 vSphere Distributed Switch 中移除主機&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;使用中的交換器上有 VMkernel 介面卡。&lt;/li&gt;
+&lt;li&gt;有連線到交換器的虛擬機器網路介面卡。&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;IF the NFS datastore is showing 0 bytes of capacity when you use &lt;strong&gt;df -h&lt;/strong&gt; command, it means that the NFS server that hosts datastore is down.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;vCenter server Appliance 5 要升級到  6 的版本,需間接升級。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;5.0 -&amp;gt; 5.1 update 3 -&amp;gt; vcenter 6.0&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;調查 vCenter Server upgrade 發生的錯誤訊息,可以用以下三個 Log 來調查&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;vminst.log&lt;/li&gt;
+&lt;li&gt;vim-vcs-msi.log&lt;/li&gt;
+&lt;li&gt;pkgmgr.log&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;利用 esxtop 分析 CPU 情況,以下哪三個指標顯示 CPU 爭奪&lt;a href=&#34;https://communities.vmware.com/docs/DOC-9279&#34;&gt;參考解讀CPU統計值_英文&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;%RDY  (Ready Time: 說明vCPU 要等候多久才有可用的LCPU)&lt;/li&gt;
+&lt;li&gt;%RUN&lt;/li&gt;
+&lt;li&gt;%MLMTD&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;在VM 設定檔中設定 CPU Performance&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;numa.vcpu.preferHT=TRUE&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;要使用vNUMA 功能需更新 Virtual Hardware version 8&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;通常 %RDY &amp;gt; 10% 情況:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;% RDY 約等於 %USED  表示 OK&lt;/li&gt;
+&lt;li&gt;% RDY 與 %USED 相差太多 表示 不 OK&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;VMware FT 是保護 Host零停機。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Fault Tolerance is not licensed in all editions of VMware vSphere. Check the edition you are running and upgrade to an edition that includes Fault Tolerance.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;數據存儲群集中的數據存儲無法進入維護模式。「正在進入維護模式」狀態保持為 1%,造成此原因如下:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Storage DRS is disabled on the disk.&lt;/li&gt;
+&lt;li&gt;Storage DRS rules prevent Storage DRS from making migration recommendations for the disk.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;以下是SDRS負載不平衡的可能原因：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The migration threshold is too high.(遷移閾值過高。)&lt;/li&gt;
+&lt;li&gt;VM/VM or VM/Host DRS rules prevent virtual machines from being moved.(虛擬機/虛擬機或虛擬機/主機 DRS 規則可阻止移動虛擬機。)&lt;/li&gt;
+&lt;li&gt;DRS is disabled for one or more virtual machines.(
+為一個或多個虛擬機禁用了 DRS。)&lt;/li&gt;
+&lt;li&gt;A device is mounted to one or more virtual machines preventing DRS from moving the virtual machine in order to balance the load.(擬機與 DRS 要將它們移動到的主機不兼容。這就是說，群集中至少有一個主機與將要遷移的虛擬機不兼容。例如，如果主機 A 的 CPU 不與主機 B 的 CPU vMotion 兼容，則主機 A 將與在主機 B 上運行的已打開電源虛擬機變得不兼容。)&lt;/li&gt;
+&lt;li&gt;Virtual machines are not compatible with the hosts to which DRS would move them. That is, at least one of the hosts in the cluster is incompatible for the virtual machines that would be migrated. For example, if host A&amp;rsquo;s CPU is not vMotion-compatible with host B&amp;rsquo;s CPU, then host A becomes incompatible for powered-on virtual machines running on host B.(虛擬機與 DRS 要將它們移動到的主機不兼容。這就是說，群集中至少有一個主機與將要遷移的虛擬機不兼容。例如，如果主機 A 的 CPU 不與主機 B 的 CPU vMotion 兼容，則主機 A 將與在主機 B 上運行的已打開電源虛擬機變得不兼容)&lt;/li&gt;
+&lt;li&gt;It would be more detrimental for the virtual machine&amp;rsquo;s performance to move it than for it to run where it is currently located. This may occur when loads are unstable or the migration cost is high compared to the benefit gained from moving the virtual machine.(與虛擬機保留在當前位置繼續運行相比，移動虛擬機可能會對其性能更加不利。當負載不穩定或者遷移成本比移動虛擬機所帶來的收益要高時，就會出現上述情況。)&lt;/li&gt;
+&lt;li&gt;vMotion is not enabled or set up for the hosts in the cluster.(沒有為群集中的主機啟用或設置 vMotion。)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;如果在共享存儲中沒有允許數據存儲檢測信號的冗餘，則會發生此問題。 自 vSphere 5.0 開始，vSphere HA 至少需要在群集中的所有主機之間共享兩個共享數據存儲，才能正常運行數據存儲檢測信號。&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>2v0-621_Section9</title>
+      <link>http://myghost.aligogo.pw/post/2v0-621-9/</link>
+      <pubDate>Mon, 19 Sep 2016 19:31:16 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/2v0-621-9/</guid>
+      <description>
+
+&lt;h1 id=&#34;configure-and-administer-vsphere-availability-solutions&#34;&gt;Configure and Administer vSphere Availability Solutions&lt;/h1&gt;
+
+&lt;ol&gt;
+&lt;li&gt;在vSphere 6 最大分配 vCPU 給 VM 為 128 個 。&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;VMs configured with DirectPath I/O&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;vSMP&lt;/li&gt;
+&lt;li&gt;vNUMA&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;You have enabled Storage DRS for a datastore cluster, but Storage DRS is disabled on one or more virtual machine disks in the datastore cluster.(即使為某個數據存儲群集啟用了存儲 DRS，也可能會在該數據存儲群集中的某些虛擬磁盤上禁用存儲 DRS。)以下情形可能導致在虛擬磁盤上禁用存儲 DRS。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;虛擬機的交換文件是主機-本地交換文件（存儲在主機上的指定數據存儲中）。無法重定位該交換文件，該交換文件磁盤將禁用存儲 DRS。&lt;/li&gt;
+&lt;li&gt;為虛擬機的 .vmx 交換文件指定了特定位置。無法重定位該交換文件，.vmx 交換文件磁盤上將禁用存儲 DRS&lt;/li&gt;
+&lt;li&gt;當前已對 vCenter Server 中的虛擬機禁用重定位或 Storage vMotion 操作（例如，因為虛擬機上正在執行其他 vCenter Server 操作）。在 vCenter Server 中重新啟用重定位或 Storage vMotion 操作之前將禁用存儲 DRS。&lt;/li&gt;
+&lt;li&gt;虛擬機的主磁盤受 vSphere HA 保護，重定位該磁盤將導致失去 vSphere HA 保護。&lt;/li&gt;
+&lt;li&gt;磁盤是 CD-ROM/ISO 文件。&lt;/li&gt;
+&lt;li&gt;如果該磁盤是獨立磁盤，則除非進行重定位或克隆放置，否則將禁用存儲 DRS&lt;/li&gt;
+&lt;li&gt;如果虛擬機在獨立於主數據存儲的數據存儲上具有系統文件（舊版），則主磁盤上將禁用存儲 DRS。如果使用 Storage vMotion 手動遷移主磁盤，不同數據存儲上的系統文件都將位於目標數據存儲上，主磁盤上將啟用存儲 DRS。&lt;/li&gt;
+&lt;li&gt;如果虛擬機的某個磁盤將基礎/重做文件分散在多個單獨的數據存儲上（舊版），則將禁用該磁盤的存儲 DRS。如果使用 Storage vMotion 手動遷移磁盤，則不同數據存儲上的文件都將位於目標數據存儲上，且將在磁盤上啟用存儲 DRS。&lt;/li&gt;
+&lt;li&gt;虛擬機中存在隱藏磁盤（例如，以前快照中的磁盤，而非當前快照中的磁盤）。這會導致在虛擬機上禁用存儲 DRS。&lt;/li&gt;
+&lt;li&gt;虛擬機是一個模板。&lt;/li&gt;
+&lt;li&gt;虛擬機啟用了 vSphere Fault Tolerance。&lt;/li&gt;
+&lt;li&gt;虛擬機正在其磁盤之間共享文件。&lt;/li&gt;
+&lt;li&gt;虛擬機對手動指定的數據存儲啟用存儲 DRS。&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;在 VirtualCenter Server 2.0.2 和更高版本中，可以為 VMware High Availability (HA) 指定多個隔離響應地址。使用多個隔離響應地址可以讓 VMware HA 更為準確地瞭解主機的網絡連接情況。可以使用 &lt;strong&gt;das.isolationaddress0 至 das.isolationaddress9&lt;/strong&gt; 選項指定多個隔離響應地址。&lt;a href=&#34;https://kb.vmware.com/selfservice/search.do?cmd=displayKC&amp;amp;docType=kc&amp;amp;docTypeID=DT_KB_1_1&amp;amp;externalId=2077559&#34;&gt;KB2077559&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;虛擬機監控服務還監控虛擬機的 I/O 活動,預設每 120秒會監測I/O &lt;a href=&#34;https://pubs.vmware.com/vsphere-50/index.jsp#com.vmware.vsphere.avail.doc_50/GUID-62B80D7A-C764-40CB-AE59-752DA6AD78E7.html&#34;&gt;pub_虛擬機和應用程序監控&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;vSphere 5.x 和 6.0 中的 VMware High Availability 的高級配置選項&lt;a href=&#34;https://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;amp;cmd=displayKC&amp;amp;externalId=2093965&#34;&gt;KB2093965&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;設置 &lt;strong&gt;VMCP(VM Component Protection)&lt;/strong&gt; ,哪兩個項目是必須要設定&lt;a href=&#34;http://pubs.vmware.com/vsphere-60/index.jsp?topic=%2Fcom.vmware.vsphere.avail.doc%2FGUID-F01F7EB8-FF9D-45E2-A093-5F56A788D027.html&#34;&gt;VM Component Protection&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Host Monitoring&lt;/li&gt;
+&lt;li&gt;VM Restart Priority&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;關於 &lt;strong&gt;Distributed Resource Scheduler (DRS) affinity rule&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;當兩個虛擬機 - 虛擬機關聯性規則發生衝突，舊的將優先考慮與新的規則將被禁用&lt;/li&gt;
+&lt;li&gt;DRS提供更高的優先級，以防止違反反關聯性規則，而不是違反關聯性規則&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;What two IT infrastructure components are virtualized by vSphere Essentials?&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Networks&lt;/li&gt;
+&lt;li&gt;Storage&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>2v0-621_Section9</title>
+      <link>http://myghost.aligogo.pw/post/old/2v0-621-9/</link>
+      <pubDate>Mon, 19 Sep 2016 19:31:16 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/old/2v0-621-9/</guid>
+      <description>
+
+&lt;h1 id=&#34;configure-and-administer-vsphere-availability-solutions&#34;&gt;Configure and Administer vSphere Availability Solutions&lt;/h1&gt;
+
+&lt;ol&gt;
+&lt;li&gt;在vSphere 6 最大分配 vCPU 給 VM 為 128 個 。&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;VMs configured with DirectPath I/O&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;vSMP&lt;/li&gt;
+&lt;li&gt;vNUMA&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;You have enabled Storage DRS for a datastore cluster, but Storage DRS is disabled on one or more virtual machine disks in the datastore cluster.(即使為某個數據存儲群集啟用了存儲 DRS，也可能會在該數據存儲群集中的某些虛擬磁盤上禁用存儲 DRS。)以下情形可能導致在虛擬磁盤上禁用存儲 DRS。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;虛擬機的交換文件是主機-本地交換文件（存儲在主機上的指定數據存儲中）。無法重定位該交換文件，該交換文件磁盤將禁用存儲 DRS。&lt;/li&gt;
+&lt;li&gt;為虛擬機的 .vmx 交換文件指定了特定位置。無法重定位該交換文件，.vmx 交換文件磁盤上將禁用存儲 DRS&lt;/li&gt;
+&lt;li&gt;當前已對 vCenter Server 中的虛擬機禁用重定位或 Storage vMotion 操作（例如，因為虛擬機上正在執行其他 vCenter Server 操作）。在 vCenter Server 中重新啟用重定位或 Storage vMotion 操作之前將禁用存儲 DRS。&lt;/li&gt;
+&lt;li&gt;虛擬機的主磁盤受 vSphere HA 保護，重定位該磁盤將導致失去 vSphere HA 保護。&lt;/li&gt;
+&lt;li&gt;磁盤是 CD-ROM/ISO 文件。&lt;/li&gt;
+&lt;li&gt;如果該磁盤是獨立磁盤，則除非進行重定位或克隆放置，否則將禁用存儲 DRS&lt;/li&gt;
+&lt;li&gt;如果虛擬機在獨立於主數據存儲的數據存儲上具有系統文件（舊版），則主磁盤上將禁用存儲 DRS。如果使用 Storage vMotion 手動遷移主磁盤，不同數據存儲上的系統文件都將位於目標數據存儲上，主磁盤上將啟用存儲 DRS。&lt;/li&gt;
+&lt;li&gt;如果虛擬機的某個磁盤將基礎/重做文件分散在多個單獨的數據存儲上（舊版），則將禁用該磁盤的存儲 DRS。如果使用 Storage vMotion 手動遷移磁盤，則不同數據存儲上的文件都將位於目標數據存儲上，且將在磁盤上啟用存儲 DRS。&lt;/li&gt;
+&lt;li&gt;虛擬機中存在隱藏磁盤（例如，以前快照中的磁盤，而非當前快照中的磁盤）。這會導致在虛擬機上禁用存儲 DRS。&lt;/li&gt;
+&lt;li&gt;虛擬機是一個模板。&lt;/li&gt;
+&lt;li&gt;虛擬機啟用了 vSphere Fault Tolerance。&lt;/li&gt;
+&lt;li&gt;虛擬機正在其磁盤之間共享文件。&lt;/li&gt;
+&lt;li&gt;虛擬機對手動指定的數據存儲啟用存儲 DRS。&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;在 VirtualCenter Server 2.0.2 和更高版本中，可以為 VMware High Availability (HA) 指定多個隔離響應地址。使用多個隔離響應地址可以讓 VMware HA 更為準確地瞭解主機的網絡連接情況。可以使用 &lt;strong&gt;das.isolationaddress0 至 das.isolationaddress9&lt;/strong&gt; 選項指定多個隔離響應地址。&lt;a href=&#34;https://kb.vmware.com/selfservice/search.do?cmd=displayKC&amp;amp;docType=kc&amp;amp;docTypeID=DT_KB_1_1&amp;amp;externalId=2077559&#34;&gt;KB2077559&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;虛擬機監控服務還監控虛擬機的 I/O 活動,預設每 120秒會監測I/O &lt;a href=&#34;https://pubs.vmware.com/vsphere-50/index.jsp#com.vmware.vsphere.avail.doc_50/GUID-62B80D7A-C764-40CB-AE59-752DA6AD78E7.html&#34;&gt;pub_虛擬機和應用程序監控&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;vSphere 5.x 和 6.0 中的 VMware High Availability 的高級配置選項&lt;a href=&#34;https://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;amp;cmd=displayKC&amp;amp;externalId=2093965&#34;&gt;KB2093965&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;設置 &lt;strong&gt;VMCP(VM Component Protection)&lt;/strong&gt; ,哪兩個項目是必須要設定&lt;a href=&#34;http://pubs.vmware.com/vsphere-60/index.jsp?topic=%2Fcom.vmware.vsphere.avail.doc%2FGUID-F01F7EB8-FF9D-45E2-A093-5F56A788D027.html&#34;&gt;VM Component Protection&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Host Monitoring&lt;/li&gt;
+&lt;li&gt;VM Restart Priority&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;關於 &lt;strong&gt;Distributed Resource Scheduler (DRS) affinity rule&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;當兩個虛擬機 - 虛擬機關聯性規則發生衝突，舊的將優先考慮與新的規則將被禁用&lt;/li&gt;
+&lt;li&gt;DRS提供更高的優先級，以防止違反反關聯性規則，而不是違反關聯性規則&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;What two IT infrastructure components are virtualized by vSphere Essentials?&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Networks&lt;/li&gt;
+&lt;li&gt;Storage&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>2v0-621_Section2</title>
+      <link>http://myghost.aligogo.pw/post/2v0-621-2/</link>
+      <pubDate>Sun, 18 Sep 2016 18:13:27 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/2v0-621-2/</guid>
+      <description>
+
+&lt;h1 id=&#34;network&#34;&gt;Network&lt;/h1&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Private VLAN 樣式中,isolated pvlan只可以與Promiscuous連接。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;ESXi NIC Teaming 設定後,負載平衡的設定選擇IP Hash,並在 實體Switch 交換器上啟用LACP功能,即可達成故障切換需求,但無法達成負載平衡。若要使用流量達成負載平衡,須利用iSCSI 的 Multipathing(多重路徑存取方式)。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Network I/O Control (NIOC)&lt;/strong&gt; 主要是 頻寬控制。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Network I/O Control version 3 可以相容 &lt;strong&gt;Network I/O Control version 2&lt;/strong&gt; (vSphere 5.1 and vSphere 5.5)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Network I/O Control version 3&lt;/strong&gt; 分配頻寬控制方式 ,在VM設定上可以分成 三種 (Shares ,Reservation,Limit )
+
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Network I/O Control version 2&lt;/strong&gt;  Upgrade version 3 時,會將原本versin 2的兩項功能給移除&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;User-defined network resource pools&lt;/li&gt;
+&lt;li&gt;Cos tagging of traffic associated&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;secondary provate VLANs&lt;/strong&gt;(pvlan 主要是VLAN再劃分子vlan) 的選項有哪三個&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Promiscuous
+
+&lt;ul&gt;
+&lt;li&gt;VM 互相都會通&lt;/li&gt;
+&lt;li&gt;對Gateway會通&lt;/li&gt;
+&lt;li&gt;對 Isolated 和 Community 都會通&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Isolated
+
+&lt;ul&gt;
+&lt;li&gt;VM 互相都不會通&lt;/li&gt;
+&lt;li&gt;對Gateway會通&lt;/li&gt;
+&lt;li&gt;對 Promiscuous 會通&lt;/li&gt;
+&lt;li&gt;對 Community不會通&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Community
+
+&lt;ul&gt;
+&lt;li&gt;VM 互相都會通&lt;/li&gt;
+&lt;li&gt;對Gateway會通&lt;/li&gt;
+&lt;li&gt;對 Promiscuous 會通&lt;/li&gt;
+&lt;li&gt;對 Isolated 不會通&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>2v0-621_Section2</title>
+      <link>http://myghost.aligogo.pw/post/old/2v0-621-2/</link>
+      <pubDate>Sun, 18 Sep 2016 18:13:27 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/old/2v0-621-2/</guid>
+      <description>
+
+&lt;h1 id=&#34;network&#34;&gt;Network&lt;/h1&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Private VLAN 樣式中,isolated pvlan只可以與Promiscuous連接。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;ESXi NIC Teaming 設定後,負載平衡的設定選擇IP Hash,並在 實體Switch 交換器上啟用LACP功能,即可達成故障切換需求,但無法達成負載平衡。若要使用流量達成負載平衡,須利用iSCSI 的 Multipathing(多重路徑存取方式)。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Network I/O Control (NIOC)&lt;/strong&gt; 主要是 頻寬控制。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Network I/O Control version 3 可以相容 &lt;strong&gt;Network I/O Control version 2&lt;/strong&gt; (vSphere 5.1 and vSphere 5.5)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Network I/O Control version 3&lt;/strong&gt; 分配頻寬控制方式 ,在VM設定上可以分成 三種 (Shares ,Reservation,Limit )
+
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Network I/O Control version 2&lt;/strong&gt;  Upgrade version 3 時,會將原本versin 2的兩項功能給移除&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;User-defined network resource pools&lt;/li&gt;
+&lt;li&gt;Cos tagging of traffic associated&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;secondary provate VLANs&lt;/strong&gt;(pvlan 主要是VLAN再劃分子vlan) 的選項有哪三個&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Promiscuous
+
+&lt;ul&gt;
+&lt;li&gt;VM 互相都會通&lt;/li&gt;
+&lt;li&gt;對Gateway會通&lt;/li&gt;
+&lt;li&gt;對 Isolated 和 Community 都會通&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Isolated
+
+&lt;ul&gt;
+&lt;li&gt;VM 互相都不會通&lt;/li&gt;
+&lt;li&gt;對Gateway會通&lt;/li&gt;
+&lt;li&gt;對 Promiscuous 會通&lt;/li&gt;
+&lt;li&gt;對 Community不會通&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Community
+
+&lt;ul&gt;
+&lt;li&gt;VM 互相都會通&lt;/li&gt;
+&lt;li&gt;對Gateway會通&lt;/li&gt;
+&lt;li&gt;對 Promiscuous 會通&lt;/li&gt;
+&lt;li&gt;對 Isolated 不會通&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>2v0-621_Section1</title>
+      <link>http://myghost.aligogo.pw/post/2v0-621-1/</link>
+      <pubDate>Sun, 18 Sep 2016 17:38:49 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/2v0-621-1/</guid>
+      <description>
+
+&lt;h1 id=&#34;security&#34;&gt;Security&lt;/h1&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;system role  是無法被刪除&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;No Access&lt;/li&gt;
+&lt;li&gt;Read-only&lt;/li&gt;
+&lt;li&gt;Administrator
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;如果新增了自訂角色，且未指派任何權限給該角色，則該角色將會建立為唯讀角色，並具有以下三個系統定義的權限：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;System.Anonymous,&lt;/li&gt;
+&lt;li&gt;System.View&lt;/li&gt;
+&lt;li&gt;System.Read.
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Datastore.Allocate space權限可以做以下工作&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;virtual machine,&lt;/li&gt;
+&lt;li&gt;snapshot,&lt;/li&gt;
+&lt;li&gt;clone, or&lt;/li&gt;
+&lt;li&gt;virtual disk
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Role  Base Access  Control (RBAC)
+User (or Group )  &amp;mdash;&amp;mdash;&amp;gt;  Role   &amp;mdash;&amp;mdash;-&amp;gt;(privileges)  Object&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;vCenter Single Sign-on Server Server 有三種元件:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Kerberos&lt;/li&gt;
+&lt;li&gt;Certificate Authority CA&lt;/li&gt;
+&lt;li&gt;VMware Directory Service&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;vCenter Server 預設會提供 System Role 和 Sample Role&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;vCenter Sever 預設 提共 Sample Role 有哪兩個&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Virtual machine User&lt;/li&gt;
+&lt;li&gt;Network Administrator&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;使用 VMCA 做為中繼憑證授權機構 步驟:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Replace the Root Certificate (Intermediate CA)&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;Replace Machine SSL Certificates (Intermediate CA)&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;Replace Solution User Certificates (Intermediate CA)&lt;/li&gt;
+&lt;li&gt;Replace the VMware Directory Service Certificate&lt;/li&gt;
+&lt;li&gt;Replace the VMware Directory Service Certificate in Mixed Mode Environments&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;ESXi 憑證取代,以下有三個選項&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;VMware Certificate Authority mode&lt;/li&gt;
+&lt;li&gt;Custom Certificate Authority mode&lt;/li&gt;
+&lt;li&gt;Thumbprint mode&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Lockdown mode :&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;vSphere 6.0 可以選擇 Normal lockdown mode  或 是 Strict Lockdown  mode&lt;/li&gt;
+&lt;li&gt;Normal lockdown  mode 不會 關掉 DCUI 服務。&lt;/li&gt;
+&lt;li&gt;(Strict lockdown  mode: 只有 vSphere 6.0 以上才有;連 DCUI都不允許)不允許管理者從遠端登入,只允許vCenter 的 vpxuser 登入
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;10-2. 透過兩種例外清單方式,可以使用 DCUI&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  - 若將使用者加入 DCUI.Access list,列表上的使用者 可以 有 Disable Lockdown mode得權利。
+  - 預設上enable Lockdown mode  ,利用DCUI不用Administrator 特權就可以登入。若將使用者清單,加入 Exception User list(例外清單),這些使用者不受限制即可登入。
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;ESXi主機升級保留現有的SSL證書。另外,在安裝過程中,VMCA會分配SSL憑證。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;更換vCenter Server Security Certificates&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Replace with Certificates signed by the VMware Certificate Authority.&lt;/li&gt;
+&lt;li&gt;Make VMware Certificate Authority an Intermediate Certificate Authority.&lt;/li&gt;
+&lt;li&gt;Do not use VMware Certificate Authority, provision your own Certificates
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;CAAdmins 群組的成員擁有 VMCA 的管理員權限&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;在改變密碼之前,對已存在密碼有最大數量過期天數: Maximum Lifetime&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;vCenter Single Sign On Components&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;STS (Security Token Service)&lt;/li&gt;
+&lt;li&gt;Administration server&lt;/li&gt;
+&lt;li&gt;vCenter Lookup Service&lt;/li&gt;
+&lt;li&gt;RSA SSPI service
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;新增 vCenter Single Sign-On 身分識別來源&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Active Directory (整合式 Windows 驗證)&lt;/li&gt;
+&lt;li&gt;做為 LDAP 伺服器的 Active Directory&lt;/li&gt;
+&lt;li&gt;OpenLDAP&lt;/li&gt;
+&lt;li&gt;LocalOS&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;在 vCenter Single Sign-On 5.5 中添加 Active Directory 標識源失敗並出現以下錯誤：該主機需要加入到域 [domain.local] 中，但卻加入到了 [null] 中 參考 &lt;strong&gt;KB2111148, 或  KB 2058919&lt;/strong&gt;&lt;a href=&#34;https://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;amp;cmd=displayKC&amp;amp;externalId=2111148&#34;&gt;參考連結&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;內容程式庫的直接父系為全域根物件。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;遠端Site 與 vClound Air 之間連線 ,有哪三種?&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Secure internet Connectivity&lt;/li&gt;
+&lt;li&gt;Direct Connect&lt;/li&gt;
+&lt;li&gt;Secure VPN
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;解決 root 帳戶的安全性&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Set a complex password for the root account and limit its use.&lt;/li&gt;
+&lt;li&gt;Use ESXi Active Directory capabilities to assign users the administrator role.
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;attempting to increase the security of virtual machines (VMs)?&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Disable hardware devices&lt;/li&gt;
+&lt;li&gt;Disable unexposed features
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Storage I/O Control (SIOC) 可用來控制虛擬機的 I/O 使用量以及逐漸執行預定義的 I/O 共享等級&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Storage I/O Control (SIOC) Requirement&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;不支援 RDM (Raw Device Mapping)&lt;/li&gt;
+&lt;li&gt;多個LUN 組成不支援&lt;/li&gt;
+&lt;li&gt;Esxi Host  需要vSphere 5.0 以上 且是  Enterprise Plus licensing&lt;/li&gt;
+&lt;li&gt;SIOC 在 ESX/ESXi 4.1 和 5.0 中通過光纖通道和 iSCSI 連接的存儲上均受支持&lt;/li&gt;
+&lt;li&gt;ESXi 5.0 還增加了 SIOC 對 NFS 的支持&lt;/li&gt;
+&lt;li&gt;The datastore must consist of only one extent.&lt;/li&gt;
+&lt;li&gt;The datastore is managed by a single vCenter Server.&lt;/li&gt;
+&lt;li&gt;Auto-tiered storage must be compatable with SIOC.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;path selection policies&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Fixed (VMware)                      &amp;mdash;-&amp;gt; Default&lt;/li&gt;
+&lt;li&gt;Most Recently Used (VMware)&lt;/li&gt;
+&lt;li&gt;Round Robin (VMware)         &amp;mdash;-&amp;gt; This implements load balancing across all the available physical paths.
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Disk Group&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;3 至 64 Hosts / 1 Cluster&lt;/li&gt;
+&lt;li&gt;5 Disk Groups / 1 Host&lt;/li&gt;
+&lt;li&gt;1 SSD +  1至 7 Disk / 1 Disk Group&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>2v0-621_Section1</title>
+      <link>http://myghost.aligogo.pw/post/old/2v0-621-1/</link>
+      <pubDate>Sun, 18 Sep 2016 17:38:49 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/old/2v0-621-1/</guid>
+      <description>
+
+&lt;h1 id=&#34;security&#34;&gt;Security&lt;/h1&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;system role  是無法被刪除&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;No Access&lt;/li&gt;
+&lt;li&gt;Read-only&lt;/li&gt;
+&lt;li&gt;Administrator
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;如果新增了自訂角色，且未指派任何權限給該角色，則該角色將會建立為唯讀角色，並具有以下三個系統定義的權限：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;System.Anonymous,&lt;/li&gt;
+&lt;li&gt;System.View&lt;/li&gt;
+&lt;li&gt;System.Read.
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Datastore.Allocate space權限可以做以下工作&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;virtual machine,&lt;/li&gt;
+&lt;li&gt;snapshot,&lt;/li&gt;
+&lt;li&gt;clone, or&lt;/li&gt;
+&lt;li&gt;virtual disk
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Role  Base Access  Control (RBAC)
+User (or Group )  &amp;mdash;&amp;mdash;&amp;gt;  Role   &amp;mdash;&amp;mdash;-&amp;gt;(privileges)  Object&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;vCenter Single Sign-on Server Server 有三種元件:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Kerberos&lt;/li&gt;
+&lt;li&gt;Certificate Authority CA&lt;/li&gt;
+&lt;li&gt;VMware Directory Service&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;vCenter Server 預設會提供 System Role 和 Sample Role&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;vCenter Sever 預設 提共 Sample Role 有哪兩個&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Virtual machine User&lt;/li&gt;
+&lt;li&gt;Network Administrator&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;使用 VMCA 做為中繼憑證授權機構 步驟:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Replace the Root Certificate (Intermediate CA)&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;Replace Machine SSL Certificates (Intermediate CA)&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;Replace Solution User Certificates (Intermediate CA)&lt;/li&gt;
+&lt;li&gt;Replace the VMware Directory Service Certificate&lt;/li&gt;
+&lt;li&gt;Replace the VMware Directory Service Certificate in Mixed Mode Environments&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;ESXi 憑證取代,以下有三個選項&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;VMware Certificate Authority mode&lt;/li&gt;
+&lt;li&gt;Custom Certificate Authority mode&lt;/li&gt;
+&lt;li&gt;Thumbprint mode&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Lockdown mode :&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;vSphere 6.0 可以選擇 Normal lockdown mode  或 是 Strict Lockdown  mode&lt;/li&gt;
+&lt;li&gt;Normal lockdown  mode 不會 關掉 DCUI 服務。&lt;/li&gt;
+&lt;li&gt;(Strict lockdown  mode: 只有 vSphere 6.0 以上才有;連 DCUI都不允許)不允許管理者從遠端登入,只允許vCenter 的 vpxuser 登入
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;10-2. 透過兩種例外清單方式,可以使用 DCUI&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  - 若將使用者加入 DCUI.Access list,列表上的使用者 可以 有 Disable Lockdown mode得權利。
+  - 預設上enable Lockdown mode  ,利用DCUI不用Administrator 特權就可以登入。若將使用者清單,加入 Exception User list(例外清單),這些使用者不受限制即可登入。
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;ESXi主機升級保留現有的SSL證書。另外,在安裝過程中,VMCA會分配SSL憑證。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;更換vCenter Server Security Certificates&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Replace with Certificates signed by the VMware Certificate Authority.&lt;/li&gt;
+&lt;li&gt;Make VMware Certificate Authority an Intermediate Certificate Authority.&lt;/li&gt;
+&lt;li&gt;Do not use VMware Certificate Authority, provision your own Certificates
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;CAAdmins 群組的成員擁有 VMCA 的管理員權限&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;在改變密碼之前,對已存在密碼有最大數量過期天數: Maximum Lifetime&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;vCenter Single Sign On Components&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;STS (Security Token Service)&lt;/li&gt;
+&lt;li&gt;Administration server&lt;/li&gt;
+&lt;li&gt;vCenter Lookup Service&lt;/li&gt;
+&lt;li&gt;RSA SSPI service
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;新增 vCenter Single Sign-On 身分識別來源&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Active Directory (整合式 Windows 驗證)&lt;/li&gt;
+&lt;li&gt;做為 LDAP 伺服器的 Active Directory&lt;/li&gt;
+&lt;li&gt;OpenLDAP&lt;/li&gt;
+&lt;li&gt;LocalOS&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;在 vCenter Single Sign-On 5.5 中添加 Active Directory 標識源失敗並出現以下錯誤：該主機需要加入到域 [domain.local] 中，但卻加入到了 [null] 中 參考 &lt;strong&gt;KB2111148, 或  KB 2058919&lt;/strong&gt;&lt;a href=&#34;https://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;amp;cmd=displayKC&amp;amp;externalId=2111148&#34;&gt;參考連結&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;內容程式庫的直接父系為全域根物件。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;遠端Site 與 vClound Air 之間連線 ,有哪三種?&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Secure internet Connectivity&lt;/li&gt;
+&lt;li&gt;Direct Connect&lt;/li&gt;
+&lt;li&gt;Secure VPN
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;解決 root 帳戶的安全性&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Set a complex password for the root account and limit its use.&lt;/li&gt;
+&lt;li&gt;Use ESXi Active Directory capabilities to assign users the administrator role.
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;attempting to increase the security of virtual machines (VMs)?&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Disable hardware devices&lt;/li&gt;
+&lt;li&gt;Disable unexposed features
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Storage I/O Control (SIOC) 可用來控制虛擬機的 I/O 使用量以及逐漸執行預定義的 I/O 共享等級&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Storage I/O Control (SIOC) Requirement&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;不支援 RDM (Raw Device Mapping)&lt;/li&gt;
+&lt;li&gt;多個LUN 組成不支援&lt;/li&gt;
+&lt;li&gt;Esxi Host  需要vSphere 5.0 以上 且是  Enterprise Plus licensing&lt;/li&gt;
+&lt;li&gt;SIOC 在 ESX/ESXi 4.1 和 5.0 中通過光纖通道和 iSCSI 連接的存儲上均受支持&lt;/li&gt;
+&lt;li&gt;ESXi 5.0 還增加了 SIOC 對 NFS 的支持&lt;/li&gt;
+&lt;li&gt;The datastore must consist of only one extent.&lt;/li&gt;
+&lt;li&gt;The datastore is managed by a single vCenter Server.&lt;/li&gt;
+&lt;li&gt;Auto-tiered storage must be compatable with SIOC.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;path selection policies&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Fixed (VMware)                      &amp;mdash;-&amp;gt; Default&lt;/li&gt;
+&lt;li&gt;Most Recently Used (VMware)&lt;/li&gt;
+&lt;li&gt;Round Robin (VMware)         &amp;mdash;-&amp;gt; This implements load balancing across all the available physical paths.
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Disk Group&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;3 至 64 Hosts / 1 Cluster&lt;/li&gt;
+&lt;li&gt;5 Disk Groups / 1 Host&lt;/li&gt;
+&lt;li&gt;1 SSD +  1至 7 Disk / 1 Disk Group&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

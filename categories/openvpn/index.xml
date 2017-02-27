@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Openvpn on ALIBABA WIKI - 菩薩球球</title>
+    <link>http://myghost.aligogo.pw/categories/openvpn/index.xml</link>
+    <description>Recent content in Openvpn on ALIBABA WIKI - 菩薩球球</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <atom:link href="http://myghost.aligogo.pw/categories/openvpn/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>OpenVpn-使用公開金鑰加密方式</title>
+      <link>http://myghost.aligogo.pw/post/old/openvpn-shi-yong-gong-kai-jin-yao-jia-mi-fang-shi/</link>
+      <pubDate>Sun, 03 Jul 2016 17:15:40 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/old/openvpn-shi-yong-gong-kai-jin-yao-jia-mi-fang-shi/</guid>
+      <description>&lt;p&gt;##建立OpenVPN
+1.安裝 OpenVPN&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;   yum install openvpn
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;2.安裝  easy-rsa.noarch&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;yum install easy-rsa.noarch
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;3.copy  easy-rsa&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cp -a /usr/share/easy-rsa/2.0/  /etc/openvpn/
+cd /etc/openvpn/2.0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;4.編輯 vars&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;      #export KEY_NAME=&amp;quot;EasyRSA&amp;quot;
+      KEY_NAME=&amp;quot;AliRSA&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;chmod a+x vars
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;##建立OpenVPN 憑證&lt;/p&gt;
+
+&lt;p&gt;1.建立 CA 憑證&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  cd  /etc/openvpn/2.0/
+    source vars
+    ./clean-all
+    ./build-ca
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;2.建立 server 憑證&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./build-key-server MyWeb
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;3.建立client 憑證&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./build-key myghost
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;4.建立build-dh&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./build-dh
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;##設定 OpenVPN Server 設定檔
+1.vim /etc/openvpn/server.conf&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;user openvpn
+group openvpn
+port  5628
+proto tcp
+dev tun
+ca /etc/openvpn/2.0/keys/ca.crt
+cert /etc/openvpn/2.0/keys/MyWeb.crt
+key /etc/openvpn/2.0/keys/MyWeb.key
+dh /etc/openvpn/2.0/keys/dh2048.pem
+server 192.168.130.0 255.255.255.0
+push &amp;quot;dhcp-option DNS 8.8.8.8&amp;quot;
+push &amp;quot;dhcp-option DNS 8.8.4.4&amp;quot;
+#push  &amp;quot;route 10.130.0.0 255.255.0.0&amp;quot;
+#push  &amp;quot;route 172.17.0.0 255.255.0.0&amp;quot;
+plugin /usr/lib64/openvpn/plugins/openvpn-plugin-auth-pam.so openvpn
+duplicate-cn
+keepalive 20 60
+comp-lzo
+persist-key
+persist-tun
+daemon
+log-append /var/log/openvpn.log
+verb 3
+#crl-verify /etc/openvpn/crl.pem
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;2.啟動 OpenVPN&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/etc/init.d/openvpn start
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;3.建立 Client OpenVPN 設定檔&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;client
+dev tun
+proto tcp
+remote ghost.utshop.tw  5628
+remote-random
+comp-lzo
+verb 3
+auth-user-pass
+&amp;lt;ca&amp;gt;
+  ca.crt
+&amp;lt;/ca&amp;gt;
+&amp;lt;cert&amp;gt;
+  Client .crt
+&amp;lt;/cert&amp;gt;
+&amp;lt;key&amp;gt;
+  Client  Key
+&amp;lt;/key&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;##讓OpenVPN Client 用帳密登入
+1.vim /etc/pam.d/openvpn&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;auth    required        pam_unix.so    shadow    nodelay
+account required        pam_unix.so
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;2./etc/openvpn/server.conf&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;...
+plugin /usr/lib64/openvpn/plugins/openvpn-plugin-auth-pam.so openvpn
+...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;##參考資料&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://www.ichiayi.com/wiki/tech/openvpn&#34;&gt;OpenVPN 安裝與設定-蔡宗融&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://openvpn.net/index.php/open-source/documentation/howto.html#policy&#34;&gt;Configuring client-specific rules and access policies-Openvpn How to&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://blog.nuface.tw/?p=1347&#34;&gt;OpenVPN 建置筆記(第7集)-紐菲斯部落格&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>OpenVpn-使用公開金鑰加密方式</title>
+      <link>http://myghost.aligogo.pw/post/openvpn-shi-yong-gong-kai-jin-yao-jia-mi-fang-shi/</link>
+      <pubDate>Sun, 03 Jul 2016 17:15:40 +0000</pubDate>
+      
+      <guid>http://myghost.aligogo.pw/post/openvpn-shi-yong-gong-kai-jin-yao-jia-mi-fang-shi/</guid>
+      <description>&lt;p&gt;##建立OpenVPN
+1.安裝 OpenVPN&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;   yum install openvpn
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;2.安裝  easy-rsa.noarch&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;yum install easy-rsa.noarch
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;3.copy  easy-rsa&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cp -a /usr/share/easy-rsa/2.0/  /etc/openvpn/
+cd /etc/openvpn/2.0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;4.編輯 vars&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;      #export KEY_NAME=&amp;quot;EasyRSA&amp;quot;
+      KEY_NAME=&amp;quot;AliRSA&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;chmod a+x vars
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;##建立OpenVPN 憑證&lt;/p&gt;
+
+&lt;p&gt;1.建立 CA 憑證&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  cd  /etc/openvpn/2.0/
+    source vars
+    ./clean-all
+    ./build-ca
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;2.建立 server 憑證&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./build-key-server MyWeb
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;3.建立client 憑證&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./build-key myghost
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;4.建立build-dh&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./build-dh
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;##設定 OpenVPN Server 設定檔
+1.vim /etc/openvpn/server.conf&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;user openvpn
+group openvpn
+port  5628
+proto tcp
+dev tun
+ca /etc/openvpn/2.0/keys/ca.crt
+cert /etc/openvpn/2.0/keys/MyWeb.crt
+key /etc/openvpn/2.0/keys/MyWeb.key
+dh /etc/openvpn/2.0/keys/dh2048.pem
+server 192.168.130.0 255.255.255.0
+push &amp;quot;dhcp-option DNS 8.8.8.8&amp;quot;
+push &amp;quot;dhcp-option DNS 8.8.4.4&amp;quot;
+#push  &amp;quot;route 10.130.0.0 255.255.0.0&amp;quot;
+#push  &amp;quot;route 172.17.0.0 255.255.0.0&amp;quot;
+plugin /usr/lib64/openvpn/plugins/openvpn-plugin-auth-pam.so openvpn
+duplicate-cn
+keepalive 20 60
+comp-lzo
+persist-key
+persist-tun
+daemon
+log-append /var/log/openvpn.log
+verb 3
+#crl-verify /etc/openvpn/crl.pem
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;2.啟動 OpenVPN&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/etc/init.d/openvpn start
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;3.建立 Client OpenVPN 設定檔&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;client
+dev tun
+proto tcp
+remote ghost.utshop.tw  5628
+remote-random
+comp-lzo
+verb 3
+auth-user-pass
+&amp;lt;ca&amp;gt;
+  ca.crt
+&amp;lt;/ca&amp;gt;
+&amp;lt;cert&amp;gt;
+  Client .crt
+&amp;lt;/cert&amp;gt;
+&amp;lt;key&amp;gt;
+  Client  Key
+&amp;lt;/key&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;##讓OpenVPN Client 用帳密登入
+1.vim /etc/pam.d/openvpn&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;auth    required        pam_unix.so    shadow    nodelay
+account required        pam_unix.so
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;2./etc/openvpn/server.conf&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;...
+plugin /usr/lib64/openvpn/plugins/openvpn-plugin-auth-pam.so openvpn
+...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;##參考資料&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://www.ichiayi.com/wiki/tech/openvpn&#34;&gt;OpenVPN 安裝與設定-蔡宗融&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://openvpn.net/index.php/open-source/documentation/howto.html#policy&#34;&gt;Configuring client-specific rules and access policies-Openvpn How to&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://blog.nuface.tw/?p=1347&#34;&gt;OpenVPN 建置筆記(第7集)-紐菲斯部落格&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
