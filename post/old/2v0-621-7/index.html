@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="theme-color" content="#263238">
+
+<meta name="generator" content="Hugo 0.18.1" />
+
+<link rel="apple-touch-icon" href="http://myghost.aligogo.pw/images/logo.png">
+
+
+<link rel="canonical" href="http://myghost.aligogo.pw/post/old/2v0-621-7/">
+
+
+    
+    <link href="//fonts.googleapis.com/css?family=Noto+Sans:400,700|Montserrat" rel="stylesheet">
+    
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>2v0-621_Section7 - ALIBABA WIKI - 菩薩球球</title>
+    
+<meta name="description" content="Troubleshoot a vSphere Deployment  內容程式庫的直接父系為全域根物件。 當Content library 被刪除之後,後端Storage 也會被刪除。 如果在安裝 vCenter Server、Inventory Service 或 Web client 的過程中遇到有關 vCenter SSO 的問題，請執行以下步驟：  確保 vCenter SSO 服務器與 Active Directory 域控制器之間存在時差。如果時差超過 5 分鐘，Kerboros 身份驗證會失敗 驗證 SSO 服務器的配置 驗證每個域控制器在 DNS 中是否均有正確配置的 PTR 記錄，並確保 PTR 記錄的內容準確。要從 Windows 命令行對此進行檢查，可對名稱和 IP 運行 nslookup 命令 如果在域控制器中啟用了 SSL，請確認 SSL 證書仍然有效。 移除 vCenter SSO 主機，然後將其重新加入到域中。這樣，如果在向域添加的過程中出現故障，便可發現任何連接或基於信任的錯誤 安裝完成後，查看 install.log 和 imsTrace.log 文件 SSO_Server_Directory\utils\logs\，以瞭解是否在自動發現過程中出現錯誤。  假若在vCenter Server 無法看到 上週 Performance 統計資訊的原因  Performance statistics are turned off The Past Day rollup job is not present.">
+
+<meta property="og:title" content="2v0-621_Section7 - ALIBABA WIKI - 菩薩球球">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://myghost.aligogo.pw/post/old/2v0-621-7/">
+<meta property="og:image" content="http://myghost.aligogo.pw/images/default.png">
+<meta property="og:site_name" content="ALIBABA WIKI - 菩薩球球">
+<meta property="og:description" content="Troubleshoot a vSphere Deployment  內容程式庫的直接父系為全域根物件。 當Content library 被刪除之後,後端Storage 也會被刪除。 如果在安裝 vCenter Server、Inventory Service 或 Web client 的過程中遇到有關 vCenter SSO 的問題，請執行以下步驟：  確保 vCenter SSO 服務器與 Active Directory 域控制器之間存在時差。如果時差超過 5 分鐘，Kerboros 身份驗證會失敗 驗證 SSO 服務器的配置 驗證每個域控制器在 DNS 中是否均有正確配置的 PTR 記錄，並確保 PTR 記錄的內容準確。要從 Windows 命令行對此進行檢查，可對名稱和 IP 運行 nslookup 命令 如果在域控制器中啟用了 SSL，請確認 SSL 證書仍然有效。 移除 vCenter SSO 主機，然後將其重新加入到域中。這樣，如果在向域添加的過程中出現故障，便可發現任何連接或基於信任的錯誤 安裝完成後，查看 install.log 和 imsTrace.log 文件 SSO_Server_Directory\utils\logs\，以瞭解是否在自動發現過程中出現錯誤。  假若在vCenter Server 無法看到 上週 Performance 統計資訊的原因  Performance statistics are turned off The Past Day rollup job is not present.">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="ALIBABA WIKI - 菩薩球球">
+<meta name="twitter:url" content="http://myghost.aligogo.pw/post/old/2v0-621-7/">
+<meta name="twitter:title" content="2v0-621_Section7 - ALIBABA WIKI - 菩薩球球">
+<meta name="twitter:description" content="Troubleshoot a vSphere Deployment  內容程式庫的直接父系為全域根物件。 當Content library 被刪除之後,後端Storage 也會被刪除。 如果在安裝 vCenter Server、Inventory Service 或 Web client 的過程中遇到有關 vCenter SSO 的問題，請執行以下步驟：  確保 vCenter SSO 服務器與 Active Directory 域控制器之間存在時差。如果時差超過 5 分鐘，Kerboros 身份驗證會失敗 驗證 SSO 服務器的配置 驗證每個域控制器在 DNS 中是否均有正確配置的 PTR 記錄，並確保 PTR 記錄的內容準確。要從 Windows 命令行對此進行檢查，可對名稱和 IP 運行 nslookup 命令 如果在域控制器中啟用了 SSL，請確認 SSL 證書仍然有效。 移除 vCenter SSO 主機，然後將其重新加入到域中。這樣，如果在向域添加的過程中出現故障，便可發現任何連接或基於信任的錯誤 安裝完成後，查看 install.log 和 imsTrace.log 文件 SSO_Server_Directory\utils\logs\，以瞭解是否在自動發現過程中出現錯誤。  假若在vCenter Server 無法看到 上週 Performance 統計資訊的原因  Performance statistics are turned off The Past Day rollup job is not present.">
+<meta name="twitter:image" content="http://myghost.aligogo.pw/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"http:\/\/myghost.aligogo.pw\/"
+    },
+    "headline": "2v0-621_Section7 - ALIBABA WIKI - 菩薩球球",
+    "image": {
+      "@type": "ImageObject",
+      "url": "http:\/\/myghost.aligogo.pw\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2016-09-21T18:43:13JST",
+    "dateModified": "2016-09-21T18:43:13JST",
+    "author": {
+      "@type": "Person",
+      "name": "ALIBABA WIKI - 菩薩球球"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "ALIBABA WIKI - 菩薩球球",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "http:\/\/myghost.aligogo.pw\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "Troubleshoot a vSphere Deployment  內容程式庫的直接父系為全域根物件。 當Content library 被刪除之後,後端Storage 也會被刪除。 如果在安裝 vCenter Server、Inventory Service 或 Web client 的過程中遇到有關 vCenter SSO 的問題，請執行以下步驟：  確保 vCenter SSO 服務器與 Active Directory 域控制器之間存在時差。如果時差超過 5 分鐘，Kerboros 身份驗證會失敗 驗證 SSO 服務器的配置 驗證每個域控制器在 DNS 中是否均有正確配置的 PTR 記錄，並確保 PTR 記錄的內容準確。要從 Windows 命令行對此進行檢查，可對名稱和 IP 運行 nslookup 命令 如果在域控制器中啟用了 SSL，請確認 SSL 證書仍然有效。 移除 vCenter SSO 主機，然後將其重新加入到域中。這樣，如果在向域添加的過程中出現故障，便可發現任何連接或基於信任的錯誤 安裝完成後，查看 install.log 和 imsTrace.log 文件 SSO_Server_Directory\\utils\\logs\\，以瞭解是否在自動發現過程中出現錯誤。  假若在vCenter Server 無法看到 上週 Performance 統計資訊的原因  Performance statistics are turned off The Past Day rollup job is not present."
+  }
+</script>
+
+
+    <style>
+      html { font-size: 18px;}@media (max-width: 768px) { html { font-size: 15px; }}body { font-family: 'Noto Sans','Hiragino Kaku Gothic Pro',メイリオ,Meiryo,sans-serif; font-size: inherit; font-weight: 300; line-height: 1rem; background-color: #eceff1;}p { margin: 0;}a { color: #4caf50;}a:hover { text-decoration: none; color: #388e3c;}ul,ol { margin: 0; padding: 0;}h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: 700;}h1 { font-size: 1.8rem; line-height: 2rem; margin: 1.5rem 0; }h2 { font-size: 1.4rem; line-height: 2rem; margin: 1.5rem 0; }h3 { font-size: 1.2rem; line-height: 1.5rem; margin: 1.5rem 0; }h4, h5, h6 { font-size: 1rem; line-height: 1.5rem; margin: 1.5rem 0; }main { display: block;}.content-inner { padding: 1rem 2rem;}.content-inner.thin { padding: .5rem 1rem;}@media (max-width: 768px) { .content-inner { padding: 1rem; }}/* Override */.container { position: relative;}/* Parts:layouts */.l-header { background-color: #fff; margin-bottom: 1rem; padding: 1rem 0; text-align: center;}.l-footer { font-size: .8rem; padding: 1.5rem 0;}/* Parts:menu */.p-menu { position: absolute; right: 15px; top: 0;}/* Parts:terms */.p-terms { list-style: none;}.p-terms .terms-title { margin: 0;}.p-terms a { display: inline-block; padding: .25rem 0;}.p-terms.inline li { display: inline-block; font-size: .8rem;}.p-terms.inline li::after { content: ',';}.p-terms.inline li:last-child::after { content: '';}/* Parts:paging */.p-paging { margin-bottom: 1.5rem; text-align: center;}.p-paging a { display: inline-block; padding: 1rem 1.5rem; margin: 0 .5rem; background-color: #cfd8dc; color: #263238;}/* Parts:section */section { margin-bottom: 1.5rem;}section>header { font-size: .8rem; font-weight: 700; margin-bottom: .5rem; text-transform: uppercase;}section>header a { color: #333; text-decoration: underline;}section.article-footer { margin-bottom: 1rem;}section.article-footer>header { margin-bottom: 0;}/* Parts:share */.p-share { min-width: 100%; margin-bottom: 1.5rem;}.p-share .share-inner { display: table; table-layout: fixed; width: 100%; border-spacing: .25rem;}.p-share a { display: table-cell; text-align: center; font-weight: 700; font-size: .7rem; padding: .5rem 0; color: #fff; border-radius: 5px;}.p-share a.ht { background-color: #00a4de; border-bottom: 2px solid #0083b1; }.p-share a.fb { background-color: #3b5998; border-bottom: 2px solid #2f4779; }.p-share a.tw { background-color: #1da1f2; border-bottom: 2px solid #1780c1; }.p-share a.gp { background-color: #dd4b39; border-bottom: 2px solid #b03c2d; }.p-share a.ln { background-color: #00c300; border-bottom: 2px solid #009c00; }.p-share a.ht::before { content: 'Hatena'; }.p-share a.fb::before { content: 'Facebook'; }.p-share a.tw::before { content: 'Twitter'; }.p-share a.gp::before { content: 'Google+'; }.p-share a.ln::before { content: 'LINE'; }/* Parts:logo */.h-logo { font-family: 'Montserrat', sans-serif;}.p-logo { display: inline-block; text-transform: uppercase;}.p-logo a { display: inline-block; font-size: 1.4rem; line-height: 2rem; color: #000;}/* Parts:crumb */.p-crumb ol { list-style: none; margin-bottom: 1rem;}.p-crumb li { display: inline; margin-right: .25rem; font-size: .8rem; color: #607d8b;}.p-crumb li::after { content: '/'; margin-left: .25rem;}.p-crumb li:last-child::after { content: '';}/* Parts:facts */.p-facts { list-style: none; font-size: .8rem; margin-bottom: 1rem;}.p-facts li { display: inline-block; margin-right: .5rem; color: #90a4ae;}.p-facts li i { margin-right: .5rem; color: #cfd8dc;}/* Parts:article */article { background-color: #fff;}article .title { margin: 0; margin-bottom: .5rem; font-weight: 700;}article .title a { color: #000;}article .thumb { display: block; background-image: url(http://myghost.aligogo.pw/images/default.jpg); background-position: center; background-size: cover;}article .summary { margin-bottom: .5rem; max-height: 5rem; overflow: hidden;}article.single .thumb { height: 18rem; margin-bottom: 1rem;}@media (max-width: 768px) { article.single .thumb { height: 12rem; }}article.li { margin-bottom: 1rem;}article.li .thumb { height: 7.5rem; margin-bottom: .5rem;}article.li.sm { background-color: transparent; margin-bottom: .5rem;}article.li.sm>header { padding: .5rem 0;}article.li.sm .title { font-size: .8rem; line-height: 1rem; margin-bottom: .25rem;}article.li.sm .p-facts { font-size: .6rem; margin-bottom: 0;}article.li.sm .thumb { float: left; margin-right: .5rem; height: 3rem; width: 3rem;}.article-body h2 { padding: 1rem 0; border-bottom: 2px solid #eceff1;}.article-body h2:first-child { margin-top: 0; }.article-body h3 { color: #428bca;}.article-body h4 { border-left: solid .25rem #428bca; padding: 0 .5rem;}.article-body p { margin: 1.5rem 0; line-height: 1.5rem;}.article-body a { text-decoration: underline;}.article-body ul,.article-body ol { padding-left: 1.5rem;}.article-body code { display: inline-block; font-family: Menlo, consolas, monospace; font-size: .8rem; padding: 0 .5rem; line-height: 1.5rem;}.article-body pre { margin: 1.5rem 0; padding: 0; font-size: .8rem; border: none; border-radius: 0;}.article-body pre code { display: block; line-height: 1rem; padding: 1rem;}.article-body blockquote { margin: 1.5rem 0; padding: .5rem 0; font-size: .8rem; border-top: 1px solid #eceff1; border-bottom: 1px solid #eceff1; color: #607d8b;}.article-body blockquote p { margin: .5rem 0; line-height: 1rem;}.article-body strong { box-shadow: 0 -.5rem 0 0 #90caf9 inset;}.article-body em { font-style: normal; font-weight: 700; color: #03a9f4;}.article-body figure { margin: 1.5rem 0; }.article-body figure img { max-width: 100%; }.article-body figure.left,.article-body figure.right { width: 15rem; height: 12rem; margin-top: 0;}.article-body figure.left { float: left; margin-right: 1rem; }.article-body figure.right { float: right; margin-left: 1rem; }@media (max-width: 768px) { .article-body figure.left, .article-body figure.right { float: none; margin: 0; width: auto; height: auto; }}.article-body figcaption { padding: .5rem 0; font-size: .8rem; text-align: center;}.article-body figcaption a { color: #263238;}
+      
+      
+    </style>
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <div class="container">
+        <div class="p-logo">
+          <a href="http://myghost.aligogo.pw/" class="h-logo">ALIBABA WIKI - 菩薩球球</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol>
+        <li><a href="http://myghost.aligogo.pw/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="http://myghost.aligogo.pw/post/" itemprop="url"><span itemprop="title">post</span></a></li>
+        
+        <li class="active">2v0-621_Section7</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+
+  <a href="http://myghost.aligogo.pw/post/old/2v0-621-7/" class="thumb"></a>
+  <div class="content-inner">
+    <h1 class="title">2v0-621_Section7</h1>
+
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2016-09-21T18:43:13JST">Sep 21, 2016</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://myghost.aligogo.pw/post/">post</a></li>
+      
+    </ul>
+
+    <div class="article-body">
+
+<h1 id="troubleshoot-a-vsphere-deployment">Troubleshoot a vSphere Deployment</h1>
+
+<ol>
+<li>內容程式庫的直接父系為全域根物件。</li>
+<li>當Content library 被刪除之後,後端Storage 也會被刪除。</li>
+<li>如果在安裝 vCenter Server、Inventory Service 或 Web client 的過程中遇到有關 vCenter SSO 的問題，請執行以下步驟：
+
+<ul>
+<li>確保 vCenter SSO 服務器與 Active Directory 域控制器之間存在時差。如果時差超過 5 分鐘，Kerboros 身份驗證會失敗</li>
+<li>驗證 SSO 服務器的配置</li>
+<li>驗證每個域控制器在 DNS 中是否均有正確配置的 PTR 記錄，並確保 PTR 記錄的內容準確。要從 Windows 命令行對此進行檢查，可對名稱和 IP 運行 nslookup 命令</li>
+<li>如果在域控制器中啟用了 SSL，請確認 SSL 證書仍然有效。</li>
+<li>移除 vCenter SSO 主機，然後將其重新加入到域中。這樣，如果在向域添加的過程中出現故障，便可發現任何連接或基於信任的錯誤</li>
+<li>安裝完成後，查看 install.log 和 imsTrace.log 文件 SSO_Server_Directory\utils\logs\，以瞭解是否在自動發現過程中出現錯誤。</li>
+</ul></li>
+<li>假若在vCenter Server 無法看到 上週 Performance 統計資訊的原因
+
+<ul>
+<li>Performance statistics are turned off</li>
+<li>The Past Day rollup job is not present.</li>
+<li>The stats_rollup_1_proc is not present</li>
+</ul></li>
+<li>當 ESXi 5.<sup>1</sup>&frasl;<sub>5</sub>.5 主機由 vCenter Server 5.1 和 5.5 進行管理時，將安裝兩個組件，每個組件都有自己的日誌<a href="https://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=2095394">ESXi 5.1 和 5.5 日誌文件的位置 (2095394) </a>
+
+<ul>
+<li>/var/log/vpxa.log：vCenter Server vpxa 代理日誌，包括與 vCenter Server 和主機管理 hostd 代理之間的通信。</li>
+<li>/var/log/fdm.log：vSphere High Availability 日誌，由 fdm 服務生成。</li>
+</ul></li>
+<li>虛擬機已意外關閉,可以看以下兩個Log<a href="https://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=2078043">確定虛擬機關閉電源或重新啟動的原因 (2078043) </a>
+
+<ul>
+<li>vmware.log</li>
+<li>hostd.log</li>
+</ul></li>
+
+<li><p>在 vSphere Web Client 中有<strong>孤立(orphaned)</strong>的虛擬機,發生原因如下:<a href="https://pubs.vmware.com/vsphere-50/index.jsp#com.vmware.vsphere.troubleshooting.doc_50/GUID-BFD8C9BC-30FB-4A92-AFEC-2FC9FF387920.html">在 vSphere Web Client 中恢復孤立的虛擬機</a></p>
+
+<ul>
+<li>主機故障切換失敗</li>
+<li>直接在主機上取消對虛擬機的註冊時</li>
+</ul></li>
+
+<li><p>無法開啟VirtualMachine <a href="https://pubs.vmware.com/vsphere-50/index.jsp?topic=%2Fcom.vmware.vsphere.troubleshooting.doc_50%2FGUID-D4770546-9F9A-4F1E-AC1C-CF313E6130F4.html">無法打開虛擬機電源</a></p>
+
+<ul>
+<li>The virtual machine is running on an ESXi host which has an expired license.</li>
+<li>The virtual machine is running on a datastore which has insufficient disk space for the .vswp file</li>
+<li>The virtual machine is in a cluster with vSphere HA Admission control enabled</li>
+</ul></li>
+
+<li><p>哪個指令可以檢驗 VMFS3 and VMFS5 Datastore for metadata inconsistency(metadata 一致性) <a href="http://www.running-system.com/how-to-check-vmfs-for-metadata-corruption-esxi-5-1-and-later/">參考check VMFS </a></p>
+
+<ul>
+<li>voma(Vmware Ondisk Metadata Analyser)</li>
+</ul></li>
+
+<li><p>哪兩個原因造成 VirtualSAN 無法用 local flash device</p>
+
+<ul>
+<li>It has a VMFS datastore present.</li>
+<li>It is in use by the vFlash Read Cache feature.</li>
+</ul></li>
+
+<li><p>對於配置Virtual Machine template造成 slow Performance,以下三項動作來改善它</p>
+
+<ul>
+<li>Increase network throughput by adding additional uplinks to the vSwitch.</li>
+<li>Change the destination datastore or volume for the virtual machine template.</li>
+<li>Configure a Provisioning Traffic vmkernel port to perform the deployment operation.</li>
+</ul></li>
+
+<li><p>無法從分散式交換器中移除主機或刪除主機代理交換器，原因如下。 <a href="https://pubs.vmware.com/vsphere-55/index.jsp?topic=%2Fcom.vmware.vsphere.troubleshooting.doc%2FGUID-038AC93F-D710-48ED-8E3B-258A23FB2930.html">無法從 vSphere Distributed Switch 中移除主機</a></p>
+
+<ul>
+<li>使用中的交換器上有 VMkernel 介面卡。</li>
+<li>有連線到交換器的虛擬機器網路介面卡。</li>
+</ul></li>
+
+<li><p>IF the NFS datastore is showing 0 bytes of capacity when you use <strong>df -h</strong> command, it means that the NFS server that hosts datastore is down.</p></li>
+
+<li><p>vCenter server Appliance 5 要升級到  6 的版本,需間接升級。</p>
+
+<ul>
+<li>5.0 -&gt; 5.1 update 3 -&gt; vcenter 6.0</li>
+</ul></li>
+
+<li><p>調查 vCenter Server upgrade 發生的錯誤訊息,可以用以下三個 Log 來調查</p>
+
+<ul>
+<li>vminst.log</li>
+<li>vim-vcs-msi.log</li>
+<li>pkgmgr.log</li>
+</ul></li>
+
+<li><p>利用 esxtop 分析 CPU 情況,以下哪三個指標顯示 CPU 爭奪<a href="https://communities.vmware.com/docs/DOC-9279">參考解讀CPU統計值_英文</a></p>
+
+<ul>
+<li>%RDY  (Ready Time: 說明vCPU 要等候多久才有可用的LCPU)</li>
+<li>%RUN</li>
+<li>%MLMTD<br /></li>
+</ul></li>
+
+<li><p>在VM 設定檔中設定 CPU Performance</p>
+
+<ul>
+<li>numa.vcpu.preferHT=TRUE</li>
+</ul></li>
+
+<li><p>要使用vNUMA 功能需更新 Virtual Hardware version 8</p></li>
+
+<li><p>通常 %RDY &gt; 10% 情況:</p>
+
+<ul>
+<li>% RDY 約等於 %USED  表示 OK</li>
+<li>% RDY 與 %USED 相差太多 表示 不 OK</li>
+</ul></li>
+
+<li><p>VMware FT 是保護 Host零停機。</p></li>
+
+<li><p>Fault Tolerance is not licensed in all editions of VMware vSphere. Check the edition you are running and upgrade to an edition that includes Fault Tolerance.</p></li>
+
+<li><p>數據存儲群集中的數據存儲無法進入維護模式。「正在進入維護模式」狀態保持為 1%,造成此原因如下:</p>
+
+<ul>
+<li>Storage DRS is disabled on the disk.</li>
+<li>Storage DRS rules prevent Storage DRS from making migration recommendations for the disk.</li>
+</ul></li>
+
+<li><p>以下是SDRS負載不平衡的可能原因：</p>
+
+<ul>
+<li>The migration threshold is too high.(遷移閾值過高。)</li>
+<li>VM/VM or VM/Host DRS rules prevent virtual machines from being moved.(虛擬機/虛擬機或虛擬機/主機 DRS 規則可阻止移動虛擬機。)</li>
+<li>DRS is disabled for one or more virtual machines.(
+為一個或多個虛擬機禁用了 DRS。)</li>
+<li>A device is mounted to one or more virtual machines preventing DRS from moving the virtual machine in order to balance the load.(擬機與 DRS 要將它們移動到的主機不兼容。這就是說，群集中至少有一個主機與將要遷移的虛擬機不兼容。例如，如果主機 A 的 CPU 不與主機 B 的 CPU vMotion 兼容，則主機 A 將與在主機 B 上運行的已打開電源虛擬機變得不兼容。)</li>
+<li>Virtual machines are not compatible with the hosts to which DRS would move them. That is, at least one of the hosts in the cluster is incompatible for the virtual machines that would be migrated. For example, if host A&rsquo;s CPU is not vMotion-compatible with host B&rsquo;s CPU, then host A becomes incompatible for powered-on virtual machines running on host B.(虛擬機與 DRS 要將它們移動到的主機不兼容。這就是說，群集中至少有一個主機與將要遷移的虛擬機不兼容。例如，如果主機 A 的 CPU 不與主機 B 的 CPU vMotion 兼容，則主機 A 將與在主機 B 上運行的已打開電源虛擬機變得不兼容)</li>
+<li>It would be more detrimental for the virtual machine&rsquo;s performance to move it than for it to run where it is currently located. This may occur when loads are unstable or the migration cost is high compared to the benefit gained from moving the virtual machine.(與虛擬機保留在當前位置繼續運行相比，移動虛擬機可能會對其性能更加不利。當負載不穩定或者遷移成本比移動虛擬機所帶來的收益要高時，就會出現上述情況。)</li>
+<li>vMotion is not enabled or set up for the hosts in the cluster.(沒有為群集中的主機啟用或設置 vMotion。)</li>
+</ul></li>
+
+<li><p>如果在共享存儲中沒有允許數據存儲檢測信號的冗餘，則會發生此問題。 自 vSphere 5.0 開始，vSphere HA 至少需要在群集中的所有主機之間共享兩個共享數據存儲，才能正常運行數據存儲檢測信號。</p></li>
+</ol>
+</div>
+  </div>
+
+  <footer class="article-footer">
+    <div class="content-inner">
+
+      <aside class="p-share">
+  <div class="share-inner">
+    <a href="http://b.hatena.ne.jp/add?mode=confirm&url=http%3a%2f%2fmyghost.aligogo.pw%2fpost%2fold%2f2v0-621-7%2f&title=2v0-621_Section7" title="はてなブックマーク" class="ht" target="_blank" rel="nofollow"></a>
+    <a href="http://www.facebook.com/sharer.php?u=http%3a%2f%2fmyghost.aligogo.pw%2fpost%2fold%2f2v0-621-7%2f&t=2v0-621_Section7" title="Facebookでシェア" class="fb" target="_blank" rel="nofollow"></a>
+    <a href="http://twitter.com/intent/tweet?url=http%3a%2f%2fmyghost.aligogo.pw%2fpost%2fold%2f2v0-621-7%2f&text=2v0-621_Section7&tw_p=tweetbutton" title="Twitterでシェア" class="tw" target="_blank" rel="nofollow"></a>
+    <a href="https://plus.google.com/share?url=http%3a%2f%2fmyghost.aligogo.pw%2fpost%2fold%2f2v0-621-7%2f" title="Google Plusでシェア" class="gp" target="_blank" rel="nofollow"></a>
+    <a href="http://line.me/R/msg/text/?2v0-621_Section7 http%3a%2f%2fmyghost.aligogo.pw%2fpost%2fold%2f2v0-621-7%2f" title="LINEでシェア" class="ln" target="_blank" rel="nofollow"></a>
+  </div>
+</aside>
+
+
+      <nav class="p-crumb">
+        <ol>
+          <li><a href="http://myghost.aligogo.pw/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+          
+          <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="http://myghost.aligogo.pw/post/" itemprop="url"><span itemprop="title">post</span></a></li>
+          
+          <li class="active">2v0-621_Section7</li>
+        </ol>
+      </nav>
+
+      
+      
+      
+      <section class="article-footer">
+        <header>
+          <a href="http://myghost.aligogo.pw/categories/">CATEGORIES</a>
+        </header>
+        <div>
+          <ul class="p-terms inline">
+            
+            <li><a href="http://myghost.aligogo.pw/categories/2v0-621/">2v0-621</a></li>
+            
+          </ul>
+        </div>
+      </section>
+      
+      
+      
+      <section class="article-footer">
+        <header>
+          <a href="http://myghost.aligogo.pw/tags/">TAGS</a>
+        </header>
+        <div>
+          <ul class="p-terms inline">
+            
+            <li><a href="http://myghost.aligogo.pw/tags/2v0-621/">2v0-621</a></li>
+            
+          </ul>
+        </div>
+      </section>
+      
+      
+    </div>
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    <aside class="site">
+
+  <section>
+    <header>latests</header>
+    <div>
+      <div class="row">
+        
+        <div class="col-md-12 col-sm-6 col-xs-12"><article class="li sm">
+  <a href="http://myghost.aligogo.pw/post/good-to-great/" class="thumb"></a>
+  <header>
+    <div class="title"><a href="http://myghost.aligogo.pw/post/good-to-great/">good to great</a></div>
+
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-02-27T06:03:19JST">Feb 27, 2017</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://myghost.aligogo.pw/post/">post</a></li>
+    </ul>
+  </header>
+</article>
+</div>
+        
+        
+        <div class="col-md-12 col-sm-6 col-xs-12"><article class="li sm">
+  <a href="http://myghost.aligogo.pw/post/old/good-to-great/" class="thumb"></a>
+  <header>
+    <div class="title"><a href="http://myghost.aligogo.pw/post/old/good-to-great/">good to great</a></div>
+
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-02-27T06:03:19JST">Feb 27, 2017</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://myghost.aligogo.pw/post/">post</a></li>
+    </ul>
+  </header>
+</article>
+</div>
+        <div class="col-sm-12"></div>
+        
+        <div class="col-md-12 col-sm-6 col-xs-12"><article class="li sm">
+  <a href="http://myghost.aligogo.pw/post/list_comprehensions/" class="thumb"></a>
+  <header>
+    <div class="title"><a href="http://myghost.aligogo.pw/post/list_comprehensions/">Python 的 生成式 (List Comprehensions)...待續</a></div>
+
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-02-26T11:55:26JST">Feb 26, 2017</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://myghost.aligogo.pw/post/">post</a></li>
+    </ul>
+  </header>
+</article>
+</div>
+        
+        
+        <div class="col-md-12 col-sm-6 col-xs-12"><article class="li sm">
+  <a href="http://myghost.aligogo.pw/post/old/list_comprehensions/" class="thumb"></a>
+  <header>
+    <div class="title"><a href="http://myghost.aligogo.pw/post/old/list_comprehensions/">Python 的 生成式 (List Comprehensions)...待續</a></div>
+
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-02-26T11:55:26JST">Feb 26, 2017</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://myghost.aligogo.pw/post/">post</a></li>
+    </ul>
+  </header>
+</article>
+</div>
+        <div class="col-sm-12"></div>
+        
+        <div class="col-md-12 col-sm-6 col-xs-12"><article class="li sm">
+  <a href="http://myghost.aligogo.pw/post/old/rpi1/" class="thumb"></a>
+  <header>
+    <div class="title"><a href="http://myghost.aligogo.pw/post/old/rpi1/">Raspberry Pi :使用ttl線登入Console 端</a></div>
+
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-02-20T15:11:26JST">Feb 20, 2017</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://myghost.aligogo.pw/post/">post</a></li>
+    </ul>
+  </header>
+</article>
+</div>
+        
+        
+        <div class="col-md-12 col-sm-6 col-xs-12"><article class="li sm">
+  <a href="http://myghost.aligogo.pw/post/rpi1/" class="thumb"></a>
+  <header>
+    <div class="title"><a href="http://myghost.aligogo.pw/post/rpi1/">Raspberry Pi :使用ttl線登入Console 端</a></div>
+
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-02-20T15:11:26JST">Feb 20, 2017</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://myghost.aligogo.pw/post/">post</a></li>
+    </ul>
+  </header>
+</article>
+</div>
+        <div class="col-sm-12"></div>
+        
+        <div class="col-md-12 col-sm-6 col-xs-12"><article class="li sm">
+  <a href="http://myghost.aligogo.pw/post/gong-ye-4-0/" class="thumb"></a>
+  <header>
+    <div class="title"><a href="http://myghost.aligogo.pw/post/gong-ye-4-0/">工業4.0  ...待續</a></div>
+
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-02-06T18:21:34JST">Feb 6, 2017</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://myghost.aligogo.pw/post/">post</a></li>
+    </ul>
+  </header>
+</article>
+</div>
+        
+        
+        <div class="col-md-12 col-sm-6 col-xs-12"><article class="li sm">
+  <a href="http://myghost.aligogo.pw/post/old/gong-ye-4-0/" class="thumb"></a>
+  <header>
+    <div class="title"><a href="http://myghost.aligogo.pw/post/old/gong-ye-4-0/">工業4.0  ...待續</a></div>
+
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-02-06T18:21:34JST">Feb 6, 2017</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://myghost.aligogo.pw/post/">post</a></li>
+    </ul>
+  </header>
+</article>
+</div>
+        <div class="col-sm-12"></div>
+        
+        <div class="col-md-12 col-sm-6 col-xs-12"><article class="li sm">
+  <a href="http://myghost.aligogo.pw/post/nginx-uwsgi-flask/" class="thumb"></a>
+  <header>
+    <div class="title"><a href="http://myghost.aligogo.pw/post/nginx-uwsgi-flask/">Nginx &#43; uwsgi &#43; Flask</a></div>
+
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-01-22T18:04:18JST">Jan 22, 2017</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://myghost.aligogo.pw/post/">post</a></li>
+    </ul>
+  </header>
+</article>
+</div>
+        
+        
+        <div class="col-md-12 col-sm-6 col-xs-12"><article class="li sm">
+  <a href="http://myghost.aligogo.pw/post/old/nginx-uwsgi-flask/" class="thumb"></a>
+  <header>
+    <div class="title"><a href="http://myghost.aligogo.pw/post/old/nginx-uwsgi-flask/">Nginx &#43; uwsgi &#43; Flask</a></div>
+
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-01-22T18:04:18JST">Jan 22, 2017</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://myghost.aligogo.pw/post/">post</a></li>
+    </ul>
+  </header>
+</article>
+</div>
+        <div class="col-sm-12"></div>
+        
+      </div>
+    </div>
+  </section>
+
+  
+  <section>
+    <header>category</header>
+    <div>
+      <ul class="p-terms">
+        <li><a href="http://myghost.aligogo.pw/categories/python">python</a></li><li><a href="http://myghost.aligogo.pw/categories/travel">travel</a></li><li><a href="http://myghost.aligogo.pw/categories/2v0-621">2v0-621</a></li><li><a href="http://myghost.aligogo.pw/categories/docker">docker</a></li><li><a href="http://myghost.aligogo.pw/categories/iot">iot</a></li><li><a href="http://myghost.aligogo.pw/categories/vmware">vmware</a></li><li><a href="http://myghost.aligogo.pw/categories/alpine">alpine</a></li><li><a href="http://myghost.aligogo.pw/categories/datascience">datascience</a></li><li><a href="http://myghost.aligogo.pw/categories/flask">flask</a></li><li><a href="http://myghost.aligogo.pw/categories/kvm">kvm</a></li>
+      </ul>
+    </div>
+  </section>
+  
+  <section>
+    <header>tag</header>
+    <div>
+      <ul class="p-terms">
+        <li><a href="http://myghost.aligogo.pw/tags/python">python</a></li><li><a href="http://myghost.aligogo.pw/tags/travel">travel</a></li><li><a href="http://myghost.aligogo.pw/tags/2v0-621">2v0-621</a></li><li><a href="http://myghost.aligogo.pw/tags/docker">docker</a></li><li><a href="http://myghost.aligogo.pw/tags/iot">iot</a></li><li><a href="http://myghost.aligogo.pw/tags/vmware">vmware</a></li><li><a href="http://myghost.aligogo.pw/tags/alpine">alpine</a></li><li><a href="http://myghost.aligogo.pw/tags/datascience">datascience</a></li><li><a href="http://myghost.aligogo.pw/tags/flask">flask</a></li><li><a href="http://myghost.aligogo.pw/tags/kvm">kvm</a></li>
+      </ul>
+    </div>
+  </section>
+  
+
+</aside>
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; ALIBABA WIKI - 菩薩球球</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_robust">Robust</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

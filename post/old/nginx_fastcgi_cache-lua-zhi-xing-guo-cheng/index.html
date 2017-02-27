@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="theme-color" content="#263238">
+
+<meta name="generator" content="Hugo 0.18.1" />
+
+<link rel="apple-touch-icon" href="http://myghost.aligogo.pw/images/logo.png">
+
+
+<link rel="canonical" href="http://myghost.aligogo.pw/post/old/nginx_fastcgi_cache-lua-zhi-xing-guo-cheng/">
+
+
+    
+    <link href="//fonts.googleapis.com/css?family=Noto+Sans:400,700|Montserrat" rel="stylesheet">
+    
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>Nginx_Fastcgi_Cache &#43; Lua 執行過程 - ALIBABA WIKI - 菩薩球球</title>
+    
+<meta name="description" content="Nginx Proxy Cache  應用於Reverse Proxy,負載均衡 作用是緩存後端服務器的內容，可能是任何內容，包括靜態的和動態 另外,也可作正向代理 (Nginx 這邊支援 web proxy)  Nginx Fastcgi Cache  proxy_cache 與 fastcgi_cache功能大至一樣。 用是緩存fastcgi生成的內容，很多情況是php生成的動態的內容。 緩存作用。減少了nginx與Application(php,python,cgi等等)通信的次數。  Nginx Cache 運作流程 Nginx 除了 work Process 管理 Http Request 請求等其他工作外,Nginx Cache 也由另外程序來作管理。 Nginx Cache loader 主要Nginx 一開始初始化時,有呼叫Nginx Cache 相關模組,Nginx master process 會 fork Nginx Cache loader 去抓取 Nginx Cache Store(cache 儲存區),來重新建立索引(hash key)並存放在memory 中, 建立完成後, Cache loader process 就隨即結束。 Nginx Cache mamager 主要接受 master process 指令 去管理 Nginx Cache 大小事務,像是 Hash key 過期,或是搜尋 此筆資料是否存放在 cache 儲存區中 等工作。   Nginx Fastcgi Cache 簡要參數說明 http{ .">
+
+<meta property="og:title" content="Nginx_Fastcgi_Cache &#43; Lua 執行過程 - ALIBABA WIKI - 菩薩球球">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://myghost.aligogo.pw/post/old/nginx_fastcgi_cache-lua-zhi-xing-guo-cheng/">
+<meta property="og:image" content="http://myghost.aligogo.pw/images/default.png">
+<meta property="og:site_name" content="ALIBABA WIKI - 菩薩球球">
+<meta property="og:description" content="Nginx Proxy Cache  應用於Reverse Proxy,負載均衡 作用是緩存後端服務器的內容，可能是任何內容，包括靜態的和動態 另外,也可作正向代理 (Nginx 這邊支援 web proxy)  Nginx Fastcgi Cache  proxy_cache 與 fastcgi_cache功能大至一樣。 用是緩存fastcgi生成的內容，很多情況是php生成的動態的內容。 緩存作用。減少了nginx與Application(php,python,cgi等等)通信的次數。  Nginx Cache 運作流程 Nginx 除了 work Process 管理 Http Request 請求等其他工作外,Nginx Cache 也由另外程序來作管理。 Nginx Cache loader 主要Nginx 一開始初始化時,有呼叫Nginx Cache 相關模組,Nginx master process 會 fork Nginx Cache loader 去抓取 Nginx Cache Store(cache 儲存區),來重新建立索引(hash key)並存放在memory 中, 建立完成後, Cache loader process 就隨即結束。 Nginx Cache mamager 主要接受 master process 指令 去管理 Nginx Cache 大小事務,像是 Hash key 過期,或是搜尋 此筆資料是否存放在 cache 儲存區中 等工作。   Nginx Fastcgi Cache 簡要參數說明 http{ .">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="ALIBABA WIKI - 菩薩球球">
+<meta name="twitter:url" content="http://myghost.aligogo.pw/post/old/nginx_fastcgi_cache-lua-zhi-xing-guo-cheng/">
+<meta name="twitter:title" content="Nginx_Fastcgi_Cache &#43; Lua 執行過程 - ALIBABA WIKI - 菩薩球球">
+<meta name="twitter:description" content="Nginx Proxy Cache  應用於Reverse Proxy,負載均衡 作用是緩存後端服務器的內容，可能是任何內容，包括靜態的和動態 另外,也可作正向代理 (Nginx 這邊支援 web proxy)  Nginx Fastcgi Cache  proxy_cache 與 fastcgi_cache功能大至一樣。 用是緩存fastcgi生成的內容，很多情況是php生成的動態的內容。 緩存作用。減少了nginx與Application(php,python,cgi等等)通信的次數。  Nginx Cache 運作流程 Nginx 除了 work Process 管理 Http Request 請求等其他工作外,Nginx Cache 也由另外程序來作管理。 Nginx Cache loader 主要Nginx 一開始初始化時,有呼叫Nginx Cache 相關模組,Nginx master process 會 fork Nginx Cache loader 去抓取 Nginx Cache Store(cache 儲存區),來重新建立索引(hash key)並存放在memory 中, 建立完成後, Cache loader process 就隨即結束。 Nginx Cache mamager 主要接受 master process 指令 去管理 Nginx Cache 大小事務,像是 Hash key 過期,或是搜尋 此筆資料是否存放在 cache 儲存區中 等工作。   Nginx Fastcgi Cache 簡要參數說明 http{ .">
+<meta name="twitter:image" content="http://myghost.aligogo.pw/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"http:\/\/myghost.aligogo.pw\/"
+    },
+    "headline": "Nginx_Fastcgi_Cache \x2b Lua 執行過程 - ALIBABA WIKI - 菩薩球球",
+    "image": {
+      "@type": "ImageObject",
+      "url": "http:\/\/myghost.aligogo.pw\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2016-06-19T08:24:43JST",
+    "dateModified": "2016-06-19T08:24:43JST",
+    "author": {
+      "@type": "Person",
+      "name": "ALIBABA WIKI - 菩薩球球"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "ALIBABA WIKI - 菩薩球球",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "http:\/\/myghost.aligogo.pw\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "Nginx Proxy Cache  應用於Reverse Proxy,負載均衡 作用是緩存後端服務器的內容，可能是任何內容，包括靜態的和動態 另外,也可作正向代理 (Nginx 這邊支援 web proxy)  Nginx Fastcgi Cache  proxy_cache 與 fastcgi_cache功能大至一樣。 用是緩存fastcgi生成的內容，很多情況是php生成的動態的內容。 緩存作用。減少了nginx與Application(php,python,cgi等等)通信的次數。  Nginx Cache 運作流程 Nginx 除了 work Process 管理 Http Request 請求等其他工作外,Nginx Cache 也由另外程序來作管理。\n Nginx Cache loader 主要Nginx 一開始初始化時,有呼叫Nginx Cache 相關模組,Nginx master process 會 fork Nginx Cache loader 去抓取 Nginx Cache Store(cache 儲存區),來重新建立索引(hash key)並存放在memory 中, 建立完成後, Cache loader process 就隨即結束。\n Nginx Cache mamager\n 主要接受 master process 指令 去管理 Nginx Cache 大小事務,像是 Hash key 過期,或是搜尋 此筆資料是否存放在 cache 儲存區中 等工作。   Nginx Fastcgi Cache 簡要參數說明 http{ ."
+  }
+</script>
+
+
+    <style>
+      html { font-size: 18px;}@media (max-width: 768px) { html { font-size: 15px; }}body { font-family: 'Noto Sans','Hiragino Kaku Gothic Pro',メイリオ,Meiryo,sans-serif; font-size: inherit; font-weight: 300; line-height: 1rem; background-color: #eceff1;}p { margin: 0;}a { color: #4caf50;}a:hover { text-decoration: none; color: #388e3c;}ul,ol { margin: 0; padding: 0;}h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: 700;}h1 { font-size: 1.8rem; line-height: 2rem; margin: 1.5rem 0; }h2 { font-size: 1.4rem; line-height: 2rem; margin: 1.5rem 0; }h3 { font-size: 1.2rem; line-height: 1.5rem; margin: 1.5rem 0; }h4, h5, h6 { font-size: 1rem; line-height: 1.5rem; margin: 1.5rem 0; }main { display: block;}.content-inner { padding: 1rem 2rem;}.content-inner.thin { padding: .5rem 1rem;}@media (max-width: 768px) { .content-inner { padding: 1rem; }}/* Override */.container { position: relative;}/* Parts:layouts */.l-header { background-color: #fff; margin-bottom: 1rem; padding: 1rem 0; text-align: center;}.l-footer { font-size: .8rem; padding: 1.5rem 0;}/* Parts:menu */.p-menu { position: absolute; right: 15px; top: 0;}/* Parts:terms */.p-terms { list-style: none;}.p-terms .terms-title { margin: 0;}.p-terms a { display: inline-block; padding: .25rem 0;}.p-terms.inline li { display: inline-block; font-size: .8rem;}.p-terms.inline li::after { content: ',';}.p-terms.inline li:last-child::after { content: '';}/* Parts:paging */.p-paging { margin-bottom: 1.5rem; text-align: center;}.p-paging a { display: inline-block; padding: 1rem 1.5rem; margin: 0 .5rem; background-color: #cfd8dc; color: #263238;}/* Parts:section */section { margin-bottom: 1.5rem;}section>header { font-size: .8rem; font-weight: 700; margin-bottom: .5rem; text-transform: uppercase;}section>header a { color: #333; text-decoration: underline;}section.article-footer { margin-bottom: 1rem;}section.article-footer>header { margin-bottom: 0;}/* Parts:share */.p-share { min-width: 100%; margin-bottom: 1.5rem;}.p-share .share-inner { display: table; table-layout: fixed; width: 100%; border-spacing: .25rem;}.p-share a { display: table-cell; text-align: center; font-weight: 700; font-size: .7rem; padding: .5rem 0; color: #fff; border-radius: 5px;}.p-share a.ht { background-color: #00a4de; border-bottom: 2px solid #0083b1; }.p-share a.fb { background-color: #3b5998; border-bottom: 2px solid #2f4779; }.p-share a.tw { background-color: #1da1f2; border-bottom: 2px solid #1780c1; }.p-share a.gp { background-color: #dd4b39; border-bottom: 2px solid #b03c2d; }.p-share a.ln { background-color: #00c300; border-bottom: 2px solid #009c00; }.p-share a.ht::before { content: 'Hatena'; }.p-share a.fb::before { content: 'Facebook'; }.p-share a.tw::before { content: 'Twitter'; }.p-share a.gp::before { content: 'Google+'; }.p-share a.ln::before { content: 'LINE'; }/* Parts:logo */.h-logo { font-family: 'Montserrat', sans-serif;}.p-logo { display: inline-block; text-transform: uppercase;}.p-logo a { display: inline-block; font-size: 1.4rem; line-height: 2rem; color: #000;}/* Parts:crumb */.p-crumb ol { list-style: none; margin-bottom: 1rem;}.p-crumb li { display: inline; margin-right: .25rem; font-size: .8rem; color: #607d8b;}.p-crumb li::after { content: '/'; margin-left: .25rem;}.p-crumb li:last-child::after { content: '';}/* Parts:facts */.p-facts { list-style: none; font-size: .8rem; margin-bottom: 1rem;}.p-facts li { display: inline-block; margin-right: .5rem; color: #90a4ae;}.p-facts li i { margin-right: .5rem; color: #cfd8dc;}/* Parts:article */article { background-color: #fff;}article .title { margin: 0; margin-bottom: .5rem; font-weight: 700;}article .title a { color: #000;}article .thumb { display: block; background-image: url(http://myghost.aligogo.pw/images/default.jpg); background-position: center; background-size: cover;}article .summary { margin-bottom: .5rem; max-height: 5rem; overflow: hidden;}article.single .thumb { height: 18rem; margin-bottom: 1rem;}@media (max-width: 768px) { article.single .thumb { height: 12rem; }}article.li { margin-bottom: 1rem;}article.li .thumb { height: 7.5rem; margin-bottom: .5rem;}article.li.sm { background-color: transparent; margin-bottom: .5rem;}article.li.sm>header { padding: .5rem 0;}article.li.sm .title { font-size: .8rem; line-height: 1rem; margin-bottom: .25rem;}article.li.sm .p-facts { font-size: .6rem; margin-bottom: 0;}article.li.sm .thumb { float: left; margin-right: .5rem; height: 3rem; width: 3rem;}.article-body h2 { padding: 1rem 0; border-bottom: 2px solid #eceff1;}.article-body h2:first-child { margin-top: 0; }.article-body h3 { color: #428bca;}.article-body h4 { border-left: solid .25rem #428bca; padding: 0 .5rem;}.article-body p { margin: 1.5rem 0; line-height: 1.5rem;}.article-body a { text-decoration: underline;}.article-body ul,.article-body ol { padding-left: 1.5rem;}.article-body code { display: inline-block; font-family: Menlo, consolas, monospace; font-size: .8rem; padding: 0 .5rem; line-height: 1.5rem;}.article-body pre { margin: 1.5rem 0; padding: 0; font-size: .8rem; border: none; border-radius: 0;}.article-body pre code { display: block; line-height: 1rem; padding: 1rem;}.article-body blockquote { margin: 1.5rem 0; padding: .5rem 0; font-size: .8rem; border-top: 1px solid #eceff1; border-bottom: 1px solid #eceff1; color: #607d8b;}.article-body blockquote p { margin: .5rem 0; line-height: 1rem;}.article-body strong { box-shadow: 0 -.5rem 0 0 #90caf9 inset;}.article-body em { font-style: normal; font-weight: 700; color: #03a9f4;}.article-body figure { margin: 1.5rem 0; }.article-body figure img { max-width: 100%; }.article-body figure.left,.article-body figure.right { width: 15rem; height: 12rem; margin-top: 0;}.article-body figure.left { float: left; margin-right: 1rem; }.article-body figure.right { float: right; margin-left: 1rem; }@media (max-width: 768px) { .article-body figure.left, .article-body figure.right { float: none; margin: 0; width: auto; height: auto; }}.article-body figcaption { padding: .5rem 0; font-size: .8rem; text-align: center;}.article-body figcaption a { color: #263238;}
+      
+      
+    </style>
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <div class="container">
+        <div class="p-logo">
+          <a href="http://myghost.aligogo.pw/" class="h-logo">ALIBABA WIKI - 菩薩球球</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol>
+        <li><a href="http://myghost.aligogo.pw/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="http://myghost.aligogo.pw/post/" itemprop="url"><span itemprop="title">post</span></a></li>
+        
+        <li class="active">Nginx_Fastcgi_Cache &#43; Lua 執行過程</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+
+  <a href="http://myghost.aligogo.pw/post/old/nginx_fastcgi_cache-lua-zhi-xing-guo-cheng/" class="thumb"></a>
+  <div class="content-inner">
+    <h1 class="title">Nginx_Fastcgi_Cache &#43; Lua 執行過程</h1>
+
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2016-06-19T08:24:43JST">Jun 19, 2016</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://myghost.aligogo.pw/post/">post</a></li>
+      
+    </ul>
+
+    <div class="article-body">
+
+<h1 id="nginx-proxy-cache">Nginx Proxy Cache</h1>
+
+<ul>
+<li>應用於Reverse Proxy,負載均衡</li>
+<li>作用是緩存後端服務器的內容，可能是任何內容，包括靜態的和動態</li>
+<li>另外,也可作正向代理 (Nginx 這邊支援 web proxy)</li>
+</ul>
+
+<p><img src="/content/images/2017/01/nginx_cache_jpeg.jpg" alt="Nginx_Proxy_Cache" /></p>
+
+<h1 id="nginx-fastcgi-cache">Nginx Fastcgi Cache</h1>
+
+<ul>
+<li>proxy_cache 與 fastcgi_cache功能大至一樣。</li>
+<li>用是緩存fastcgi生成的內容，很多情況是php生成的動態的內容。</li>
+<li>緩存作用。減少了nginx與Application(php,python,cgi等等)通信的次數。</li>
+</ul>
+
+<p><img src="/content/images/2017/01/nginx_Fastcgi_cache_jpeg.jpg" alt="Nginx_Fastcgi_Cache" /></p>
+
+<h1 id="nginx-cache-運作流程">Nginx Cache 運作流程</h1>
+
+<p>Nginx 除了 work Process 管理 Http Request 請求等其他工作外,Nginx Cache 也由另外程序來作管理。</p>
+
+<ol>
+<li>Nginx Cache loader</li>
+
+<li><p>主要Nginx 一開始初始化時,有呼叫Nginx Cache 相關模組,Nginx master process 會 fork Nginx Cache loader 去抓取 Nginx Cache Store(cache 儲存區),來重新建立索引(hash key)並存放在memory 中,
+       建立完成後, Cache loader process 就隨即結束。</p></li>
+
+<li><p>Nginx Cache mamager</p>
+
+<ul>
+<li>主要接受 master process 指令 去管理 Nginx Cache 大小事務,像是 Hash key 過期,或是搜尋 此筆資料是否存放在 cache 儲存區中 等工作。</li>
+</ul></li>
+</ol>
+
+<p><img src="/content/images/2017/01/cache1-4_small_jpeg.jpg" alt="Ngnx Cache運作流程" /></p>
+
+<p><img src="/content/images/2017/01/60-26_master_worker_cachemanager_process.png" alt="Ngnx Cache Manager" /></p>
+
+<h1 id="nginx-fastcgi-cache-簡要參數說明">Nginx Fastcgi Cache 簡要參數說明</h1>
+
+<pre><code>http{
+....
+fastcgi_cache_path /dev/shm/fastcgicache levels=1:2 keys_zone=democache:10m  max_size=1000m inactive=60s;
+server {
+...
+        location ~  ^/other_sport/A0017_0050/(.*) {
+                access_log /var/log/nginx/localhost-demo_cache-access.log  main;
+                error_log  /var/log/nginx/localhost-demo_cache-error.log;
+                try_files       $uri    $uri/  =404;
+                fastcgi_pass    127.0.0.1:9001;
+                fastcgi_index   index.php;
+                include         fastcgi_params;
+                set $prefix_fastcgi_name  $1;
+                if ($query_string != &quot;&quot;){ set $prefix_fastcgi_name $1?$query_string;}
+                
+                include     /etc/nginx/conf.d/skip_cache_new;
+                fastcgi_cache_key &quot;$scheme$request_method$host$request_uri&quot;;
+                fastcgi_cache_use_stale error timeout invalid_header http_500;
+                fastcgi_ignore_headers Cache-Control Expires Set-Cookie;
+                
+                fastcgi_cache_bypass $skip_cache;
+                fastcgi_no_cache $skip_cache;
+                fastcgi_cache democache;
+                fastcgi_cache_valid  1m;
+
+        }
+....
+
+    location /123.html {
+        internal;
+        set  $memc_cmd $arg_cmd;
+        set $memc_key  $arg_key;
+        memc_pass 127.0.0.1:11211;
+
+    }
+
+
+}
+
+....
+}
+
+</code></pre>
+
+<h3 id="fastcgi-cache-path">fastcgi_cache_path</h3>
+
+<ul>
+<li><p>/dev/shm/fastcgicache   <strong>儲存cache的地方</strong></p></li>
+
+<li><p>levels=1:2              <strong>設定目錄階層</strong></p></li>
+</ul>
+
+<pre><code>/dev/shm/fastcgicache
+|-- 1
+|   `-- a7
+|       `-- a5225f331f10bbe6099bfe0e48e82a71
+|-- 6
+|   `-- 8f
+`-- a
+    `-- fe
+</code></pre>
+
+<ul>
+<li><p>keys_zone=democache:10m                               **為cache 空間設定名字為 democache , 此空間10MB  **</p>
+
+<ul>
+<li>10MB 是儲存在 share memory,,比較常存取(hot data)會被儲存在share memory</li>
+</ul></li>
+
+<li><p>max_size=1000m                                         <strong>最大使用1G空間 ,是指定儲存cache的容量</strong></p></li>
+
+<li><p>inactive=60s                                          <strong>cache 1分鐘,預設值10分鐘</strong></p></li>
+</ul>
+
+<h3 id="fastcgi-cache-key">fastcgi_cache_key</h3>
+
+<ul>
+<li><p>將 &ldquo;$scheme$request_method$host$request_uri&rdquo; 用MD5方法來 當作 hash key</p>
+
+<h3 id="fastcgi-cache">fastcgi_cache</h3></li>
+
+<li><p>指定 key_zone 名字為 democache</p></li>
+
+<li><p>參數: inactive  ,指在一段時間內文件沒被存取使用,就會被緩存管理器自動刪除。 ,預設 10m(10分鐘)</p></li>
+</ul>
+
+<h3 id="fastcgi-cache-valid">fastcgi_cache_valid</h3>
+
+<p>指定接收到回應程式 的 http code 快取時間</p>
+
+<ul>
+<li><p>fastcgi_cache_valid [http code &hellip;] time;</p></li>
+
+<li><p>若只有指定時間。預設只有 http code  :200, 301, and 302 等回應狀態會被快取
+ex: 當Nginx 收到回應程式 http 狀態碼 200 時,就快取 1 小時</p>
+
+<h3 id="fastcgi-cache-use-stale">fastcgi_cache_use_stale</h3></li>
+
+<li><p>定義那些情況使用過期cache</p>
+
+<ul>
+<li><p>invalid_header  無效的回應</p></li>
+
+<li><p>error           回應的Header 發生錯誤</p></li>
+
+<li><p>http_500        回應500錯誤</p></li>
+
+<li><p>time            當Nginx 與 Application 建立連接時,Nginx 等待 Application 回應超時</p></li>
+</ul></li>
+</ul>
+
+<h3 id="fastcgi-ignore-headers">fastcgi_ignore_headers</h3>
+
+<ul>
+<li><p>忽略 Http header 帶有 Cache-Control , Expires ,Set-Cookie</p></li>
+
+<li><p>若從後端 Application回應 http header 帶有Cache-Control , Expires ,Set-Cookie 會影響fastcgi_cache 不會cache 回應資料</p></li>
+</ul>
+
+<h3 id="fastcgi-no-cache">fastcgi_no_cache</h3>
+
+<ul>
+<li><p>不等於空值 及 值不等於 0 都不被 cache。 <strong>只要是 0 或 空值 就指定 cache</strong></p>
+
+<h3 id="fastcgi-cache-bypass">fastcgi_cache_bypass</h3></li>
+
+<li><p>不等於空值 及 值不等於 0 ,即是 不從cache區 回應資料給Client端,而是 By_Pass 到後端 。 <strong>只要是 0 或 空值 就指定 cache</strong></p></li>
+</ul>
+
+<h2 id="upstream-cache-status-包含以下幾種狀態">$upstream_cache_status 包含以下幾種狀態</h2>
+
+<table>
+<thead>
+<tr>
+<th>狀態</th>
+<th align="center">說明</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>MISS</td>
+<td align="center">未命中，請求被傳送到後端</td>
+</tr>
+
+<tr>
+<td>HIT</td>
+<td align="center">緩存命中</td>
+</tr>
+
+<tr>
+<td>EXPIRED</td>
+<td align="center">緩存已經過期請求被傳送到後端</td>
+</tr>
+
+<tr>
+<td>UPDATING</td>
+<td align="center">正在更新緩存，將使用舊的應答</td>
+</tr>
+
+<tr>
+<td>STALE</td>
+<td align="center">後端將得到過期的應答</td>
+</tr>
+
+<tr>
+<td>BYPASS</td>
+<td align="center">request會By_Pass到後端伺服器上,因為請求匹配了一個proxy_cache_bypass 或是 fastcgi_cache_bypass</td>
+</tr>
+</tbody>
+</table>
+
+<h1 id="執行nginx-lua-之前-需要了解的一些事">執行Nginx + lua 之前 需要了解的一些事</h1>
+
+<h3 id="載入-lua-模組-測試是否可以運作">載入 lua 模組, 測試是否可以運作</h3>
+
+<p>1-1.</p>
+
+<pre><code>    dso{
+                path /etc/nginx/modules/;
+                load ngx_http_lua_module.so;
+       }
+    http{
+          .....
+        }
+</code></pre>
+
+<pre><code class="language-sh">    #nginx -t
+    #/etc/init.d/nginx reload
+</code></pre>
+
+<p>驗證lua 模組是否有載入</p>
+
+<pre><code class="language-sh">    #nginx -m
+</code></pre>
+
+<pre><code>        ...
+        ...
+        ngx_http_lua_module (shared, 3.1)
+        ...
+</code></pre>
+
+<p>1-2. 測試 lua 模組是否可用</p>
+
+<pre><code>        http{
+                ....
+                server{
+                ....
+                location /lua3{
+                        default_type text/html;
+                        set $RRR I come from Taiwan;
+                        content_by_lua 'ngx.say(&quot;&lt;h1&gt;&lt;a href=http://tw.yahoo.com&gt;&quot;,ngx.var.RRR,&quot;&lt;/a&gt;&lt;/h1&gt;&quot;)';
+                }
+                .....
+                }
+        ..
+        }
+</code></pre>
+
+<h3 id="nginx-hander處理模組將-http-request-劃分11個階段來處理-及了解每個階段執行順序">Nginx hander處理模組將 http request 劃分11個階段來處理,及了解每個階段執行順序。</h3>
+
+<p>2-1.</p>
+
+<ul>
+<li><p>先由Nginx核心 讀取 http Header</p></li>
+
+<li><p>根據Nginx設定檔,Nginx 核心 挑選一個Hander模組 處理 Http 請求 ,並將 http Header 交給 Hander 模組</p></li>
+
+<li><p>由Hander 模組 讀取 Http Body ,並處理好 Http 請求</p></li>
+
+<li><p>Hander 模組處理Http 請求後,再 發送給 Fliters 模組處理。</p></li>
+
+<li><p>Fliter 模組處理好後,再發送給客戶端
+<img src="/content/images/2017/01/Http_Request_Nginx_small.png" alt="Http請求處理流程圖" /></p></li>
+</ul>
+
+<p>2-2. Handers模組 精細處理 Http 請求 ,分成 11 個階段處理。下表所列處理階段分別依序處理</p>
+
+<table>
+<thead>
+<tr>
+<th>Handers階段</th>
+<th>說明</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>NGX_HTTP_POST_READ_PHAS</td>
+<td>讀取請求內容階段</td>
+</tr>
+
+<tr>
+<td>NGX_HTTP_SERVER_REWRITE_PHASE</td>
+<td>Server請求位址重寫階段</td>
+</tr>
+
+<tr>
+<td>NGX_HTTP_FIND_CONFIG_PHASE</td>
+<td>配置查找階段:</td>
+</tr>
+
+<tr>
+<td>NGX_HTTP_REWRITE_PHASE</td>
+<td>Location請求位址重寫階段</td>
+</tr>
+
+<tr>
+<td>NGX_HTTP_POST_REWRITE_PHASE</td>
+<td>請求位址重寫提交階段</td>
+</tr>
+
+<tr>
+<td>NGX_HTTP_PREACCESS_PHASE</td>
+<td>訪問許可權檢查準備階段</td>
+</tr>
+
+<tr>
+<td>NGX_HTTP_ACCESS_PHASE</td>
+<td>訪問許可權檢查階段</td>
+</tr>
+
+<tr>
+<td>NGX_HTTP_POST_ACCESS_PHASE</td>
+<td>訪問許可權檢查提交階段</td>
+</tr>
+
+<tr>
+<td>NGX_HTTP_TRY_FILES_PHASE</td>
+<td>配置項try_files處理階段</td>
+</tr>
+
+<tr>
+<td>NGX_HTTP_CONTENT_PHASE</td>
+<td>內容產生階段</td>
+</tr>
+
+<tr>
+<td>NGX_HTTP_LOG_PHASE</td>
+<td>日誌模組處理階段</td>
+</tr>
+</tbody>
+</table>
+
+<h1 id="ngx-http-memc-module-so-模組">ngx_http_memc_module.so 模組</h1>
+
+<p>使Nginx  能利用 memcached 相關指令 (set ,get ,stat..等等)存取memcached server</p>
+
+<h2 id="install">Install</h2>
+
+<pre><code class="language-sh"># cd /use/local/src;git clone https://github.com/openresty/memc-nginx-module.git
+# dso_tool --dst=/etc/nginx/modules/ --add-module=/usr/local/src/memc-nginx-module/
+</code></pre>
+
+<h2 id="修改設定檔-載入此模組-etc-nginx-modules-ngx-http-memc-module-so">修改設定檔 ,載入此模組 (/etc/nginx/modules/ngx_http_memc_module.so )</h2>
+
+<pre><code>dso {
+ ....
+      load ngx_http_memc_module.so;
+}
+http{
+....
+}
+</code></pre>
+
+<pre><code class="language-sh">#nginx -t &amp;&amp; /etc/init.d/nginx reload
+</code></pre>
+
+<h2 id="nginx-access-memcached">Nginx access memcached</h2>
+
+<ul>
+<li>先啟動 memcached ,並插入一些資料 ,這邊測試,插入 andy 和 amy</li>
+</ul>
+
+<pre><code class="language-sh">  #echo &quot;Google&quot; &gt; andy
+  #echo  &quot;Good&quot;  &gt; amy
+  #memcp --verbose --debug --servers=127.0.0.1 --expire=120  andy
+  #memcp --verbose --debug --servers=127.0.0.1 --expire=120  amy
+</code></pre>
+
+<ul>
+<li>測試抓取 andy , amy  key 的值</li>
+</ul>
+
+<pre><code class="language-sh">  curl 'http://192.168.0.3/memt.html?cmd=get&amp;key=andy'
+  curl 'http://192.168.0.3/memt.html?cmd=get&amp;key=amy'
+</code></pre>
+
+<ul>
+<li>為了能安全取得 memcached key 值</li>
+</ul>
+
+<p>可以不要讓外部直接利用Nginx  存取 memcached Server,需要修改 nginx 設定檔</p>
+
+<pre><code>  http{
+    ...
+    server {
+        location /memt.html {
+                internal;
+                set  $memc_cmd $arg_cmd;
+                set $memc_key  $arg_key;
+                memc_pass 127.0.0.1:11211;
+        }
+    }
+  }
+</code></pre>
+
+<ul>
+<li>測試</li>
+</ul>
+
+<p>目標結果 : 404 沒找到</p>
+
+<pre><code class="language-sh">   curl 'http://192.168.0.3/memt.html?cmd=get&amp;key=andy'
+</code></pre>
+
+<h1 id="自行撰寫lua流程說明">自行撰寫lua流程說明</h1>
+
+<ul>
+<li><p>先判斷是否有 帶 cookie ; 若沒帶 則 By_Pass 後端php-cgi處理</p></li>
+
+<li><p>再確定 cookie 是否有帶 &ldquo;WEBSESSID=&rdquo; 字串 ; 若沒帶 則 By_Pass 後端php-cgi處理</p></li>
+
+<li><p>有帶cookie , 利用(memcached API For Nginx) 讀取 cookie值</p></li>
+
+<li><p>確定cookie 值的內容 是否有帶登入資訊 ;若沒帶 則By_Pass 後端php-cgi處理</p></li>
+
+<li><p>有帶登入資訊, 是否為列表要cache 的對象 ; 若不是 則By_Pass 後端php-cgi處理</p></li>
+</ul>
+
+<h1 id="簡單演示-及-問題說明">簡單演示 及 問題說明</h1>
+
+<h2 id="演示">演示</h2>
+
+<h2 id="問題說明">問題說明</h2>
+
+<ul>
+<li>說明背景:</li>
+</ul>
+
+<pre><code>http://220.229.227.26/other_sport/A0017_0050/om/ 
+http://220.229.227.26/other_sport/A0017_0050/wlb/
+兩個位址都在同一個DocumentRoot /var/www/html/other_sport/A0017_0050/
+兩個位址都在同一個Nginx設定檔中 /etc/nginx/conf.d/00-default.conf
+</code></pre>
+
+<ul>
+<li>產生問題執行:</li>
+</ul>
+
+<pre><code>用Firefox 瀏覽此url 並登入 http://220.229.227.26/other_sport/A0017_0050/om/
+執行設定會被cache的url http://220.229.227.26/other_sport/A0017_0050/om/league-listing.php (看 /var/log/nginx/localhost-demo_cache-access.log 是否有hit到,有被Hit到 就馬上執行下一個步驟)
+用IE 瀏覽此url 並登入 http://220.229.227.26/other_sport/A0017_0050/wlb/
+再瀏覽此url http://220.229.227.26/other_sport/A0017_0050/om/league-listing.php,就發生未登入即可以抓取的到頁面。
+</code></pre>
+
+<h1 id="參考資料">參考資料</h1>
+
+<ul>
+<li><p><a href="http://nginx.org/en/docs/http/ngx_http_fastcgi_module.html">Module ngx_http_fastcgi_module</a></p></li>
+
+<li><p><a href="http://czerasz.com/2015/03/30/nginx-caching-tutorial/">Nginx Caching Tutorial - You Can Run Faster</a></p></li>
+
+<li><p><a href="http://blog.angryfox.com/?p=1930">Nginx的緩存：proxy_cache和fastcgi_cache</a></p></li>
+
+<li><p><a href="https://www.cnxct.com/several-reminder-in-nginx-fastcgi_cache-and-php-session_cache_limiter/">Nginx模塊fastcgi_cache的幾個注意點</a></p></li>
+
+<li><p><a href="http://281816327.blog.51cto.com/907015/1619920">Nginx模塊和請求處理流程簡介</a></p></li>
+
+<li><p><a href="https://github.com/chiamingyen/nginxProject/blob/master/nginxProject/source/chapter_3.rst">handler模組的掛載</a></p></li>
+
+<li><p><a href="http://www.pylist.com/topic/1445510269">nginx與lua的執行順序和步驟說明</a></p></li>
+
+<li><p><a href="https://github.com/openresty/lua-nginx-module#nginx-api-for-lua">Nginx API for Lua</a></p></li>
+
+<li><p><a href="http://www.pureage.info/2013/09/02/125.html">nil、null與ngx.null</a></p></li>
+
+<li><p><a href="https://www.gitbook.com/book/moonbingbing/openresty-best-practices/details">OpenResty最佳實踐</a></p></li>
+</ul>
+</div>
+  </div>
+
+  <footer class="article-footer">
+    <div class="content-inner">
+
+      <aside class="p-share">
+  <div class="share-inner">
+    <a href="http://b.hatena.ne.jp/add?mode=confirm&url=http%3a%2f%2fmyghost.aligogo.pw%2fpost%2fold%2fnginx_fastcgi_cache-lua-zhi-xing-guo-cheng%2f&title=Nginx_Fastcgi_Cache%20%2b%20Lua%20%e5%9f%b7%e8%a1%8c%e9%81%8e%e7%a8%8b" title="はてなブックマーク" class="ht" target="_blank" rel="nofollow"></a>
+    <a href="http://www.facebook.com/sharer.php?u=http%3a%2f%2fmyghost.aligogo.pw%2fpost%2fold%2fnginx_fastcgi_cache-lua-zhi-xing-guo-cheng%2f&t=Nginx_Fastcgi_Cache%20%2b%20Lua%20%e5%9f%b7%e8%a1%8c%e9%81%8e%e7%a8%8b" title="Facebookでシェア" class="fb" target="_blank" rel="nofollow"></a>
+    <a href="http://twitter.com/intent/tweet?url=http%3a%2f%2fmyghost.aligogo.pw%2fpost%2fold%2fnginx_fastcgi_cache-lua-zhi-xing-guo-cheng%2f&text=Nginx_Fastcgi_Cache%20%2b%20Lua%20%e5%9f%b7%e8%a1%8c%e9%81%8e%e7%a8%8b&tw_p=tweetbutton" title="Twitterでシェア" class="tw" target="_blank" rel="nofollow"></a>
+    <a href="https://plus.google.com/share?url=http%3a%2f%2fmyghost.aligogo.pw%2fpost%2fold%2fnginx_fastcgi_cache-lua-zhi-xing-guo-cheng%2f" title="Google Plusでシェア" class="gp" target="_blank" rel="nofollow"></a>
+    <a href="http://line.me/R/msg/text/?Nginx_Fastcgi_Cache%20%2b%20Lua%20%e5%9f%b7%e8%a1%8c%e9%81%8e%e7%a8%8b http%3a%2f%2fmyghost.aligogo.pw%2fpost%2fold%2fnginx_fastcgi_cache-lua-zhi-xing-guo-cheng%2f" title="LINEでシェア" class="ln" target="_blank" rel="nofollow"></a>
+  </div>
+</aside>
+
+
+      <nav class="p-crumb">
+        <ol>
+          <li><a href="http://myghost.aligogo.pw/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+          
+          <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="http://myghost.aligogo.pw/post/" itemprop="url"><span itemprop="title">post</span></a></li>
+          
+          <li class="active">Nginx_Fastcgi_Cache &#43; Lua 執行過程</li>
+        </ol>
+      </nav>
+
+      
+      
+      
+      <section class="article-footer">
+        <header>
+          <a href="http://myghost.aligogo.pw/categories/">CATEGORIES</a>
+        </header>
+        <div>
+          <ul class="p-terms inline">
+            
+            <li><a href="http://myghost.aligogo.pw/categories/nginx/">nginx</a></li>
+            
+          </ul>
+        </div>
+      </section>
+      
+      
+      
+      <section class="article-footer">
+        <header>
+          <a href="http://myghost.aligogo.pw/tags/">TAGS</a>
+        </header>
+        <div>
+          <ul class="p-terms inline">
+            
+            <li><a href="http://myghost.aligogo.pw/tags/nginx/">nginx</a></li>
+            
+          </ul>
+        </div>
+      </section>
+      
+      
+    </div>
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    <aside class="site">
+
+  <section>
+    <header>latests</header>
+    <div>
+      <div class="row">
+        
+        <div class="col-md-12 col-sm-6 col-xs-12"><article class="li sm">
+  <a href="http://myghost.aligogo.pw/post/good-to-great/" class="thumb"></a>
+  <header>
+    <div class="title"><a href="http://myghost.aligogo.pw/post/good-to-great/">good to great</a></div>
+
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-02-27T06:03:19JST">Feb 27, 2017</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://myghost.aligogo.pw/post/">post</a></li>
+    </ul>
+  </header>
+</article>
+</div>
+        
+        
+        <div class="col-md-12 col-sm-6 col-xs-12"><article class="li sm">
+  <a href="http://myghost.aligogo.pw/post/old/good-to-great/" class="thumb"></a>
+  <header>
+    <div class="title"><a href="http://myghost.aligogo.pw/post/old/good-to-great/">good to great</a></div>
+
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-02-27T06:03:19JST">Feb 27, 2017</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://myghost.aligogo.pw/post/">post</a></li>
+    </ul>
+  </header>
+</article>
+</div>
+        <div class="col-sm-12"></div>
+        
+        <div class="col-md-12 col-sm-6 col-xs-12"><article class="li sm">
+  <a href="http://myghost.aligogo.pw/post/list_comprehensions/" class="thumb"></a>
+  <header>
+    <div class="title"><a href="http://myghost.aligogo.pw/post/list_comprehensions/">Python 的 生成式 (List Comprehensions)...待續</a></div>
+
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-02-26T11:55:26JST">Feb 26, 2017</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://myghost.aligogo.pw/post/">post</a></li>
+    </ul>
+  </header>
+</article>
+</div>
+        
+        
+        <div class="col-md-12 col-sm-6 col-xs-12"><article class="li sm">
+  <a href="http://myghost.aligogo.pw/post/old/list_comprehensions/" class="thumb"></a>
+  <header>
+    <div class="title"><a href="http://myghost.aligogo.pw/post/old/list_comprehensions/">Python 的 生成式 (List Comprehensions)...待續</a></div>
+
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-02-26T11:55:26JST">Feb 26, 2017</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://myghost.aligogo.pw/post/">post</a></li>
+    </ul>
+  </header>
+</article>
+</div>
+        <div class="col-sm-12"></div>
+        
+        <div class="col-md-12 col-sm-6 col-xs-12"><article class="li sm">
+  <a href="http://myghost.aligogo.pw/post/old/rpi1/" class="thumb"></a>
+  <header>
+    <div class="title"><a href="http://myghost.aligogo.pw/post/old/rpi1/">Raspberry Pi :使用ttl線登入Console 端</a></div>
+
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-02-20T15:11:26JST">Feb 20, 2017</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://myghost.aligogo.pw/post/">post</a></li>
+    </ul>
+  </header>
+</article>
+</div>
+        
+        
+        <div class="col-md-12 col-sm-6 col-xs-12"><article class="li sm">
+  <a href="http://myghost.aligogo.pw/post/rpi1/" class="thumb"></a>
+  <header>
+    <div class="title"><a href="http://myghost.aligogo.pw/post/rpi1/">Raspberry Pi :使用ttl線登入Console 端</a></div>
+
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-02-20T15:11:26JST">Feb 20, 2017</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://myghost.aligogo.pw/post/">post</a></li>
+    </ul>
+  </header>
+</article>
+</div>
+        <div class="col-sm-12"></div>
+        
+        <div class="col-md-12 col-sm-6 col-xs-12"><article class="li sm">
+  <a href="http://myghost.aligogo.pw/post/gong-ye-4-0/" class="thumb"></a>
+  <header>
+    <div class="title"><a href="http://myghost.aligogo.pw/post/gong-ye-4-0/">工業4.0  ...待續</a></div>
+
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-02-06T18:21:34JST">Feb 6, 2017</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://myghost.aligogo.pw/post/">post</a></li>
+    </ul>
+  </header>
+</article>
+</div>
+        
+        
+        <div class="col-md-12 col-sm-6 col-xs-12"><article class="li sm">
+  <a href="http://myghost.aligogo.pw/post/old/gong-ye-4-0/" class="thumb"></a>
+  <header>
+    <div class="title"><a href="http://myghost.aligogo.pw/post/old/gong-ye-4-0/">工業4.0  ...待續</a></div>
+
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-02-06T18:21:34JST">Feb 6, 2017</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://myghost.aligogo.pw/post/">post</a></li>
+    </ul>
+  </header>
+</article>
+</div>
+        <div class="col-sm-12"></div>
+        
+        <div class="col-md-12 col-sm-6 col-xs-12"><article class="li sm">
+  <a href="http://myghost.aligogo.pw/post/nginx-uwsgi-flask/" class="thumb"></a>
+  <header>
+    <div class="title"><a href="http://myghost.aligogo.pw/post/nginx-uwsgi-flask/">Nginx &#43; uwsgi &#43; Flask</a></div>
+
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-01-22T18:04:18JST">Jan 22, 2017</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://myghost.aligogo.pw/post/">post</a></li>
+    </ul>
+  </header>
+</article>
+</div>
+        
+        
+        <div class="col-md-12 col-sm-6 col-xs-12"><article class="li sm">
+  <a href="http://myghost.aligogo.pw/post/old/nginx-uwsgi-flask/" class="thumb"></a>
+  <header>
+    <div class="title"><a href="http://myghost.aligogo.pw/post/old/nginx-uwsgi-flask/">Nginx &#43; uwsgi &#43; Flask</a></div>
+
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-01-22T18:04:18JST">Jan 22, 2017</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://myghost.aligogo.pw/post/">post</a></li>
+    </ul>
+  </header>
+</article>
+</div>
+        <div class="col-sm-12"></div>
+        
+      </div>
+    </div>
+  </section>
+
+  
+  <section>
+    <header>category</header>
+    <div>
+      <ul class="p-terms">
+        <li><a href="http://myghost.aligogo.pw/categories/python">python</a></li><li><a href="http://myghost.aligogo.pw/categories/travel">travel</a></li><li><a href="http://myghost.aligogo.pw/categories/2v0-621">2v0-621</a></li><li><a href="http://myghost.aligogo.pw/categories/docker">docker</a></li><li><a href="http://myghost.aligogo.pw/categories/iot">iot</a></li><li><a href="http://myghost.aligogo.pw/categories/vmware">vmware</a></li><li><a href="http://myghost.aligogo.pw/categories/alpine">alpine</a></li><li><a href="http://myghost.aligogo.pw/categories/datascience">datascience</a></li><li><a href="http://myghost.aligogo.pw/categories/flask">flask</a></li><li><a href="http://myghost.aligogo.pw/categories/kvm">kvm</a></li>
+      </ul>
+    </div>
+  </section>
+  
+  <section>
+    <header>tag</header>
+    <div>
+      <ul class="p-terms">
+        <li><a href="http://myghost.aligogo.pw/tags/python">python</a></li><li><a href="http://myghost.aligogo.pw/tags/travel">travel</a></li><li><a href="http://myghost.aligogo.pw/tags/2v0-621">2v0-621</a></li><li><a href="http://myghost.aligogo.pw/tags/docker">docker</a></li><li><a href="http://myghost.aligogo.pw/tags/iot">iot</a></li><li><a href="http://myghost.aligogo.pw/tags/vmware">vmware</a></li><li><a href="http://myghost.aligogo.pw/tags/alpine">alpine</a></li><li><a href="http://myghost.aligogo.pw/tags/datascience">datascience</a></li><li><a href="http://myghost.aligogo.pw/tags/flask">flask</a></li><li><a href="http://myghost.aligogo.pw/tags/kvm">kvm</a></li>
+      </ul>
+    </div>
+  </section>
+  
+
+</aside>
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; ALIBABA WIKI - 菩薩球球</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_robust">Robust</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+
